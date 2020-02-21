@@ -6,7 +6,9 @@ import "./components/common/_iconfont/iconfont.js";
 import "./components/common/_iconfont/iconfont.css";
 import echarts from "echarts";
 import { auth_token, auth_token_info } from "./api/beans/auth";
-
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 // filter production infos
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;

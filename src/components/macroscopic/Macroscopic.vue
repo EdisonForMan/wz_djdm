@@ -3,7 +3,7 @@
     <div class="Com_map">
       <commonArcgis id="macroArcgis" ref="macroArcgis" :leftOptions="leftOptions" />
     </div>
-    <div class="Com_container" style="z-index: 10;">
+    <div class="Com_container" style="z-index: 10;" v-show="false">
       <div :class="`leftside animated ${icon_show_left?`slideOutLeft`:`slideInLeft`}  `">
         <leftMultiSelect :leftOptions="leftOptions" ref="leftOptions" />
         <span @click="()=>{icon_show_left=!icon_show_left}" class="hidden_button"></span>
@@ -16,6 +16,8 @@
         <sbDate ref="table"v-if="false"/>
       </div>
     </div>
+    <topDocument></topDocument>
+    <CustomDocument style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"></CustomDocument>
     <xzDate />
     <bottomBtn />
     <topDate />
@@ -56,7 +58,8 @@ import mjChart from "./frame/mjChart";
 import streetFrame from "./frame/streetFrame";
 import queryForm from "./queryForm";
 import { leftOptions } from "./config/enums";
-
+import CustomDocument from './CustomDocument/CustomDocument.vue';
+import topDocument from './CustomDocument/topDocument.vue';
 export default {
   name: "macroscopic",
   data() {
@@ -68,6 +71,8 @@ export default {
     };
   },
   components: {
+    topDocument,
+    CustomDocument,
     commonArcgis,
     leftMultiSelect,
     bqtj, // 病例统计

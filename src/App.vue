@@ -44,7 +44,7 @@ export default {
       ],
       current: 1,
       time: " ",
-      showHeader: true // 显示头部
+      showHeader: false // 显示头部
     };
   },
   mounted() {
