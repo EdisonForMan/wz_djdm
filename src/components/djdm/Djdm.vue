@@ -29,7 +29,7 @@
  * 1.点击勾选左侧,右侧列表Object[]的替换
  * 2.点击列表<RightDiv>,地图<commonArcgis>定位并显示内容
  */
-import commonArcgis from "./Arcgis";
+import commonArcgis from "./Arcgis.vue";
 import bottomBtn from "./components/bottomBtn";
 import bqtj from "./rightDiv/bqtj";
 import wjw from "./rightDiv/wjw";
