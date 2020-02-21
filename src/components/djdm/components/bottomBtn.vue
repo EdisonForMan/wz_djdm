@@ -1,6 +1,16 @@
 <template>
   <div id="btnDiv">
     <ul>
+      <li class="hover">
+        区划图
+        <div>
+          <ul class="subList">
+            <li>工地数量分色图</li>
+            <li>疫情风险分色图</li>
+            <li>复工率分色图</li>
+          </ul>
+        </div>
+      </li>
       <li @click="xzqh">行政区划</li>
       <li @click="yxt">影像图</li>
       <li @click="slt">矢量图</li>
@@ -30,29 +40,15 @@ export default {
   mounted() {},
   computed: {},
   methods: {
-    xzqh() {
-      this.$parent.$refs.macroArcgis.removeLayer();
-    },
-    yxt() {
-      this.$parent.$refs.macroArcgis.yxt();
-    },
-    slt() {
-      this.$parent.$refs.macroArcgis.slt();
-    },
-    ygt() {
-      this.$parent.$refs.macroArcgis.ygt();
-    },
-    clean() {
-      this.$parent.$refs.leftOptions.clean();
-      this.$parent.$refs.macroArcgis.view.popup.visible = false;
-      this.$parent.$refs.queryForm.list = [];
-    },
+    xzqh() {},
+    yxt() {},
+    slt() {},
+    ygt() {},
+    clean() {},
     doCircleQuery() {
-      // console.log("圆形查询");
       this.$parent.$refs.macroArcgis.doCircleQuery();
     },
     doSpaceQuery() {
-      // console.log("多边形查询");
       this.$parent.$refs.macroArcgis.doSpaceQuery();
     }
   }
@@ -67,32 +63,44 @@ export default {
 
   > ul {
     > li {
-      height: 21px;
+      position: relative;
+      height: 40px;
+      line-height: 40px;
       list-style: none;
       float: left;
       background-color: #243968;
       border: 1px solid #05fff8;
-      padding: 10px 10px;
       margin-left: 5px;
+      padding: 0 10px;
       cursor: pointer;
       overflow: hidden;
 
       div {
-        margin-top: -118px;
-
+        position: absolute;
+        width: 120px;
+        bottom: 40px;
+        margin-left: -11px;
         ul li {
-          height: 21px;
+          height: 40px;
+          line-height: 40px;
+          padding: 0 10px;
+          width: 100%;
           list-style: none;
           background-color: #243968;
           border: 1px solid #05fff8;
-          padding: 10px 10px;
           cursor: pointer;
         }
       }
     }
 
     .hover {
-      padding: 10px 0px;
+      width: 120px;
+      .subList {
+        li:hover {
+          background-color: #0754e2;
+          color: #fff;
+        }
+      }
     }
 
     .hover:hover {

@@ -28,7 +28,7 @@ export default {
   methods: {
     toggle(event) {
       this.toggled = !this.toggled;
-      this.$emit("change", this.toggled);
+      this.$hub.$emit("change", this.toggled);
     }
   }
 };

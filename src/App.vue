@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header :class="`app_header `" v-if="showHeader">
+    <!-- <header :class="`app_header `" v-if="showHeader">
       <div class="app_icon" style>温州市新冠肺炎防控作战地图</div>
       <div class="app_toptab_position app_toptab_normal">
         <ul class="app_toptab">
@@ -19,7 +19,7 @@
         </p>
         <p style="position: absolute;right: 15px;top: 67px;font-size: 13px;">{{time}}</p>
       </div>
-    </header>
+    </header>-->
     <div class="app_container">
       <router-view ref="router" />
       <transition name="frame"></transition>
@@ -36,7 +36,6 @@ export default {
   name: "app",
   data() {
     return {
-      SHI_QU_DATA: window.SHI_QU_DATA,
       toptab: [
         { label: "宏观管控", route: "control" },
         { label: "防疫布控", route: "macroscopic" },
@@ -48,7 +47,9 @@ export default {
     };
   },
   mounted() {
-    setInterval(()=>{this.getTime()},1000)
+    setInterval(() => {
+      this.getTime();
+    }, 1000);
   },
   methods: {
     shallLogin() {

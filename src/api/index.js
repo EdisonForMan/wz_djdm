@@ -1,13 +1,15 @@
+/* eslint-disable */
+
 /**
  * [api]标准接口处理
- * token = sessionStorage.getItem('access_token')
- * lng = sessionStorage.getItem('access_lng')
+ * token = sessionStorage.getItem('auto@access_token')
  */
-
+import Vue from "vue";
 import axios from "axios";
 import { WRT_config } from "@/components/common/Tmap";
 
-let defaultAxios = null;
+let defaultAxios = null,
+  arcgisAxios = null;
 
 export function getDefaultAxios() {
   if (!defaultAxios) {
@@ -16,43 +18,37 @@ export function getDefaultAxios() {
   return defaultAxios;
 }
 
+export function getArcgisAxios() {
+  if (!arcgisAxios) {
+    arcgisAxios = getArcgisAxiosInstance();
+  }
+  return arcgisAxios;
+}
+
 /**
  * 获取Axios实例对象
  * [timeout] 30,000 ms超时
  */
 function getAxiosInstance() {
   const instance = axios.create();
-  // instance.defaults.baseURL =
-  //   window.env == "dev" ? "/api" : `${WRT_config.serverCompatible}/api`;
   instance.defaults.baseURL = `${WRT_config.serverCompatible}/api`;
   instance.defaults.headers.post["Content-Type"] = "multipart/form-data";
   instance.interceptors.request.use(
     config => {
+      const option = config.data;
       if (config.method === "post") {
-        if (typeof config.data === "object" && !config.data.etag) {
-          config.data.etag = WRT_config.etag;
-        }
+        config.data.etag = WRT_config.etag;
+        config.data.res = option.res || "testsql_space";
       }
       if (config.method === "get") {
-        if (typeof config.params === "object" && !config.params.etag) {
-          config.params.etag = WRT_config.etag;
-        }
+        config.params.etag = WRT_config.etag;
+        config.params.res = option.res || "testsql_space";
       }
-      /**
-       * token添加
-       * env = dev || outside  => outside@token_access
-       * env = prod  => token_access
-       */
-      if (config.data && config.data.noToken) {
-      } else {
-        const token = window.shallLogin
-          ? localStorage.getItem("auto@access_token")
-          : localStorage.getItem("access_token");
-        if (token) {
-          config.headers["Authorization"] = token;
-        } else if (config.headers["Authorization"]) {
-          delete config.headers["Authorization"];
-        }
+      const token = localStorage.getItem("auto@access_token");
+      if (token && !config.url.includes("token")) {
+        config.headers["Authorization"] = token;
+      } else if (config.headers["Authorization"]) {
+        delete config.headers["Authorization"];
       }
       return config;
     },
@@ -71,9 +67,6 @@ function getAxiosInstance() {
     err => {
       //==============  错误处理  ====================
       if (err && err.response) {
-        if (err.response.data && err.response.data.errors) {
-          err.message = err.response.data.errors[0].title;
-        }
         if (err.response.status) {
           switch (err.response.status) {
             case 400:
@@ -81,11 +74,6 @@ function getAxiosInstance() {
               break;
             case 401:
               err.message = "未授权，请重新登录(401)";
-              console.log(`[unavailable acount] return to Login Page`);
-              if (!window.shallLogin) {
-                window.location = `${WRT_config.login ||
-                  WRT_config.serverCompatible}/index.html`;
-              }
               break;
             case 403:
               err.message = "拒绝访问(403)";
@@ -118,9 +106,19 @@ function getAxiosInstance() {
               err.message = `连接出错(${err.response.status})!`;
           }
         }
+        if (err.response.data && err.response.data.errors) {
+          err.message = err.response.data.errors[0].title;
+        }
       } else {
         err.message = "连接服务器失败!";
       }
+      window._vue_ &&
+        window._vue_.$bvToast.toast(err.message, {
+          title: "错误",
+          toaster: "b-toaster-top-left",
+          autoHideDelay: 5000,
+          appendToast: false
+        });
       // hint(err)
       return Promise.reject(err);
     }
@@ -128,4 +126,8 @@ function getAxiosInstance() {
   return instance;
 }
 
-export default getAxiosInstance;
+function getArcgisAxiosInstance() {
+  const instance = axios.create();
+  instance.defaults.headers.get["Content-Type"] = "multipart/form-data";
+  return instance;
+}

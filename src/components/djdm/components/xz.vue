@@ -38,8 +38,8 @@
 export default {
   data() {
     return {
-      isShow: true, //详情框默认隐藏
-      btnShow: false
+      isShow: false, //详情框默认隐藏
+      btnShow: true
     };
   },
   methods: {

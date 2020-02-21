@@ -5,7 +5,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 // pages modules
-import Macroscopic from "./components/macroscopic/Macroscopic.vue";
+import Djdm from "./components/djdm/Djdm.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -14,8 +14,8 @@ export default new Router({
     [
       {
         path: "/",
-        name: "macroscopic",
-        component: Macroscopic
+        name: "djdm",
+        component: Djdm
         // path: "/",
         // name: "Mobile",
         // component: Mobile
