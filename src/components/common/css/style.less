@@ -1,0 +1,2591 @@
+@backgroundColor: linear-gradient(180deg, rgba(23, 45, 94, 1) 0%, rgba(2, 15, 36, 1) 100%);
+
+.app_container {
+    height: 100%;
+}
+//方案2
+.Default2 {
+    font-family            : "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align             : center;
+    color                  : #fff;
+    height                 : 100%;
+    background             : @backgroundColor;
+    display                : flex;
+    flex-direction         : column;
+    overflow               : hidden;
+
+    #cover {
+        height    : 100%;
+        width     : 100%;
+        transition: all 1s;
+        position  : fixed;
+        z-index   : 10;
+
+        #lottie_pass {
+            height          : 40px;
+            line-height     : 40px;
+            width           : 100px;
+            border-radius   : 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color           : #fff;
+            font-size       : 20px;
+            font-weight     : bold;
+            position        : fixed;
+            top             : 40px;
+            right           : 40px;
+            z-index         : 10;
+            text-align      : center;
+            cursor          : pointer;
+        }
+
+        #lottie_video {
+            width     : 100%;
+            height    : 100%;
+            object-fit: fill;
+        }
+
+
+    }
+
+    .noShow {
+        opacity: 0;
+    }
+
+    /* 头部样式 */
+    .app_header {
+        height            : 80px;
+        -webkit-box-sizing: border-box;
+        box-sizing        : border-box;
+        padding           : 0 0 10px;
+        position          : absolute;
+        width             : 100%;
+        z-index           : 2;
+
+        .app_icon,
+        .app_toptab {
+            display: inline-block;
+        }
+
+        .app_toptab_outside {
+            background-size: 100% 100%;
+        }
+
+        .app_toptab_normal {
+            background-image: url("../image/headDefault2.png");
+            background-size : 100% 100%;
+        }
+
+        .app_toptab_position {
+            width  : 100%;
+            height : 120px;
+            padding: 9px 0 0;
+
+            >div {
+                height: 100%;
+            }
+
+            .line {
+                position         : relative;
+                top              : 11px;
+                height           : 2px;
+                width            : 500px;
+                margin           : auto;
+                // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+
+                .circle {
+                    position     : absolute;
+                    margin-left  : 7px;
+                    top          : -4px;
+                    transition   : all 0.8s;
+                    width        : 10px;
+                    height       : 10px;
+                    background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+                    border-radius: 50%;
+                }
+
+                .spot {
+                    position                         : absolute;
+                    top                              : -10px;
+                    transition                       : all 0.8s;
+                    width                            : 24px;
+                    height                           : 24px;
+                    animation                        : spotChange 2s ease;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+
+                    div {
+                        position     : absolute;
+                        width        : 8px;
+                        height       : 8px;
+                        border-width : 1.5px;
+                        border-color : #F5931F;
+                        border-radius: 25%;
+                    }
+
+                    .top-left {
+                        border-style: none solid solid none;
+                        left        : 0;
+                    }
+
+                    .top-right {
+                        border-style: none none solid solid;
+                        right       : 0;
+                    }
+
+                    .bottom-left {
+                        border-style: solid solid none none;
+                        left        : 0;
+                        bottom      : 0;
+                    }
+
+                    .bottom-right {
+                        border-style: solid none none solid;
+                        right       : 0;
+                        bottom      : 0;
+                    }
+                }
+
+                .lightspot {
+                    position                         : absolute;
+                    top                              : -22px;
+                    left                             : 50px;
+                    transition                       : all 0.8s;
+                    animation                        : spotMove 6s linear;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+                }
+            }
+
+            .app_toptab {
+                list-style: none;
+                position  : relative;
+
+                li {
+                    line-height: 40px;
+                    display    : inline-block;
+                    text-align : center;
+                    font-size  : 28px;
+                    color      : #FFC649;
+                    text-shadow: 0px 2px 0px rgba(114, 66, 4, 0.6);
+                    cursor     : pointer;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+
+                li:after {
+                    content         : "";
+                    display         : inline-block;
+                    background-image: url("../image/bgP.png");
+                    height          : 24px;
+                    width           : 24px;
+                    margin          : 0 10px;
+                }
+
+                li:last-child:after {
+                    visibility : hidden;
+                    width      : 0;
+                    margin-left: 0;
+                }
+            }
+
+
+            .app_toptab:before,
+            .app_toptab:after {
+                content          : "";
+                display          : inline-block;
+                height           : 12px;
+                width            : 150px;
+                position         : relative;
+                top              : -4px;
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+            }
+
+            .app_toptab:before {
+                background-image: url("../image/line2.png");
+                margin-right    : 30px;
+            }
+
+            .app_toptab:after {
+                background-image: url("../image/line.png");
+                margin-left     : 30px;
+            }
+        }
+
+        .app_icon {
+            position: fixed;
+            left    : 16px;
+            top     : 6px;
+
+            i {
+                vertical-align: top;
+                line-height   : 40px;
+                display       : inline-block;
+                font-size     : 24px;
+                font-style    : normal;
+            }
+
+            img {
+                height: 80%;
+            }
+        }
+
+        .app_icon2 {
+            position: fixed;
+            right   : 25px;
+            top     : 19px;
+            display : flex;
+
+            img {
+                height: 24px;
+                width : 150px;
+            }
+
+            .chooseButton {
+                cursor     : pointer;
+                width      : 23px;
+                height     : 22px;
+                line-height: 38px;
+                margin-left: 20px;
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+        }
+    }
+
+    .noWidth {
+        width: unset;
+    }
+
+    /* 子标题样式 */
+    .app_container {
+        flex      : 1;
+        box-sizing: border-box;
+        overflow  : hidden;
+
+        .lucheng {
+            position      : relative;
+            height        : 100%;
+            display       : flex;
+            flex-direction: column;
+            overflow      : hidden;
+
+            >header {
+                height     : 25px;
+                position   : absolute;
+                // overflow: hidden;
+                width      : 100%;
+                top        : 72px;
+                z-index    : 2;
+
+                ul {
+                    list-style: none;
+
+                    li {
+                        height           : 30px;
+                        line-height      : 30px;
+                        display          : inline-block;
+                        width            : 92px;
+                        text-align       : center;
+                        font-size        : 16px;
+                        color            : #C7DEFF;
+                        position         : relative;
+                        cursor           : pointer;
+                        background-image : url("../image/headButton.png");
+                        background-repeat: no-repeat;
+                        background-size  : 100% 100%;
+                        margin-right     : 34px;
+
+                    }
+                }
+            }
+
+            .page_container {
+                flex      : 1;
+                overflow  : hidden;
+                box-sizing: border-box;
+
+                >div {
+                    height     : 100%;
+                    position   : relative;
+                    box-sizing : border-box;
+                    padding-top: 108px;
+
+                    .Com_map {
+                        height  : 100%;
+                        width   : 100%;
+                        position: absolute;
+                        top     : 0;
+                    }
+
+                    .Com_container {
+                        .topLeft {
+                            margin-top: unset !important;
+                            top       : 108px !important
+                        }
+
+                        .left,
+                        .right {
+                            box-sizing    : border-box;
+                            // padding-top: 80px;
+                            margin-top    : 108px;
+                        }
+
+                        .com_left,
+                        .com_right {
+                            box-sizing : border-box;
+                            padding-top: 60px;
+                        }
+                    }
+                }
+
+                /*  所有页面内通用样式放这里  */
+                .no_show {
+                    display: none !important;
+                }
+
+                .middle_chart {
+                    width : 100%;
+                    height: 100%;
+                }
+
+                #Est_moving {
+                    position : fixed;
+                    bottom   : 15px;
+                    width    : 800px;
+                    left     : 50%;
+                    transform: translate(-400px, 0);
+                }
+
+                .blueBorder {
+                    p {
+                        width           : 24px;
+                        height          : 24px;
+                        position        : absolute;
+                        top             : 0px;
+                        background-image: url("../image/blueBorder.png");
+                    }
+
+                    p:first-child {
+                        left: 0;
+                    }
+
+                    p:nth-child(2) {
+                        right    : 0;
+                        transform: rotateY(180deg);
+                    }
+
+                    p:nth-child(3) {
+                        top      : unset;
+                        bottom   : 0;
+                        left     : 0;
+                        transform: rotateX(180deg);
+                    }
+
+                    p:last-child {
+                        top      : unset;
+                        bottom   : 0;
+                        right    : 0;
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .no_select {
+                -moz-user-select: none;
+                /* Firefox私有属性 */
+                -webkit-user-select: none;
+                /* WebKit内核私有属性 */
+                -ms-user-select: none;
+                /* IE私有属性(IE10及以后) */
+                -khtml-user-select: none;
+                /* KHTML内核私有属性 */
+                -o-user-select: none;
+                /* Opera私有属性 */
+                user-select: none;
+                /* CSS3属性 */
+            }
+        }
+    }
+
+    //招商标题
+    .pageCamvass {
+        .toptab_header {
+            height : 120px !important;
+            top    : 0px !important;
+            z-index: 1 !important;
+        }
+
+        .app_toptab_normal {
+            background-image: url("../image/headDefault2.png");
+            background-size : 100% 100%;
+        }
+
+        .app_toptab_position {
+            width  : 100%;
+            height : 120px;
+            padding: 9px 0 0;
+
+            >div {
+                height: 100%;
+            }
+
+            .lineOutside {
+                width: 350px !important;
+            }
+
+            .line {
+                position         : relative;
+                top              : 11px;
+                height           : 2px;
+                width            : 500px;
+                margin           : auto;
+                // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+
+                .circle {
+                    position     : absolute;
+                    margin-left  : 7px;
+                    top          : -4px;
+                    transition   : all 0.8s;
+                    width        : 10px;
+                    height       : 10px;
+                    background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+                    border-radius: 50%;
+                }
+
+                .spot {
+                    position                         : absolute;
+                    top                              : -10px;
+                    transition                       : all 0.8s;
+                    width                            : 24px;
+                    height                           : 24px;
+                    animation                        : spotChange 2s ease;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+
+                    div {
+                        position     : absolute;
+                        width        : 8px;
+                        height       : 8px;
+                        border-width : 1.5px;
+                        border-color : #F5931F;
+                        border-radius: 25%;
+                    }
+
+                    .top-left {
+                        border-style: none solid solid none;
+                        left        : 0;
+                    }
+
+                    .top-right {
+                        border-style: none none solid solid;
+                        right       : 0;
+                    }
+
+                    .bottom-left {
+                        border-style: solid solid none none;
+                        left        : 0;
+                        bottom      : 0;
+                    }
+
+                    .bottom-right {
+                        border-style: solid none none solid;
+                        right       : 0;
+                        bottom      : 0;
+                    }
+                }
+
+                .lightspot {
+                    position                         : absolute;
+                    top                              : -22px;
+                    left                             : 50px;
+                    transition                       : all 0.8s;
+                    animation                        : spotMove 6s linear;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+                }
+            }
+
+            .app_toptab {
+                list-style: none;
+                position  : relative;
+
+                li {
+                    height          : unset !important;
+                    line-height     : 40px !important;
+                    display         : inline-block;
+                    text-align      : center;
+                    font-size       : 28px !important;
+                    color           : #C7DEFF !important;
+                    text-shadow     : 0px 2px 0px rgba(114, 66, 4, 0.6) !important;
+                    cursor          : pointer;
+                    width           : unset !important;
+                    background-image: unset !important;
+                    margin-right    : unset !important;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+
+                .active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+
+                li:after {
+                    content         : "";
+                    display         : inline-block;
+                    background-image: url("../image/bgP.png");
+                    height          : 24px;
+                    width           : 24px;
+                    margin          : 0 10px;
+                }
+
+                li:last-child:after {
+                    visibility : hidden;
+                    width      : 0;
+                    margin-left: 0;
+                }
+            }
+
+
+            .app_toptab:before,
+            .app_toptab:after {
+                content          : "";
+                display          : inline-block;
+                height           : 12px;
+                width            : 150px;
+                position         : relative;
+                top              : -4px;
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+            }
+
+            .app_toptab:before {
+                background-image: url("../image/line2.png");
+                margin-right    : 30px;
+            }
+
+            .app_toptab:after {
+                background-image: url("../image/line.png");
+                margin-left     : 30px;
+            }
+        }
+    }
+
+    .canvass_summary {
+        display    : flex;
+        padding-top: 60px !important;
+        padding-top: unset !important;
+
+        >div {
+            display: inline-block;
+        }
+
+        .top {
+            width   : 100%;
+            position: absolute;
+            top     : 72px;
+            z-index : 2;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height           : 30px;
+                    line-height      : 30px;
+                    display          : inline-block;
+                    width            : 92px;
+                    text-align       : center;
+                    font-size        : 16px;
+                    color            : #FFD16D;
+                    position         : relative;
+                    cursor           : pointer;
+                    background-image : url("../image/headButton.png");
+                    background-repeat: no-repeat;
+                    background-size  : 100% 100%;
+                    margin-right     : 34px;
+
+                    input {
+                        opacity : 0;
+                        position: absolute;
+                        top     : 4px;
+                        left    : 2px;
+                        z-index : 2;
+                        width   : 100%;
+                        height  : 20px;
+                        cursor  : pointer;
+                    }
+                }
+
+                .li_tab_active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
+
+    .canvassRes_summary {
+        padding-top: unset !important;
+        display    : flex;
+
+        >div {
+            display: inline-block;
+        }
+
+        >.top {
+            width   : 100%;
+            position: absolute;
+            top     : 72px;
+            z-index : 2;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height           : 30px;
+                    line-height      : 30px;
+                    display          : inline-block;
+                    width            : 92px;
+                    text-align       : center;
+                    font-size        : 16px;
+                    color            : #C7DEFF;
+                    position         : relative;
+                    cursor           : pointer;
+                    background-image : url("../image/headButton.png");
+                    background-repeat: no-repeat;
+                    background-size  : 100% 100%;
+                    margin-right     : 34px;
+
+                    input {
+                        opacity : 0;
+                        position: absolute;
+                        top     : 4px;
+                        left    : 2px;
+                        z-index : 2;
+                        width   : 100%;
+                        height  : 20px;
+                        cursor  : pointer;
+                    }
+                }
+
+                .li_tab_active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
+
+    //详情框
+    .indexFrame {
+        background-color: rgba(37, 37, 37, 0.4);
+
+        .frame {
+            width     : 100%;
+            background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        }
+    }
+
+    .EightFrame {
+        background-color: rgba(37, 37, 37, 0.4);
+
+        .frame {
+            width     : 100%;
+            background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        }
+    }
+
+    .frame {
+        width     : 100%;
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+    }
+
+    .proFrame {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+    }
+
+    //左托盘
+    .leftMultiSelect {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .leftMenu {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //右托盘
+    .canvassResTable {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .landNoneTable {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //亩均论英雄
+    .landHeroLeft-top {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .landhero .right {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .leftSelect {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //楼宇
+    .blueform {
+        position  : absolute;
+        right     : 20px;
+        top       : 0;
+        box-sizing: border-box;
+        // padding: 80px 0px 30px 0;
+        // height : 100%;
+        margin-top: 108px;
+        height    : 836px;
+        width     : 350px;
+
+        >div {
+            height        : 100%;
+            box-sizing    : border-box;
+            background    : linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+            box-shadow    : 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+            box-sizing    : border-box;
+            padding       : 10px;
+            border-radius : 8px;
+            display       : flex;
+            flex-direction: column;
+        }
+    }
+
+    .buildForm {
+        display: inline-block;
+
+        .buildAround {
+            position  : fixed;
+            left      : 50px;
+            top       : 120px;
+            width     : 520px;
+            font-size : 18px;
+            background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+            box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+            padding   : 10px;
+        }
+    }
+
+    .more {
+        width           : 1280px;
+        box-sizing      : border-box;
+        padding         : 10px;
+        position        : fixed;
+        top             : 50%;
+        left            : 100px;
+        transform       : translateY(-330px);
+        background-color: linear-gradient(270deg, rgba(7, 21, 41, 0.1) 0%, rgba(7, 21, 41, 0.1) 100%);
+        z-index         : 99;
+        border-top      : solid 1px rgba(255, 255, 255, 0.6);
+        border-bottom   : solid 1px rgba(255, 255, 255, 0.6);
+        box-shadow      : 0px 4px 16px 0px rgba(0, 0, 0, 0.6);
+
+        .moreBackground {
+            background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+            box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+        }
+    }
+
+    .checklist {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .spaces-list {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //综合查询
+    .ecoCompany_tableFrame {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //首页一带六区
+    .intro {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .stateTip {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //经济特色 右查询
+    .Rsearch {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //街镇特色
+    .leftCompetition {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .rightCompetition {
+        background: linear-gradient(180deg, rgba(19, 78, 197, 0.6) 0%, rgba(31, 67, 124, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .Tip {
+        background: rgba(0, 0, 0, 0.6);
+        color     : rgba(235, 235, 235, 1);
+    }
+}
+
+//方案3
+.Default3 {
+    font-family            : "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align             : center;
+    color                  : #fff;
+    height                 : 100%;
+    background             : @backgroundColor;
+    display                : flex;
+    flex-direction         : column;
+    overflow               : hidden;
+
+    #cover {
+        height    : 100%;
+        width     : 100%;
+        transition: all 1s;
+        position  : fixed;
+        z-index   : 10;
+
+        #lottie_pass {
+            height          : 40px;
+            line-height     : 40px;
+            width           : 100px;
+            border-radius   : 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color           : #fff;
+            font-size       : 20px;
+            font-weight     : bold;
+            position        : fixed;
+            top             : 40px;
+            right           : 40px;
+            z-index         : 10;
+            text-align      : center;
+            cursor          : pointer;
+        }
+
+        #lottie_video {
+            width     : 100%;
+            height    : 100%;
+            object-fit: fill;
+        }
+
+
+    }
+
+    .noShow {
+        opacity: 0;
+    }
+
+    /* 头部样式 */
+    .app_header {
+        height            : 80px;
+        -webkit-box-sizing: border-box;
+        box-sizing        : border-box;
+        padding           : 0 0 10px;
+        position          : absolute;
+        width             : 100%;
+        z-index           : 2;
+
+        .app_icon,
+        .app_toptab {
+            display: inline-block;
+        }
+
+        .app_toptab_outside {
+            background-size: 100% 100%;
+        }
+
+        .app_toptab_normal {
+            background-image: url("../image/headDefault3.png");
+            background-size : 100% 100%;
+        }
+
+        .app_toptab_position {
+            width  : 100%;
+            height : 120px;
+            padding: 9px 0 0;
+
+            >div {
+                height: 100%;
+            }
+
+            .line {
+                position         : relative;
+                top              : 11px;
+                height           : 2px;
+                width            : 500px;
+                margin           : auto;
+                // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+
+                .circle {
+                    position     : absolute;
+                    margin-left  : 7px;
+                    top          : -4px;
+                    transition   : all 0.8s;
+                    width        : 10px;
+                    height       : 10px;
+                    background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+                    border-radius: 50%;
+                }
+
+                .spot {
+                    position                         : absolute;
+                    top                              : -10px;
+                    transition                       : all 0.8s;
+                    width                            : 24px;
+                    height                           : 24px;
+                    animation                        : spotChange 2s ease;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+
+                    div {
+                        position     : absolute;
+                        width        : 8px;
+                        height       : 8px;
+                        border-width : 1.5px;
+                        border-color : #F5931F;
+                        border-radius: 25%;
+                    }
+
+                    .top-left {
+                        border-style: none solid solid none;
+                        left        : 0;
+                    }
+
+                    .top-right {
+                        border-style: none none solid solid;
+                        right       : 0;
+                    }
+
+                    .bottom-left {
+                        border-style: solid solid none none;
+                        left        : 0;
+                        bottom      : 0;
+                    }
+
+                    .bottom-right {
+                        border-style: solid none none solid;
+                        right       : 0;
+                        bottom      : 0;
+                    }
+                }
+
+                .lightspot {
+                    position                         : absolute;
+                    top                              : -22px;
+                    left                             : 50px;
+                    transition                       : all 0.8s;
+                    animation                        : spotMove 6s linear;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+                }
+            }
+
+            .app_toptab {
+                list-style: none;
+                position  : relative;
+
+                li {
+                    line-height: 40px;
+                    display    : inline-block;
+                    text-align : center;
+                    font-size  : 28px;
+                    color      : #FFC649;
+                    text-shadow: 0px 2px 0px rgba(114, 66, 4, 0.6);
+                    cursor     : pointer;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+
+                li:after {
+                    content         : "";
+                    display         : inline-block;
+                    background-image: url("../image/bgP.png");
+                    height          : 24px;
+                    width           : 24px;
+                    margin          : 0 10px;
+                }
+
+                li:last-child:after {
+                    visibility : hidden;
+                    width      : 0;
+                    margin-left: 0;
+                }
+            }
+
+
+            .app_toptab:before,
+            .app_toptab:after {
+                content          : "";
+                display          : inline-block;
+                height           : 12px;
+                width            : 150px;
+                position         : relative;
+                top              : -4px;
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+            }
+
+            .app_toptab:before {
+                background-image: url("../image/line2.png");
+                margin-right    : 30px;
+            }
+
+            .app_toptab:after {
+                background-image: url("../image/line.png");
+                margin-left     : 30px;
+            }
+        }
+
+        .app_icon {
+            position: fixed;
+            left    : 16px;
+            top     : 6px;
+
+            i {
+                vertical-align: top;
+                line-height   : 40px;
+                display       : inline-block;
+                font-size     : 24px;
+                font-style    : normal;
+            }
+
+            img {
+                height: 80%;
+            }
+        }
+
+        .app_icon2 {
+            position: fixed;
+            right   : 25px;
+            top     : 19px;
+            display : flex;
+
+            img {
+                height: 24px;
+                width : 150px;
+            }
+
+            .chooseButton {
+                cursor     : pointer;
+                width      : 23px;
+                height     : 22px;
+                line-height: 38px;
+                margin-left: 20px;
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+        }
+    }
+
+    .noWidth {
+        width: unset;
+    }
+
+    /* 子标题样式 */
+    .app_container {
+        flex      : 1;
+        box-sizing: border-box;
+        overflow  : hidden;
+
+        .lucheng {
+            position      : relative;
+            height        : 100%;
+            display       : flex;
+            flex-direction: column;
+            overflow      : hidden;
+
+            >header {
+                height     : 25px;
+                position   : absolute;
+                // overflow: hidden;
+                width      : 100%;
+                top        : 72px;
+                z-index    : 2;
+
+                ul {
+                    list-style: none;
+
+                    li {
+                        height           : 30px;
+                        line-height      : 30px;
+                        display          : inline-block;
+                        width            : 92px;
+                        text-align       : center;
+                        font-size        : 16px;
+                        color            : #C7DEFF;
+                        position         : relative;
+                        cursor           : pointer;
+                        background-image : url("../image/headButton.png");
+                        background-repeat: no-repeat;
+                        background-size  : 100% 100%;
+                        margin-right     : 34px;
+
+                    }
+                }
+            }
+
+            .page_container {
+                flex      : 1;
+                overflow  : hidden;
+                box-sizing: border-box;
+
+                >div {
+                    height     : 100%;
+                    position   : relative;
+                    box-sizing : border-box;
+                    padding-top: 108px;
+
+                    .Com_map {
+                        height  : 100%;
+                        width   : 100%;
+                        position: absolute;
+                        top     : 0;
+                    }
+
+                    .Com_container {
+                        .topLeft {
+                            margin-top: unset !important;
+                            top       : 108px !important
+                        }
+
+                        .left,
+                        .right {
+                            box-sizing    : border-box;
+                            // padding-top: 80px;
+                            margin-top    : 108px;
+                        }
+
+                        .com_left,
+                        .com_right {
+                            box-sizing : border-box;
+                            padding-top: 60px;
+                        }
+                    }
+                }
+
+                /*  所有页面内通用样式放这里  */
+                .no_show {
+                    display: none !important;
+                }
+
+                .middle_chart {
+                    width : 100%;
+                    height: 100%;
+                }
+
+                #Est_moving {
+                    position : fixed;
+                    bottom   : 15px;
+                    width    : 800px;
+                    left     : 50%;
+                    transform: translate(-400px, 0);
+                }
+
+                .blueBorder {
+                    p {
+                        width           : 24px;
+                        height          : 24px;
+                        position        : absolute;
+                        top             : 0px;
+                        background-image: url("../image/blueBorder.png");
+                    }
+
+                    p:first-child {
+                        left: 0;
+                    }
+
+                    p:nth-child(2) {
+                        right    : 0;
+                        transform: rotateY(180deg);
+                    }
+
+                    p:nth-child(3) {
+                        top      : unset;
+                        bottom   : 0;
+                        left     : 0;
+                        transform: rotateX(180deg);
+                    }
+
+                    p:last-child {
+                        top      : unset;
+                        bottom   : 0;
+                        right    : 0;
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .no_select {
+                -moz-user-select: none;
+                /* Firefox私有属性 */
+                -webkit-user-select: none;
+                /* WebKit内核私有属性 */
+                -ms-user-select: none;
+                /* IE私有属性(IE10及以后) */
+                -khtml-user-select: none;
+                /* KHTML内核私有属性 */
+                -o-user-select: none;
+                /* Opera私有属性 */
+                user-select: none;
+                /* CSS3属性 */
+            }
+        }
+    }
+
+    //招商标题
+    .pageCamvass {
+        .toptab_header {
+            height : 120px !important;
+            top    : 0px !important;
+            z-index: 1 !important;
+        }
+
+        .app_toptab_normal {
+            background-image: url("../image/headDefault3.png");
+            background-size : 100% 100%;
+        }
+
+        .app_toptab_position {
+            width  : 100%;
+            height : 120px;
+            padding: 9px 0 0;
+
+            >div {
+                height: 100%;
+            }
+
+            .lineOutside {
+                width: 350px !important;
+            }
+
+            .line {
+                position         : relative;
+                top              : 11px;
+                height           : 2px;
+                width            : 500px;
+                margin           : auto;
+                // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+
+                .circle {
+                    position     : absolute;
+                    margin-left  : 7px;
+                    top          : -4px;
+                    transition   : all 0.8s;
+                    width        : 10px;
+                    height       : 10px;
+                    background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+                    border-radius: 50%;
+                }
+
+                .spot {
+                    position                         : absolute;
+                    top                              : -10px;
+                    transition                       : all 0.8s;
+                    width                            : 24px;
+                    height                           : 24px;
+                    animation                        : spotChange 2s ease;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+
+                    div {
+                        position     : absolute;
+                        width        : 8px;
+                        height       : 8px;
+                        border-width : 1.5px;
+                        border-color : #F5931F;
+                        border-radius: 25%;
+                    }
+
+                    .top-left {
+                        border-style: none solid solid none;
+                        left        : 0;
+                    }
+
+                    .top-right {
+                        border-style: none none solid solid;
+                        right       : 0;
+                    }
+
+                    .bottom-left {
+                        border-style: solid solid none none;
+                        left        : 0;
+                        bottom      : 0;
+                    }
+
+                    .bottom-right {
+                        border-style: solid none none solid;
+                        right       : 0;
+                        bottom      : 0;
+                    }
+                }
+
+                .lightspot {
+                    position                         : absolute;
+                    top                              : -22px;
+                    left                             : 50px;
+                    transition                       : all 0.8s;
+                    animation                        : spotMove 6s linear;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+                }
+            }
+
+            .app_toptab {
+                list-style: none;
+                position  : relative;
+
+                li {
+                    height          : unset !important;
+                    line-height     : 40px !important;
+                    display         : inline-block;
+                    text-align      : center;
+                    font-size       : 28px !important;
+                    color           : #C7DEFF !important;
+                    text-shadow     : 0px 2px 0px rgba(114, 66, 4, 0.6) !important;
+                    cursor          : pointer;
+                    width           : unset !important;
+                    background-image: unset !important;
+                    margin-right    : unset !important;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+
+                .active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+
+                li:after {
+                    content         : "";
+                    display         : inline-block;
+                    background-image: url("../image/bgP.png");
+                    height          : 24px;
+                    width           : 24px;
+                    margin          : 0 10px;
+                }
+
+                li:last-child:after {
+                    visibility : hidden;
+                    width      : 0;
+                    margin-left: 0;
+                }
+            }
+
+
+            .app_toptab:before,
+            .app_toptab:after {
+                content          : "";
+                display          : inline-block;
+                height           : 12px;
+                width            : 150px;
+                position         : relative;
+                top              : -4px;
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+            }
+
+            .app_toptab:before {
+                background-image: url("../image/line2.png");
+                margin-right    : 30px;
+            }
+
+            .app_toptab:after {
+                background-image: url("../image/line.png");
+                margin-left     : 30px;
+            }
+        }
+    }
+
+    .canvass_summary {
+        display    : flex;
+        padding-top: 60px !important;
+        padding-top: unset !important;
+
+        >div {
+            display: inline-block;
+        }
+
+        .top {
+            width   : 100%;
+            position: absolute;
+            top     : 72px;
+            z-index : 2;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height           : 30px;
+                    line-height      : 30px;
+                    display          : inline-block;
+                    width            : 92px;
+                    text-align       : center;
+                    font-size        : 16px;
+                    color            : #C7DEFF;
+                    position         : relative;
+                    cursor           : pointer;
+                    background-image : url("../image/headButton.png");
+                    background-repeat: no-repeat;
+                    background-size  : 100% 100%;
+                    margin-right     : 34px;
+
+                    input {
+                        opacity : 0;
+                        position: absolute;
+                        top     : 4px;
+                        left    : 2px;
+                        z-index : 2;
+                        width   : 100%;
+                        height  : 20px;
+                        cursor  : pointer;
+                    }
+                }
+
+                .li_tab_active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
+
+    .canvassRes_summary {
+        padding-top: unset !important;
+        display    : flex;
+
+        >div {
+            display: inline-block;
+        }
+
+        >.top {
+            width   : 100%;
+            position: absolute;
+            top     : 72px;
+            z-index : 2;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height           : 30px;
+                    line-height      : 30px;
+                    display          : inline-block;
+                    width            : 92px;
+                    text-align       : center;
+                    font-size        : 16px;
+                    color            : #C7DEFF;
+                    position         : relative;
+                    cursor           : pointer;
+                    background-image : url("../image/headButton.png");
+                    background-repeat: no-repeat;
+                    background-size  : 100% 100%;
+                    margin-right     : 34px;
+
+                    input {
+                        opacity : 0;
+                        position: absolute;
+                        top     : 4px;
+                        left    : 2px;
+                        z-index : 2;
+                        width   : 100%;
+                        height  : 20px;
+                        cursor  : pointer;
+                    }
+                }
+
+                .li_tab_active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
+
+    //详情框
+    .indexFrame {
+        background-color: rgba(37, 37, 37, 0.4);
+
+        .frame {
+            width     : 100%;
+            background: linear-gradient(360deg, rgba(36, 56, 106, 0) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+        }
+    }
+
+    .EightFrame {
+        background-color: rgba(37, 37, 37, 0.4);
+
+        .frame {
+            width     : 100%;
+            background: linear-gradient(360deg, rgba(36, 56, 106, 0) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+        }
+    }
+
+    .frame {
+        width     : 100%;
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .proFrame {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //左托盘
+    .leftMultiSelect {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .leftMenu {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //右托盘
+    .canvassResTable {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .landNoneTable {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //亩均论英雄
+    .landHeroLeft-top {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .landhero .right {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .leftSelect {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //楼宇
+    .blueform {
+        position  : absolute;
+        right     : 20px;
+        top       : 0;
+        box-sizing: border-box;
+        margin-top: 108px;
+        height    : 836px;
+        width     : 350px;
+
+        >div {
+            height        : 100%;
+            box-sizing    : border-box;
+            background    : linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+            box-sizing    : border-box;
+            padding       : 10px;
+            border-radius : 8px;
+            display       : flex;
+            flex-direction: column;
+        }
+    }
+
+    .buildForm {
+        display: inline-block;
+
+        .buildAround {
+            position  : fixed;
+            left      : 50px;
+            top       : 120px;
+            width     : 520px;
+            font-size : 18px;
+            background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+            padding   : 10px;
+        }
+    }
+
+    .more {
+        width           : 1280px;
+        box-sizing      : border-box;
+        padding         : 10px;
+        position        : fixed;
+        top             : 50%;
+        left            : 100px;
+        transform       : translateY(-330px);
+        background-color: linear-gradient(270deg, rgba(7, 21, 41, 0.1) 0%, rgba(7, 21, 41, 0.1) 100%);
+        z-index         : 99;
+        border-top      : solid 1px rgba(255, 255, 255, 0.6);
+        border-bottom   : solid 1px rgba(255, 255, 255, 0.6);
+        box-shadow      : 0px 4px 16px 0px rgba(0, 0, 0, 0.6);
+
+        .moreBackground {
+            background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+        }
+    }
+
+    .checklist {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .spaces-list {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+
+    //综合查询
+    .ecoCompany_tableFrame {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //首页一带六区
+    .intro {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .stateTip {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //经济特色 右查询
+    .Rsearch {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    //街镇特色
+    .leftCompetition {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .rightCompetition {
+        background: linear-gradient(360deg, rgba(36, 56, 106, 0.6) 0%, rgba(6, 120, 181, 0.8) 47%, rgba(2, 123, 173, 1) 100%) !important;
+    }
+
+    .Tip {
+        background: rgba(0, 0, 0, 0.6);
+        color     : rgba(235, 235, 235, 1);
+    }
+}
+
+//方案4
+.Default4 {
+    font-family            : "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align             : center;
+    color                  : #fff;
+    height                 : 100%;
+    background             : @backgroundColor;
+    display                : flex;
+    flex-direction         : column;
+    overflow               : hidden;
+
+    #cover {
+        height    : 100%;
+        width     : 100%;
+        transition: all 1s;
+        position  : fixed;
+        z-index   : 10;
+
+        #lottie_pass {
+            height          : 40px;
+            line-height     : 40px;
+            width           : 100px;
+            border-radius   : 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color           : #fff;
+            font-size       : 20px;
+            font-weight     : bold;
+            position        : fixed;
+            top             : 40px;
+            right           : 40px;
+            z-index         : 10;
+            text-align      : center;
+            cursor          : pointer;
+        }
+
+        #lottie_video {
+            width     : 100%;
+            height    : 100%;
+            object-fit: fill;
+        }
+
+
+    }
+
+    .noShow {
+        opacity: 0;
+    }
+
+    /* 头部样式 */
+    .app_header {
+        height            : 80px;
+        -webkit-box-sizing: border-box;
+        box-sizing        : border-box;
+        padding           : 0 0 10px;
+        position          : absolute;
+        width             : 100%;
+        z-index           : 2;
+
+        .app_icon,
+        .app_toptab {
+            display: inline-block;
+        }
+
+        .app_toptab_outside {
+            background-size: 100% 100%;
+        }
+
+        .app_toptab_normal {
+            background-image: url("../image/headDefault4.png");
+            background-size : 100% 100%;
+        }
+
+        .app_toptab_position {
+            width  : 100%;
+            height : 120px;
+            padding: 9px 0 0;
+
+            >div {
+                height: 100%;
+            }
+
+            .line {
+                position         : relative;
+                top              : 11px;
+                height           : 2px;
+                width            : 500px;
+                margin           : auto;
+                // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+
+                .circle {
+                    position     : absolute;
+                    margin-left  : 7px;
+                    top          : -4px;
+                    transition   : all 0.8s;
+                    width        : 10px;
+                    height       : 10px;
+                    background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+                    border-radius: 50%;
+                }
+
+                .spot {
+                    position                         : absolute;
+                    top                              : -10px;
+                    transition                       : all 0.8s;
+                    width                            : 24px;
+                    height                           : 24px;
+                    animation                        : spotChange 2s ease;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+
+                    div {
+                        position     : absolute;
+                        width        : 8px;
+                        height       : 8px;
+                        border-width : 1.5px;
+                        border-color : #F5931F;
+                        border-radius: 25%;
+                    }
+
+                    .top-left {
+                        border-style: none solid solid none;
+                        left        : 0;
+                    }
+
+                    .top-right {
+                        border-style: none none solid solid;
+                        right       : 0;
+                    }
+
+                    .bottom-left {
+                        border-style: solid solid none none;
+                        left        : 0;
+                        bottom      : 0;
+                    }
+
+                    .bottom-right {
+                        border-style: solid none none solid;
+                        right       : 0;
+                        bottom      : 0;
+                    }
+                }
+
+                .lightspot {
+                    position                         : absolute;
+                    top                              : -22px;
+                    left                             : 50px;
+                    transition                       : all 0.8s;
+                    animation                        : spotMove 6s linear;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+                }
+            }
+
+            .app_toptab {
+                list-style: none;
+                position  : relative;
+
+                li {
+                    line-height: 40px;
+                    display    : inline-block;
+                    text-align : center;
+                    font-size  : 28px;
+                    color      : #FFC649;
+                    text-shadow: 0px 2px 0px rgba(114, 66, 4, 0.6);
+                    cursor     : pointer;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+
+                li:after {
+                    content         : "";
+                    display         : inline-block;
+                    background-image: url("../image/bgP.png");
+                    height          : 24px;
+                    width           : 24px;
+                    margin          : 0 10px;
+                }
+
+                li:last-child:after {
+                    visibility : hidden;
+                    width      : 0;
+                    margin-left: 0;
+                }
+            }
+
+
+            .app_toptab:before,
+            .app_toptab:after {
+                content          : "";
+                display          : inline-block;
+                height           : 12px;
+                width            : 150px;
+                position         : relative;
+                top              : -4px;
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+            }
+
+            .app_toptab:before {
+                background-image: url("../image/line2.png");
+                margin-right    : 30px;
+            }
+
+            .app_toptab:after {
+                background-image: url("../image/line.png");
+                margin-left     : 30px;
+            }
+        }
+
+        .app_icon {
+            position: fixed;
+            left    : 16px;
+            top     : 6px;
+
+            i {
+                vertical-align: top;
+                line-height   : 40px;
+                display       : inline-block;
+                font-size     : 24px;
+                font-style    : normal;
+            }
+
+            img {
+                height: 80%;
+            }
+        }
+
+        .app_icon2 {
+            position: fixed;
+            right   : 25px;
+            top     : 19px;
+            display : flex;
+
+            img {
+                height: 24px;
+                width : 150px;
+            }
+
+            .chooseButton {
+                cursor     : pointer;
+                width      : 23px;
+                height     : 22px;
+                line-height: 38px;
+                margin-left: 20px;
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+        }
+    }
+
+    .noWidth {
+        width: unset;
+    }
+
+    /* 子标题样式 */
+    .app_container {
+        flex      : 1;
+        box-sizing: border-box;
+        overflow  : hidden;
+
+        .lucheng {
+            position      : relative;
+            height        : 100%;
+            display       : flex;
+            flex-direction: column;
+            overflow      : hidden;
+
+            >header {
+                height     : 25px;
+                position   : absolute;
+                // overflow: hidden;
+                width      : 100%;
+                top        : 72px;
+                z-index    : 2;
+
+                ul {
+                    list-style: none;
+
+                    li {
+                        height           : 30px;
+                        line-height      : 30px;
+                        display          : inline-block;
+                        width            : 92px;
+                        text-align       : center;
+                        font-size        : 16px;
+                        color            : #C7DEFF;
+                        position         : relative;
+                        cursor           : pointer;
+                        background-image : url("../image/headButton.png");
+                        background-repeat: no-repeat;
+                        background-size  : 100% 100%;
+                        margin-right     : 34px;
+
+                    }
+                }
+            }
+
+            .page_container {
+                flex      : 1;
+                overflow  : hidden;
+                box-sizing: border-box;
+
+                >div {
+                    height     : 100%;
+                    position   : relative;
+                    box-sizing : border-box;
+                    padding-top: 108px;
+
+                    .Com_map {
+                        height  : 100%;
+                        width   : 100%;
+                        position: absolute;
+                        top     : 0;
+                    }
+
+                    .Com_container {
+                        .topLeft {
+                            margin-top: unset !important;
+                            top       : 108px !important
+                        }
+
+                        .left,
+                        .right {
+                            box-sizing    : border-box;
+                            // padding-top: 80px;
+                            margin-top    : 108px;
+                        }
+
+                        .com_left,
+                        .com_right {
+                            box-sizing : border-box;
+                            padding-top: 60px;
+                        }
+                    }
+                }
+
+                /*  所有页面内通用样式放这里  */
+                .no_show {
+                    display: none !important;
+                }
+
+                .middle_chart {
+                    width : 100%;
+                    height: 100%;
+                }
+
+                #Est_moving {
+                    position : fixed;
+                    bottom   : 15px;
+                    width    : 800px;
+                    left     : 50%;
+                    transform: translate(-400px, 0);
+                }
+
+                .blueBorder {
+                    p {
+                        width           : 24px;
+                        height          : 24px;
+                        position        : absolute;
+                        top             : 0px;
+                        background-image: url("../image/blueBorder.png");
+                    }
+
+                    p:first-child {
+                        left: 0;
+                    }
+
+                    p:nth-child(2) {
+                        right    : 0;
+                        transform: rotateY(180deg);
+                    }
+
+                    p:nth-child(3) {
+                        top      : unset;
+                        bottom   : 0;
+                        left     : 0;
+                        transform: rotateX(180deg);
+                    }
+
+                    p:last-child {
+                        top      : unset;
+                        bottom   : 0;
+                        right    : 0;
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .no_select {
+                -moz-user-select: none;
+                /* Firefox私有属性 */
+                -webkit-user-select: none;
+                /* WebKit内核私有属性 */
+                -ms-user-select: none;
+                /* IE私有属性(IE10及以后) */
+                -khtml-user-select: none;
+                /* KHTML内核私有属性 */
+                -o-user-select: none;
+                /* Opera私有属性 */
+                user-select: none;
+                /* CSS3属性 */
+            }
+        }
+    }
+
+    //招商标题
+    .pageCamvass {
+        .toptab_header {
+            height : 120px !important;
+            top    : 0px !important;
+            z-index: 1 !important;
+        }
+
+        .app_toptab_normal {
+            background-image: url("../image/headDefault4.png");
+            background-size : 100% 100%;
+        }
+
+        .app_toptab_position {
+            width  : 100%;
+            height : 120px;
+            padding: 9px 0 0;
+
+            >div {
+                height: 100%;
+            }
+
+            .lineOutside {
+                width: 350px !important;
+            }
+
+            .line {
+                position         : relative;
+                top              : 11px;
+                height           : 2px;
+                width            : 500px;
+                margin           : auto;
+                // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+
+                .circle {
+                    position     : absolute;
+                    margin-left  : 7px;
+                    top          : -4px;
+                    transition   : all 0.8s;
+                    width        : 10px;
+                    height       : 10px;
+                    background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+                    border-radius: 50%;
+                }
+
+                .spot {
+                    position                         : absolute;
+                    top                              : -10px;
+                    transition                       : all 0.8s;
+                    width                            : 24px;
+                    height                           : 24px;
+                    animation                        : spotChange 2s ease;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+
+                    div {
+                        position     : absolute;
+                        width        : 8px;
+                        height       : 8px;
+                        border-width : 1.5px;
+                        border-color : #F5931F;
+                        border-radius: 25%;
+                    }
+
+                    .top-left {
+                        border-style: none solid solid none;
+                        left        : 0;
+                    }
+
+                    .top-right {
+                        border-style: none none solid solid;
+                        right       : 0;
+                    }
+
+                    .bottom-left {
+                        border-style: solid solid none none;
+                        left        : 0;
+                        bottom      : 0;
+                    }
+
+                    .bottom-right {
+                        border-style: solid none none solid;
+                        right       : 0;
+                        bottom      : 0;
+                    }
+                }
+
+                .lightspot {
+                    position                         : absolute;
+                    top                              : -22px;
+                    left                             : 50px;
+                    transition                       : all 0.8s;
+                    animation                        : spotMove 6s linear;
+                    -webkit-animation-iteration-count: infinite;
+                    -moz-animation-iteration-count   : infinite;
+                    animation-iteration-count        : infinite;
+                }
+            }
+
+            .app_toptab {
+                list-style: none;
+                position  : relative;
+
+                li {
+                    height          : unset !important;
+                    line-height     : 40px !important;
+                    display         : inline-block;
+                    text-align      : center;
+                    font-size       : 28px !important;
+                    color           : #C7DEFF !important;
+                    text-shadow     : 0px 2px 0px rgba(114, 66, 4, 0.6) !important;
+                    cursor          : pointer;
+                    width           : unset !important;
+                    background-image: unset !important;
+                    margin-right    : unset !important;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+
+                .active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+
+                li:after {
+                    content         : "";
+                    display         : inline-block;
+                    background-image: url("../image/bgP.png");
+                    height          : 24px;
+                    width           : 24px;
+                    margin          : 0 10px;
+                }
+
+                li:last-child:after {
+                    visibility : hidden;
+                    width      : 0;
+                    margin-left: 0;
+                }
+            }
+
+
+            .app_toptab:before,
+            .app_toptab:after {
+                content          : "";
+                display          : inline-block;
+                height           : 12px;
+                width            : 150px;
+                position         : relative;
+                top              : -4px;
+                background-repeat: no-repeat;
+                background-size  : 100% 100%;
+            }
+
+            .app_toptab:before {
+                background-image: url("../image/line2.png");
+                margin-right    : 30px;
+            }
+
+            .app_toptab:after {
+                background-image: url("../image/line.png");
+                margin-left     : 30px;
+            }
+        }
+    }
+
+    .canvass_summary {
+        display    : flex;
+        padding-top: 60px !important;
+        padding-top: unset !important;
+
+        >div {
+            display: inline-block;
+        }
+
+        .top {
+            width   : 100%;
+            position: absolute;
+            top     : 72px;
+            z-index : 2;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height           : 30px;
+                    line-height      : 30px;
+                    display          : inline-block;
+                    width            : 92px;
+                    text-align       : center;
+                    font-size        : 16px;
+                    color            : #C7DEFF;
+                    position         : relative;
+                    cursor           : pointer;
+                    background-image : url("../image/headButton.png");
+                    background-repeat: no-repeat;
+                    background-size  : 100% 100%;
+                    margin-right     : 34px;
+
+                    input {
+                        opacity : 0;
+                        position: absolute;
+                        top     : 4px;
+                        left    : 2px;
+                        z-index : 2;
+                        width   : 100%;
+                        height  : 20px;
+                        cursor  : pointer;
+                    }
+                }
+
+                .li_tab_active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
+
+    .canvassRes_summary {
+        padding-top: unset !important;
+        display    : flex;
+
+        >div {
+            display: inline-block;
+        }
+
+        >.top {
+            width   : 100%;
+            position: absolute;
+            top     : 72px;
+            z-index : 2;
+
+            ul {
+                list-style: none;
+
+                li {
+                    height           : 30px;
+                    line-height      : 30px;
+                    display          : inline-block;
+                    width            : 92px;
+                    text-align       : center;
+                    font-size        : 16px;
+                    color            : #C7DEFF;
+                    position         : relative;
+                    cursor           : pointer;
+                    background-image : url("../image/headButton.png");
+                    background-repeat: no-repeat;
+                    background-size  : 100% 100%;
+                    margin-right     : 34px;
+
+                    input {
+                        opacity : 0;
+                        position: absolute;
+                        top     : 4px;
+                        left    : 2px;
+                        z-index : 2;
+                        width   : 100%;
+                        height  : 20px;
+                        cursor  : pointer;
+                    }
+                }
+
+                .li_tab_active {
+                    color      : rgba(255, 250, 231, 1) !important;
+                    text-shadow: 0px 0px 2px rgba(245, 147, 31, 0.5) !important;
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
+
+    //详情框
+    .indexFrame {
+        background-color: rgba(37, 37, 37, 0.4);
+
+        .frame {
+            width     : 100%;
+            background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        }
+    }
+
+    .EightFrame {
+        background-color: rgba(37, 37, 37, 0.4);
+
+        .frame {
+            width     : 100%;
+            background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        }
+    }
+
+    .frame {
+        width     : 100%;
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+    }
+
+
+    .proFrame {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+    }
+
+    //左托盘
+    .leftMultiSelect {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .leftMenu {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //右托盘
+    .canvassResTable {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .landNoneTable {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //亩均论英雄
+    .landHeroLeft-top {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .landhero .right {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .leftSelect {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //楼宇
+    .blueform {
+        position  : absolute;
+        right     : 20px;
+        top       : 0;
+        box-sizing: border-box;
+        margin-top: 108px;
+        height    : 836px;
+        width     : 350px;
+
+        >div {
+            height        : 100%;
+            box-sizing    : border-box;
+            background    : linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+            box-shadow    : 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+            box-sizing    : border-box;
+            padding       : 10px;
+            border-radius : 8px;
+            display       : flex;
+            flex-direction: column;
+        }
+    }
+
+    .buildForm {
+        display: inline-block;
+
+        .buildAround {
+            position  : fixed;
+            left      : 50px;
+            top       : 120px;
+            width     : 520px;
+            font-size : 18px;
+            background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+            box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+            padding   : 10px;
+        }
+    }
+
+    .more {
+        width           : 1280px;
+        box-sizing      : border-box;
+        padding         : 10px;
+        position        : fixed;
+        top             : 50%;
+        left            : 100px;
+        transform       : translateY(-330px);
+        background-color: linear-gradient(270deg, rgba(7, 21, 41, 0.1) 0%, rgba(7, 21, 41, 0.1) 100%);
+        z-index         : 99;
+        border-top      : solid 1px rgba(255, 255, 255, 0.6);
+        border-bottom   : solid 1px rgba(255, 255, 255, 0.6);
+        box-shadow      : 0px 4px 16px 0px rgba(0, 0, 0, 0.6);
+
+        .moreBackground {
+            background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+            box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+        }
+    }
+
+    .checklist {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .spaces-list {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //综合查询
+    .ecoCompany_tableFrame {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //首页一带六区
+    .intro {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .stateTip {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //经济特色 右查询
+    .Rsearch {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    //街镇特色
+    .leftCompetition {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .rightCompetition {
+        background: linear-gradient(180deg, rgba(19, 21, 197, 0.6) 0%, rgba(17, 10, 152, 0.6) 100%) !important;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.4), 0px 0px 44px 0px rgba(16, 146, 236, 0.3) !important;
+    }
+
+    .Tip {
+        background: rgba(0, 0, 0, 0.6);
+        color     : rgba(235, 235, 235, 1);
+    }
+}
