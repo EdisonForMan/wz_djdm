@@ -11,6 +11,7 @@
       type="card"
       class="my-tabs"
       :class="{vsb:!shallTabs}"
+      @tab-click="tabsPaneClickHandler"
     >
       <el-tab-pane
         v-for="(value, index) of tabsPane"
@@ -130,6 +131,10 @@ export default {
         this.activeTabsPane = val ? "qyhf" : "xm";
       });
     },
+    tabsPaneClickHandler() {
+      console.log(1)
+      this.$hub.$emit("tabsPane-click");
+    },
     changeCheckboxHandler(parentIndex, childrenIndex) {
       const currentMenu = this.tabsMenuData[this.activeTabsPane];
       if (childrenIndex !== null && childrenIndex !== undefined) {
@@ -160,7 +165,7 @@ export default {
         // parentCheck
         //   ? this.$hub.$emit("document-single-list-choose", items)
         //   : this.$hub.$emit("document-single-list-close", items);
-        this.$hub.$emit("document-checkbox")
+        this.$hub.$emit("document-checkbox");
       }
     },
     // 单独点击一个侧目录的子项

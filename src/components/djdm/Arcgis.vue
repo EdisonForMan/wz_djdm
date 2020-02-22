@@ -7,7 +7,7 @@
 <script>
 import { loadModules } from "esri-loader";
 import { OPTION, spatialReference, IMAGELAYER } from "@/components/common/Tmap";
-import { doXmLayer } from "./Arcgis.js";
+import { doPointLayer, doXmColorLayer } from "./Arcgis.js";
 
 export default {
   name: "DjdmArcgis",
@@ -24,12 +24,20 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    doXmLayer(this);
+    doXmColorLayer(this);
+    doPointLayer(this);
   },
   methods: {
     eventRegister() {
+      //  顶部点击、左侧菜单点击,刷新点
       this.$hub.$on("document-checkbox", val => {
-        doXmLayer(this);
+        doPointLayer(this);
+      });
+      this.$hub.$on("topDocumentClick", val => {
+        doPointLayer(this);
+      });
+      this.$hub.$on("tabsPane-click", val => {
+        doPointLayer(this);
       });
     },
     /**
@@ -70,7 +78,9 @@ export default {
             view: that.view
           });
           that.view.on("click", evt => {
-            console.log(evt);
+            view.hitTest(evt).then(response => {
+              console.log(response);
+            });
           });
           that.view.on("mouse-wheel", evt => {});
           resolve(true);

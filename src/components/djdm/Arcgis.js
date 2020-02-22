@@ -1,40 +1,69 @@
-import { SERVER, xmBuildSiteURL, djdmBuildSiteURL } from "./config/index";
+import { SERVER, xmBuildSiteURL, xmBuildColorURL, djdmBuildSiteURL } from "./config/index";
 import { loadModules } from "esri-loader";
-
+const _URIS_ = {
+    xm: [xmBuildSiteURL, "GDD.XMSZD", "GDD.SFYFG", "是"],
+    qyhf: [djdmBuildSiteURL, "djdm_xm.xmszd", "djdm_xm.sffg", "是"],
+    xxjd: [djdmBuildSiteURL, "xm_point.STATE", "djdm_xm.sffg", "是"],
+    hyfl: [djdmBuildSiteURL, "djdm_xm.constype2", "djdm_xm.sffg", "是"]
+}
 /**
- * 图层叠加
+ * FeatureLayer
  * @param {*} context 
  * @param {*} item 
  */
-const doMassLayer = (context, { url, id, definitionExpression = "1=1", renderer }) => {
+const doMassFeatureLayer = (context, { url, id, definitionExpression = "1=1", renderer }) => {
+    context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+            const option = { url, id, definitionExpression }
+            renderer && (option.renderer = renderer)
+            const feature = new FeatureLayer(option);
+            context.map.add(feature, 3)
+        })
+    })
+}
+/**
+ * FeatureLayer
+ * @param {*} context 
+ * @param {*} item 
+ */
+const doMassImageLayer = (context, { url, id }) => {
     context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
     return new Promise((resolve, reject) => {
         loadModules(
-            ["esri/layers/FeatureLayer", "esri/layers/MapImageLayer"]
-        ).then(([FeatureLayer, MapImageLayer]) => {
-            const layer = FeatureLayer;
-            const option = { url, id, definitionExpression }
-            renderer && (option.renderer = renderer)
-            const feature = new layer(option);
-            context.map.add(feature, 3)
+            ["esri/layers/MapImageLayer"]
+        ).then(([MapImageLayer]) => {
+            const option = { url, id }
+            const img = new MapImageLayer(option);
+            context.map.add(img, 2)
         })
     })
 }
 
 /**
- * 项目点
+ * 重点项目五色图
  * @param {*} context 
  */
-export const doXmLayer = (context) => {
-    const menu = context.$parent.$refs.leftMenu.tabsMenuData['xm'];
-    const keys = [...new Set(context.$parent.$refs.leftMenu.tabsMenuData['xm'].map(({ name, check }) => {
+export const doXmColorLayer = (context) => {
+    doMassImageLayer(context, { url: xmBuildColorURL, id: "xmColorLayer" })
+}
+
+/**
+ * 重点项目工地点
+ * @param {*} context 
+ */
+export const doPointLayer = (context) => {
+    const activeTabsPane = context.$parent.$refs.leftMenu.activeTabsPane;
+    const menu = context.$parent.$refs.leftMenu.tabsMenuData[activeTabsPane];
+    const config = _URIS_[activeTabsPane];
+    const keys = [...new Set(menu.map(({ name, check }) => {
         return check ? `'${name}'` : '';
     }))].filter(s => s.trim()).join(",");
-    const definitionExpression = menu.length ? `GDD.XMSZD in (${keys})` : "1=1";
+    const definitionExpression = menu.length ? `${config[1]} in (${keys})` : "1=1";
     const renderer = {
         type: "unique-value",
-        field: "GDD.SFYFG",
-        valueExpression: "When($feature['GDD.SFYFG'] == '是', 'done' , 'other')",
+        field: config[2],
+        valueExpression: `When($feature['${config[2]}'] == '${config[3]}', 'done' , 'other')`,
         uniqueValueInfos: [
             {
                 value: "done",
@@ -56,5 +85,5 @@ export const doXmLayer = (context) => {
             }
         ]
     }
-    doMassLayer(context, { url: xmBuildSiteURL, id: "xmLayer", definitionExpression, renderer })
+    doMassFeatureLayer(context, { url: config[0], id: "PointLayer", definitionExpression, renderer })
 }
