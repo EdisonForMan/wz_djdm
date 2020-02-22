@@ -1,7 +1,7 @@
 import { SERVER, xmBuildSiteURL, xmBuildColorURL, djdmBuildSiteURL } from "./config/index";
 import { loadModules } from "esri-loader";
 const _URIS_ = {
-    xm: [xmBuildSiteURL, "GDD.XMSZD", "GDD.SFYFG", "是"],
+    xm: [xmBuildSiteURL, "XMSZD", "SFYFG", "是"],
     qyhf: [djdmBuildSiteURL, "djdm_xm.xmszd", "djdm_xm.sffg", "是"],
     xxjd: [djdmBuildSiteURL, "xm_point.STATE", "djdm_xm.sffg", "是"],
     hyfl: [djdmBuildSiteURL, "djdm_xm.constype2", "djdm_xm.sffg", "是"]
@@ -33,9 +33,10 @@ const doMassImageLayer = (context, { url, id }) => {
         loadModules(
             ["esri/layers/MapImageLayer"]
         ).then(([MapImageLayer]) => {
-            const option = { url, id }
+            const option = { url, id, opacity: 0.8 }
             const img = new MapImageLayer(option);
             context.map.add(img, 2)
+            resolve(true);
         })
     })
 }

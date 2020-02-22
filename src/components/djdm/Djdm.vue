@@ -52,7 +52,8 @@ export default {
   computed: {
     ...mapState({
       xmBuildSiteList: state => state.xmBuildSiteList,
-      djdmBuildSiteList: state => state.djdmBuildSiteList
+      djdmBuildSiteList: state => state.djdmBuildSiteList,
+      buildDataList: state => state.buildDataList
     })
   },
   /**
@@ -61,9 +62,14 @@ export default {
   mounted() {
     !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
     !this.djdmBuildSiteList.length && this.fetchDjdmBuildSiteList();
+    !this.buildDataList.length && this.fetchBuildDataList();
   },
   methods: {
-    ...mapActions(["fetchXmBuildSiteList", "fetchDjdmBuildSiteList"])
+    ...mapActions([
+      "fetchXmBuildSiteList",
+      "fetchDjdmBuildSiteList",
+      "fetchBuildDataList"
+    ])
   }
 };
 </script>

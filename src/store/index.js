@@ -1,15 +1,16 @@
 /* eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
-import { xmBuildSiteURL, djdmBuildSiteURL } from "@/components/djdm/config/index"
+import { xmBuildSiteURL, djdmBuildSiteURL, buildDataURL } from "@/components/djdm/config/index"
 Vue.use(Vuex);
 import { fetchArcgisServer } from "@/api/beans/space";
 export default new Vuex.Store({
   state: {
-    /** 原始数据 */
-    radius: 1000, // default
+    /** 原始地图数据 */
     xmBuildSiteList: [],  //  重点项目工地点
     djdmBuildSiteList: [],  //  大建大美工地点
+    /** 指标数据 */
+    buildDataList: [],
     /** 菜单数组 */
     xmMenu: [],
     djdmMenuQyhf: [],
@@ -17,12 +18,6 @@ export default new Vuex.Store({
     djdmMenuHyfl: []
   },
   mutations: {
-    /**
-     * 修改缓冲区半径
-     */
-    updateRadius(state, val) {
-      state.radius = val;
-    },
     /**
      * 修改重点项目工地点
      */
@@ -39,20 +34,30 @@ export default new Vuex.Store({
       state.djdmMenuXxjd = xxjd;
       state.djdmMenuHyfl = hyfl;
     },
+    /**
+     * 修改指标数据
+     */
+    updateBuildDataList(state, data) {
+      state.buildDataList = data;
+    },
   },
   actions: {
+    async fetchBuildDataList({ state, commit }) {
+      const { data } = await fetchArcgisServer({ url: buildDataURL });
+      commit('updateBuildDataList', data.features)
+    },
     /**
      * xmbuild fetch
      * @param {*} param0 
      * @param {*} option 
      */
-    async fetchXmBuildSiteList({ state, commit }, option) {
+    async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
       const buildS = {};
       data.features.map(({ attributes, geometry }) => {
-        !buildS[attributes['GDD.XMSZD']] && (buildS[attributes['GDD.XMSZD']] = { name: attributes['GDD.XMSZD'], count: 0, arr: [] })
-        buildS[attributes['GDD.XMSZD']].arr.push({ name: attributes['GDD.NAME'], geometry })
-        buildS[attributes['GDD.XMSZD']].count += 1;
+        !buildS[attributes['XMSZD']] && (buildS[attributes['XMSZD']] = { name: attributes['XMSZD'], count: 0, arr: [] })
+        buildS[attributes['XMSZD']].arr.push({ name: attributes['NAME'], geometry })
+        buildS[attributes['XMSZD']].count += 1;
       })
       const menu = Object.keys(buildS).map(key => {
         const { name, count, arr } = buildS[key];
@@ -65,7 +70,7 @@ export default new Vuex.Store({
      * @param {*} param0 
      * @param {*} option 
      */
-    async fetchDjdmBuildSiteList({ state, commit }, option) {
+    async fetchDjdmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: djdmBuildSiteURL });
       const qyhfObj = {};
       const xxjdObj = {};

@@ -1,6 +1,9 @@
 <template>
   <div class="Map">
     <div :id="id" class="arcgisMap"></div>
+    <transition name="fade">
+      <djdmFrame v-if="doFrame" />
+    </transition>
   </div>
 </template>
 
@@ -8,23 +11,23 @@
 import { loadModules } from "esri-loader";
 import { OPTION, spatialReference, IMAGELAYER } from "@/components/common/Tmap";
 import { doPointLayer, doXmColorLayer } from "./Arcgis.js";
+import djdmFrame from "./components/djdmFrame";
 
 export default {
   name: "DjdmArcgis",
   data() {
-    return {};
+    return {
+      doFrame: false
+    };
   },
-  components: {},
-  props: {
-    id: String,
-    leftOptions: Array
-  },
+  components: { djdmFrame },
+  props: ["id"],
   created() {},
   async mounted() {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    doXmColorLayer(this);
+    await doXmColorLayer(this);
     doPointLayer(this);
   },
   methods: {
@@ -179,6 +182,13 @@ export default {
 };
 </script>
  <style scoped lang="less">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .Map {
   width: 100%;
   height: 100%;
