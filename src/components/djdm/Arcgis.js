@@ -1,10 +1,10 @@
-import { SERVER, xmBuildSiteURL, xmBuildColorURL, djdmBuildSiteURL } from "./config/index";
+import { SERVER, xmBuildSiteURL, xmBuildColorURL, ssBuildColorURL, djdmBuildSiteURL, buildSiteIdentify } from "./config/index";
 import { loadModules } from "esri-loader";
 const _URIS_ = {
     xm: [xmBuildSiteURL, "XMSZD", "SFYFG", "是"],
-    qyhf: [djdmBuildSiteURL, "djdm_xm.xmszd", "djdm_xm.sffg", "是"],
-    xxjd: [djdmBuildSiteURL, "xm_point.STATE", "djdm_xm.sffg", "是"],
-    hyfl: [djdmBuildSiteURL, "djdm_xm.constype2", "djdm_xm.sffg", "是"]
+    qyhf: [djdmBuildSiteURL, "xmszd", "sffg", "是"],
+    xxjd: [djdmBuildSiteURL, "STATE", "sffg", "是"],
+    hyfl: [djdmBuildSiteURL, "constype2", "sffg", "是"]
 }
 /**
  * FeatureLayer
@@ -18,7 +18,7 @@ const doMassFeatureLayer = (context, { url, id, definitionExpression = "1=1", re
             const option = { url, id, definitionExpression }
             renderer && (option.renderer = renderer)
             const feature = new FeatureLayer(option);
-            context.map.add(feature, 3)
+            context.map.add(feature, 4)
         })
     })
 }
@@ -35,18 +35,25 @@ const doMassImageLayer = (context, { url, id }) => {
         ).then(([MapImageLayer]) => {
             const option = { url, id, opacity: 0.8 }
             const img = new MapImageLayer(option);
-            context.map.add(img, 2)
+            context.map.add(img, 1)
             resolve(true);
         })
     })
 }
 
 /**
- * 重点项目五色图
+ * 亿元以上项目五色图
  * @param {*} context 
  */
 export const doXmColorLayer = (context) => {
-    doMassImageLayer(context, { url: xmBuildColorURL, id: "xmColorLayer" })
+    doMassImageLayer(context, { url: xmBuildColorURL, id: "colorLayer" })
+}
+/**
+ * 省市重点项目五色图
+ * @param {*} context 
+ */
+export const doSzColorLayer = (context) => {
+    doMassImageLayer(context, { url: ssBuildColorURL, id: "colorLayer" })
 }
 
 /**
@@ -87,4 +94,27 @@ export const doPointLayer = (context) => {
         ]
     }
     doMassFeatureLayer(context, { url: config[0], id: "PointLayer", definitionExpression, renderer })
+}
+
+/**
+ * 点击获取
+ * @param {*} mapPoint 
+ * @param {*} activeTabsPane 
+ * @param {*} view 
+ * @param {*} fn 
+ */
+export const fetchPoint = (mapPoint, activeTabsPane, view, fn) => {
+    loadModules(
+        ["esri/tasks/IdentifyTask", "esri/tasks/support/IdentifyParameters"]
+    ).then(async ([IdentifyTask, IdentifyParameters]) => {
+        const identifyTask = new IdentifyTask(buildSiteIdentify);
+        const params = new IdentifyParameters();
+        params.layerIds = [activeTabsPane == "xm" ? 0 : 2]
+        params.tolerance = 5;
+        params.geometry = mapPoint;
+        params.mapExtent = view.extent;
+        params.returnGeometry = true;
+        const { results } = await identifyTask.execute(params);
+        results.length && fn && fn(results[0].feature)
+    });
 }

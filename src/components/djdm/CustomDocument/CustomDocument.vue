@@ -132,7 +132,6 @@ export default {
       });
     },
     tabsPaneClickHandler() {
-      console.log(1)
       this.$hub.$emit("tabsPane-click");
     },
     changeCheckboxHandler(parentIndex, childrenIndex) {

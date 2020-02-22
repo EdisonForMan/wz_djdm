@@ -53,7 +53,8 @@ export default {
     ...mapState({
       xmBuildSiteList: state => state.xmBuildSiteList,
       djdmBuildSiteList: state => state.djdmBuildSiteList,
-      buildDataList: state => state.buildDataList
+      buildDataList: state => state.buildDataList,
+      backToWzList: state => state.backToWzList
     })
   },
   /**
@@ -63,12 +64,14 @@ export default {
     !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
     !this.djdmBuildSiteList.length && this.fetchDjdmBuildSiteList();
     !this.buildDataList.length && this.fetchBuildDataList();
+    !this.backToWzList.length && this.fetchBackToWzList();
   },
   methods: {
     ...mapActions([
       "fetchXmBuildSiteList",
       "fetchDjdmBuildSiteList",
-      "fetchBuildDataList"
+      "fetchBuildDataList",
+      "fetchBackToWzList"
     ])
   }
 };

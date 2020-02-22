@@ -5,9 +5,8 @@
         区划图
         <div>
           <ul class="subList">
-            <li>工地数量分色图</li>
-            <li>疫情风险分色图</li>
-            <li>复工率分色图</li>
+            <li @click="$parent.$refs.macroArcgis.switchColorLayer(1)">亿元以上项目五色图</li>
+            <li @click="$parent.$refs.macroArcgis.switchColorLayer(0)">省市重点项目五色图</li>
           </ul>
         </div>
       </li>
@@ -77,10 +76,11 @@ export default {
 
       div {
         position: absolute;
-        width: 120px;
+        width: 140px;
         bottom: 40px;
         margin-left: -11px;
         ul li {
+          font-size: 14px;
           height: 40px;
           line-height: 40px;
           padding: 0 10px;
@@ -94,7 +94,7 @@ export default {
     }
 
     .hover {
-      width: 120px;
+      width: 140px;
       .subList {
         li:hover {
           background-color: #0754e2;

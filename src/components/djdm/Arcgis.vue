@@ -2,7 +2,7 @@
   <div class="Map">
     <div :id="id" class="arcgisMap"></div>
     <transition name="fade">
-      <djdmFrame v-if="doFrame" />
+      <djdmFrame ref="djdm" v-show="doFrame" />
     </transition>
   </div>
 </template>
@@ -10,8 +10,13 @@
 <script>
 import { loadModules } from "esri-loader";
 import { OPTION, spatialReference, IMAGELAYER } from "@/components/common/Tmap";
-import { doPointLayer, doXmColorLayer } from "./Arcgis.js";
-import djdmFrame from "./components/djdmFrame";
+import {
+  doPointLayer,
+  doXmColorLayer,
+  doSzColorLayer,
+  fetchPoint
+} from "./Arcgis.js";
+import djdmFrame from "./components/djdmFrame.vue";
 
 export default {
   name: "DjdmArcgis",
@@ -41,6 +46,11 @@ export default {
       });
       this.$hub.$on("tabsPane-click", val => {
         doPointLayer(this);
+      });
+      //  点击工地
+      this.$hub.$on("menu-item-click", ({ geometry }) => {
+        this.goloaction(geometry);
+        this.doFrame = true;
       });
     },
     /**
@@ -81,102 +91,25 @@ export default {
             view: that.view
           });
           that.view.on("click", evt => {
-            view.hitTest(evt).then(response => {
-              console.log(response);
-            });
+            fetchPoint(
+              evt.mapPoint,
+              that.$parent.$refs.leftMenu.activeTabsPane,
+              that.view,
+              obj => {
+                this.$hub.$emit("menu-item-click", obj);
+              }
+            );
           });
           that.view.on("mouse-wheel", evt => {});
           resolve(true);
         });
       });
     },
-    goloaction() {
-      const that = this;
-      that.view.goTo({
-        center: [x, y]
-      });
-      that.view.popup = {
-        title: "",
-        content: ``,
-        location: [x, y]
-      };
-      that.view.popup.visible = true;
+    goloaction({ x, y }) {
+      this.view.goTo({ center: [x, y], zoom: 16 });
     },
-    addFeatures(item, _id_) {
-      // console.log(item);
-      const id = _id_.replace(/yt_/g, "").replace(/m_/g, "");
-      const that = this;
-      const { url } = item;
-      const shallYT = this.$parent.$refs.leftOptions.tabIndex == 1;
-      return new Promise((resolve, reject) => {
-        loadModules(
-          ["esri/layers/FeatureLayer", "esri/layers/MapImageLayer"],
-          OPTION
-        ).then(([FeatureLayer, MapImageLayer]) => {
-          const option = { url, id: _id_, outFields: "*" };
-          const feature = new _layers_(option);
-          that.map.add(feature, 4);
-          resolve(true);
-        });
-      });
-    },
-    // 空间查询
-    spaceQuery() {
-      const that = this;
-      loadModules(
-        [
-          "esri/Graphic",
-          "esri/widgets/Sketch/SketchViewModel",
-          "esri/layers/GraphicsLayer",
-          "esri/geometry/Circle",
-          "esri/geometry/Point"
-        ],
-        OPTION
-      ).then(([Graphic, SketchViewModel, GraphicsLayer, Circle, Point]) => {
-        let spaceGraphicsLayer = that.map.findLayerById("spaceLayer");
-        if (!spaceGraphicsLayer) {
-          spaceGraphicsLayer = new GraphicsLayer({
-            id: "spaceLayer"
-          });
-          that.map.add(spaceGraphicsLayer);
-        }
-        // 绘制多边形
-        that.sketchViewModel = new SketchViewModel({
-          updateOnGraphicClick: false,
-          view: that.view,
-          layer: spaceGraphicsLayer,
-          polylineSymbol: {
-            type: "simple-line",
-            color: "#0000ff",
-            width: "1",
-            style: "dash"
-          },
-          polygonSymbol: {
-            type: "simple-fill",
-            color: "rgba(0, 0, 255, 0.2)",
-            style: "solid",
-            outline: {
-              color: "white",
-              width: 1
-            }
-          }
-        });
-        that.sketchViewModel.on("create", event => {});
-      });
-    },
-    // 多边形查询
-    doSpaceQuery() {
-      this.cleanQuery();
-      this.sketchViewModel.create("polygon");
-    },
-    // 圆形查询
-    doCircleQuery() {
-      this.cleanQuery();
-      this.sketchViewModel.create("polyline");
-    },
-    // 清除空间查询图层
-    cleanQuery() {
-      this.map.findLayerById("spaceLayer").removeAll();
+    switchColorLayer(val) {
+      val ? doXmColorLayer(this) : doSzColorLayer(this);
     }
   }
 };

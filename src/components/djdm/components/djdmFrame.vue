@@ -1,27 +1,86 @@
 <template>
   <div class="djdmFrame">
-    <div class="close" />
+    <div class="close" @click="()=>{$parent.doFrame=false}" />
     <div class="basic">
       <header>基本信息</header>
       <div>
-        <div class="name">项目名称：中央绿轴区G-23地块沿河绿地及驳坎工程</div>
+        <div class="name">{{attributes.NAME}}</div>
         <ul>
-          <li v-for="(item,key,index) in obj">
-            <span>{{key}}</span>
-            <span>{{item}}</span>
+          <li>
+            <span>投资类型</span>
+            <span>{{attributes.fundtype}}</span>
+          </li>
+          <li>
+            <span>建设类型大类</span>
+            <span>{{attributes.constype_1}}</span>
+          </li>
+          <li>
+            <span>建设类型小类</span>
+            <span>{{attributes.constype2}}</span>
+          </li>
+          <li>
+            <span>建设进度</span>
+            <span>{{attributes.STATE}}</span>
+          </li>
+          <li>
+            <span>所在范围</span>
+            <span>{{attributes.XMSZD}}</span>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span>所属街道</span>
+            <span>{{attributes.XZJD || attributes.xzjd}}</span>
+          </li>
+          <li>
+            <span>计划开工时间</span>
+            <span>{{attributes.consyearb2}}</span>
+          </li>
+          <li>
+            <span>计划建成时间</span>
+            <span>{{attributes.consyeare2}}</span>
+          </li>
+          <li>
+            <span>总投资</span>
+            <span>{{attributes.totalamount}}万</span>
+          </li>
+          <li>
+            <span>去年累计投资</span>
+            <span>{{""}}万</span>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span>当年投资计划</span>
+            <span>{{attributes.yearsum}}万</span>
+          </li>
+          <li>
+            <span>当年累计投资</span>
+            <span>{{attributes.yearsum}}万</span>
+          </li>
+          <li>
+            <span>剩余投资额</span>
+            <span>{{attributes.yearremain}}万</span>
+          </li>
+          <li>
+            <span>责任单位</span>
+            <span>{{""}}</span>
           </li>
         </ul>
         <ul class="nobreakul">
           <li>
             <span>实施单位:</span>
-            <span>五马街到</span>
+            <span>{{attributes.zr_dept}}</span>
           </li>
           <li>
             <span>项目范围:</span>
-            <span>中央绿轴-即指挥部字段</span>
+            <span>{{attributes.XMSZD}}</span>
           </li>
         </ul>
-        <div class="scroll"></div>
+        <div class="scroll">
+          <span>项目建设规模和内容:</span>
+          {{""}}
+        </div>
       </div>
     </div>
     <div class="worker">
@@ -39,8 +98,19 @@ export default {
   name: "djdmFrame",
   data: () => {
     return {
-      obj: { 投资类型: "政府性投资", 建设类型大类: "公益型项目" }
+      //  懒得写逻辑了就这么分吧
+      attributes: {}
     };
+  },
+  mounted() {
+    this.eventRegister();
+  },
+  methods: {
+    eventRegister() {
+      this.$hub.$on("menu-item-click", ({ attributes }) => {
+        this.attributes = attributes;
+      });
+    }
   }
 };
 </script>
@@ -127,7 +197,7 @@ export default {
       }
       > li {
         list-style: none;
-        min-width: 20%;
+        width: 20%;
         display: inline-block;
         float: left;
         height: 44px;
@@ -146,6 +216,7 @@ export default {
           color: rgba(255, 255, 255, 1);
         }
         > span:last-child {
+          font-size: 12px;
           color: rgba(255, 208, 86, 1);
         }
       }
@@ -162,10 +233,10 @@ export default {
         }
       }
       li:first-child {
-        width: 39.9%;
+        width: 59.9%;
       }
       li:last-child {
-        width: 49.9%;
+        width: 39.9%;
       }
     }
     /** 滚动框 */
@@ -176,6 +247,7 @@ export default {
       height: 100px;
       overflow-y: auto;
       word-break: break-all;
+      text-align: left;
     }
     .scroll::-webkit-scrollbar {
       border: 1px solid rgba(109, 225, 255, 1);
