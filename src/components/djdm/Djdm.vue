@@ -5,9 +5,7 @@
     </div>
     <div class="Com_container" style="z-index: 10;">
       <div id="fy-rightDiv">
-        <bqtj ref="bqtj" />
-        <wjw />
-        <qstu />
+        <rightDiv />
       </div>
     </div>
     <topDocument />
@@ -31,9 +29,7 @@
  */
 import commonArcgis from "./Arcgis.vue";
 import bottomBtn from "./components/bottomBtn";
-import bqtj from "./rightDiv/bqtj";
-import wjw from "./rightDiv/wjw";
-import qstu from "./rightDiv/qstu";
+import rightDiv from "./rightDiv/rightDiv.vue";
 import topDate from "./components/topDate";
 import xzDate from "./components/xz";
 import CustomDocument from "./CustomDocument/CustomDocument.vue";
@@ -48,9 +44,7 @@ export default {
     topDocument,
     CustomDocument,
     commonArcgis,
-    bqtj, // 病例统计
-    wjw, // 卫健委
-    qstu, // 趋势图统计
+    rightDiv, // 右侧图表
     bottomBtn, //底部按钮
     topDate, //顶部数据
     xzDate //详情须知
