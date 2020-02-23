@@ -58,10 +58,7 @@ export default {
   },
   computed: {
     ...mapState({
-      xmBuildSiteList: state => state.xmBuildSiteList,
-      djdmBuildSiteList: state => state.djdmBuildSiteList,
-      buildDataList: state => state.buildDataList,
-      backToWzList: state => state.backToWzList
+      xmBuildSiteList: state => state.xmBuildSiteList
     })
   },
   /**
@@ -69,21 +66,12 @@ export default {
    */
   mounted() {
     !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
-    !this.djdmBuildSiteList.length && this.fetchDjdmBuildSiteList();
-    !this.buildDataList.length && this.fetchBuildDataList();
-    !this.backToWzList.length && this.fetchBackToWzList();
     this.eventRegister();
   },
   methods: {
-    ...mapActions([
-      "fetchXmBuildSiteList",
-      "fetchDjdmBuildSiteList",
-      "fetchBuildDataList",
-      "fetchBackToWzList"
-    ]),
+    ...mapActions(["fetchXmBuildSiteList"]),
     eventRegister() {
       this.$hub.$on("topDocumentClick", val => {
-        console.log(val);
         this.shallActive = val;
       });
     }

@@ -1,23 +1,45 @@
 <template>
-  <div class="yqImg">
-    <img />
-    <img />
+  <div class="yqimg">
+    <div>
+      <img :src="image" @click="goPicture" />
+    </div>
+    <div>
+      <img :src="image" @click="goPicture" />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      image: require("./img/demo.jpg")
+    };
+  },
+  methods: {
+    goPicture() {
+      window.open("http://172.20.89.88:5001/yq/icon/demo.jpg");
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
-.yqImg{
+.yqimg {
+  height: 100%;
+  width: 100%;
+  > div {
+    display: inline-block;
+    width: 49.9%;
+    float: left;
     height: 100%;
-    width: 100%;
+    position: relative;
     > img {
-        display: inline-block;
-        width: 49.9%;
-        float: left;
-        height: 100%;
+      height: 100%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
+  }
 }
 </style>

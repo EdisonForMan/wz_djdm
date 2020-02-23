@@ -16,14 +16,12 @@ export default {
             type: "shadow"
         }
     },
-    tooltip: {
-        trigger: "axis"
-    },
     grid: {
-        top: "8%",
+        top: "6%",
         left: "2%",
-        right: "0",
-        bottom: "30%"
+        right: "5%",
+        bottom: "10%",
+        containLabel: true
     },
     legend: {
         show: true,
@@ -32,45 +30,14 @@ export default {
         textStyle: {
             color: "#fff"
         },
-        data: [{ name: "未复工工地数" }, { name: "复工工地数" }]
+        data: [{
+            name: "未复工企业"
+        }, {
+            name: "复工企业"
+        }]
     },
-    xAxis: [
-        {
-            boundaryGap: true,
-            type: "category",
-            axisTick: {
-                show: false,
-                color: "#fff",
-                alignWithLabel: true
-            },
-            axisLabel: {
-                textStyle: {
-                    fontSize: 14,
-                    color: "#fff"
-                },
-                interval: 0,
-                formatter: function (param) {
-                    let str = "";
-                    for (let i = 0; i < param.length; i++) {
-                        if (i == param.length - 1) {
-                            str += param[i];
-                        } else {
-                            str += param[i] + "\n";
-                        }
-                    }
-                    return str;
-                }
-            },
-            axisLine: {
-                show: false,
-                lineStyle: {
-                    color: "#fff"
-                }
-            },
-            data: []
-        }
-    ],
-    yAxis: {
+
+    xAxis: {
         show: false,
         type: "value",
         name: "例",
@@ -93,32 +60,55 @@ export default {
             }
         }
     },
-    series: [
-        {
-            name: "复工工地数",
-            type: "bar",
-            stack: "one",
-            label: {
-                show: false,
-            },
-            barWidth: 16,
-            data: []
+    yAxis: [{
+        boundaryGap: true,
+        type: "category",
+        inverse: 'true',
+        axisTick: {
+            show: false,
+            color: "#fff",
+            alignWithLabel: true
         },
-        {
-            name: "未复工工地数",
-            type: "bar",
-            stack: "one",
-            label: {
-                show: true,
-                position: "top",
-                color: "#fff",
-                formatter: function (param) {
-                    console.log(param)
-                    return param.value;
-                }
+        axisLabel: {
+            textStyle: {
+                fontSize: 14,
+                color: "#fff"
             },
-            barWidth: 16,
-            data: []
-        }
+            show: true
+        },
+        axisLine: {
+            show: false,
+            lineStyle: {
+                color: "#fff"
+            }
+        },
+        data: []
+    }],
+    series: [{
+        name: "复工企业",
+        type: "bar",
+        stack: "one",
+        label: {
+            show: false,
+        },
+        barWidth: 18,
+        data: []
+    },
+    {
+        name: "未复工企业",
+        type: "bar",
+        stack: "one",
+        label: {
+            show: true,
+            position: "right",
+            color: "#fff",
+            formatter: function (param) {
+                console.log(param)
+                return param.value;
+            }
+        },
+        barWidth: 18,
+        data: []
+    }
     ]
 }

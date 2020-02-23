@@ -41,17 +41,17 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上企业数", v: 0, c: "#FF835F" },
-        { t: "规上企业复工数", v: 0, c: "#54FFA6" }
+        { t: "规上企业数", v: 1359, c: "#FF835F" },
+        { t: "规上企业复工数", v: 1236, c: "#54FFA6" }
       ];
-      this.buildDataList
-        // .filter(item => item.attributes.qy)
-        .filter(item => item.attributes.id == "1")
-        .map(({ attributes }) => {
-          const { yyysxms, yyysfgs } = attributes;
-          topData[0].v += yyysxms ? parseInt(yyysxms) : 0;
-          topData[1].v += yyysxms ? parseInt(yyysfgs) : 0;
-        });
+      // this.buildDataList
+      //   // .filter(item => item.attributes.qy)
+      //   .filter(item => item.attributes.id == "1")
+      //   .map(({ attributes }) => {
+      //     const { yyysxms, yyysfgs } = attributes;
+      //     topData[0].v += yyysxms ? parseInt(yyysxms) : 0;
+      //     topData[1].v += yyysxms ? parseInt(yyysfgs) : 0;
+      //   });
       this.TOP_DATA = topData;
     }
   }

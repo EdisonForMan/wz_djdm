@@ -12,7 +12,7 @@ import { loadModules } from "esri-loader";
 import { OPTION, spatialReference, IMAGELAYER } from "@/components/common/Tmap";
 import {
   doPointLayer,
-  doXmColorLayer,
+  doYqStreetLayer,
   doSzColorLayer,
   fetchPoint
 } from "./Arcgis.js";
@@ -32,7 +32,7 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    await doXmColorLayer(this);
+    // await doYqStreetLayer(this);
     doPointLayer(this);
   },
   methods: {
@@ -79,8 +79,8 @@ export default {
             container: that.$props.id,
             spatialReference,
             map: that.map,
-            zoom: 10,
-            center: [120.67819448808013, 28.039695289562555]
+            zoom: 12,
+            center: [120.98066617591361, 28.116856434417986]
           });
           const layer = new VectorTileLayer({
             id: "vectorLayer",
@@ -91,14 +91,9 @@ export default {
             view: that.view
           });
           that.view.on("click", evt => {
-            fetchPoint(
-              evt.mapPoint,
-              that.$parent.$refs.leftMenu.activeTabsPane,
-              that.view,
-              obj => {
-                this.$hub.$emit("menu-item-click", obj);
-              }
-            );
+            fetchPoint(evt.mapPoint, that.view, obj => {
+              this.$hub.$emit("menu-item-click", obj);
+            });
           });
           that.view.on("mouse-wheel", evt => {});
           resolve(true);
@@ -109,7 +104,7 @@ export default {
       this.view.goTo({ center: [x, y], zoom: 16 });
     },
     switchColorLayer(val) {
-      val ? doXmColorLayer(this) : doSzColorLayer(this);
+      val ? doYqStreetLayer(this) : doSzColorLayer(this);
     }
   }
 };

@@ -2,7 +2,7 @@
   <div class="right-div">
     <div class="gqx">
       <div class="right-div-title">
-        <span class="right-div-title-inner">各县市区</span>
+        <span class="right-div-title-inner">各街镇规上企业复工情况</span>
       </div>
       <div id="gqx-chart"></div>
     </div>
@@ -19,22 +19,18 @@ export default {
   },
   computed: {
     ...mapState({
-      buildDataList: state => state.buildDataList,
-      backToWzList: state => state.backToWzList
+      xmBuildSiteList: state => state.xmBuildSiteList
     })
   },
   watch: {
-    buildDataList(n, o) {
+    xmBuildSiteList(n, o) {
       this.doChartData();
-    },
-    backToWzList(n, o) {
-      this.doChartExtra();
     }
   },
   mounted() {
     this.eventRegister();
     this.chartRegister();
-    if (this.buildDataList.length) {
+    if (this.xmBuildSiteList.length) {
       this.doChartData();
     }
   },
@@ -44,25 +40,26 @@ export default {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
     },
     doChartData() {
-      const _data_ = this.buildDataList
-        .map(({ attributes }) => {
-          return { ...attributes };
-        })
-        .filter(item => item.qy);
+      const _obj_ = {};
+      const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
+        const { zj, cnfhqk } = attributes;
+        !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+        _obj_[zj].ydyg += 1;
+        _obj_[zj].ydygs += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+      });
+      const data = Object.keys(_obj_).map(item => {
+        return { zj: item, ..._obj_[item] };
+      });
       //  顶部
-      const chart_t_arr = _data_.sort(this.$util.compare("yyysxms")).reverse();
+      const chart_t_arr = data.sort(this.$util.compare("ydyg")).reverse();
       const chart_t_option_clone = this.chart_T_fixed();
-      chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
-        item.qy.replace(/集聚区/g, "")
-      );
-      chart_t_option_clone.series[0].data = chart_t_arr.map(
-        item => item.yyysfgs
-      );
-      chart_t_option_clone.series[1].data = chart_t_arr.map(
-        item => item.yyysxms - item.yyysfgs
+      chart_t_option_clone.yAxis[0].data = data.map(item => item.zj);
+      chart_t_option_clone.series[0].data = data.map(item => item.ydygs);
+      chart_t_option_clone.series[1].data = data.map(
+        item => item.ydyg - item.ydygs
       );
       chart_t_option_clone.series[1].label.formatter = param => {
-        return chart_t_arr[param.dataIndex].yyysxms;
+        return data[param.dataIndex].ydyg;
       };
       this.doChartOption({
         t: chart_t_option_clone
@@ -102,7 +99,7 @@ export default {
   box-sizing: border-box;
 }
 .gqx {
-  height: 40%;
+  height: 100%;
 }
 .yjfw {
   height: 30%;

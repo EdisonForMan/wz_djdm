@@ -4,86 +4,56 @@
     <div class="basic">
       <header>基本信息</header>
       <div>
-        <div class="name">{{attributes.NAME}}</div>
+        <div class="name">{{attributes.qymc || attributes.企业名称}}</div>
         <ul>
           <li>
-            <span>投资类型</span>
-            <span>{{attributes.FUNDTYPE || attributes.投资类型}}</span>
+            <span>地址</span>
+            <span>{{attributes.dz || attributes.地址}}</span>
           </li>
           <li>
-            <span>建设类型大类</span>
-            <span>{{attributes.CONSTYPE || attributes.建设类型大类}}</span>
+            <span>地址2</span>
+            <span>{{attributes.dz1 || attributes.地址1}}</span>
           </li>
           <li>
-            <span>建设类型小类</span>
-            <span>{{attributes.CONSTYPE2 || attributes.建设类型小类}}</span>
+            <span>法人代表</span>
+            <span>{{attributes.fr || attributes.法人代表}}</span>
           </li>
           <li>
-            <span>建设进度</span>
-            <span>{{attributes.STATE || attributes.建设进度}}</span>
+            <span>联系电话</span>
+            <span>{{attributes.lxdh || attributes.联系电话}}</span>
           </li>
           <li>
-            <span>所在范围</span>
-            <span>{{attributes.XMSZD || attributes.所在范围}}</span>
+            <span>联系电话</span>
+            <span>{{attributes.lxdh1 || attributes.联系联系号码}}</span>
+          </li>
+          <li>
+            <span>产能发挥情况</span>
+            <span>{{attributes.cnfhqk || attributes.产能发挥情况}}</span>
+          </li>
+          <li>
+            <span>所在村社</span>
+            <span>{{attributes.szcs || attributes.所在村社}}</span>
+          </li>
+          <li>
+            <span>统一社会信用代码</span>
+            <span>{{attributes.tyshxydm || attributes.统一社会信用代码}}</span>
+          </li>
+          <li>
+            <span>应到员工数</span>
+            <span>{{attributes.ydyg || attributes.应到员工数}}</span>
+          </li>
+          <li>
+            <span>已到员工数</span>
+            <span>{{attributes.ydygs || attributes.已到员工数}}</span>
           </li>
         </ul>
-        <ul>
-          <li>
-            <span>所属街道</span>
-            <span>{{attributes.XZJD || attributes.所属街道}}</span>
-          </li>
-          <li>
-            <span>计划开工时间</span>
-            <span>{{attributes.CONSYEARB2 || attributes.计划开工时间}}</span>
-          </li>
-          <li>
-            <span>计划建成时间</span>
-            <span>{{attributes.CONSYEARE2 || attributes.计划建成时间}}</span>
-          </li>
-          <li>
-            <span>总投资</span>
-            <span>{{attributes.TOTALAMOUNT || attributes.总投资}}万</span>
-          </li>
-          <li>
-            <span>去年累计投资</span>
-            <span>{{attributes.YEARSUM || attributes.当年累计投资}}万</span>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <span>当年投资计划</span>
-            <span>{{attributes.NEXTAMOUNT || attributes.当年投资计划}}万</span>
-          </li>
-          <li>
-            <span>当年累计投资</span>
-            <span>{{attributes.YEARSUM || attributes.当年累计投资}}万</span>
-          </li>
-          <li>
-            <span>剩余投资额</span>
-            <span>{{attributes.YEARREMAIN || attributes.剩余投资额}}万</span>
-          </li>
-          <li>
-            <span>责任单位</span>
-            <span>{{attributes.ZR_DEPT || attributes.责任单位}}</span>
-          </li>
-        </ul>
-        <ul class="nobreakul">
-          <li>
-            <span>实施单位:</span>
-            <span>{{attributes.SS_DEPT || attributes.实施单位}}</span>
-          </li>
-          <li>
-            <span>项目范围:</span>
-            <span>{{attributes.ZHB_DEPT || attributes.项目范围}}</span>
-          </li>
-        </ul>
-        <div class="scroll">
+        <div class="scroll" v-if="false">
           <span>项目建设规模和内容:</span>
           无
         </div>
       </div>
     </div>
-    <div class="worker">
+    <div class="worker" v-if="false">
       <header>返工信息</header>
       <ul>
         <li>人员数量:</li>
@@ -108,6 +78,7 @@ export default {
   methods: {
     eventRegister() {
       this.$hub.$on("menu-item-click", ({ attributes }) => {
+        console.log(attributes)
         this.attributes = attributes;
       });
     }
@@ -191,23 +162,18 @@ export default {
       clear: both;
       overflow: hidden;
       padding: 10px 0;
-      border-bottom: 1px #979797 solid;
-      > li:last-child {
-        border-right: 0px !important;
-      }
       > li {
         list-style: none;
-        width: 20%;
+        width: 49.9%;
         display: inline-block;
-        float: left;
-        height: 44px;
-        border-right: 1px #979797 solid;
+        border-bottom: 1px #979797 solid;
+        vertical-align: super;
         .box();
         padding: 0px 12px;
         span {
+          word-break: break-all;
           display: block;
-          height: 22px;
-          line-height: 22px;
+          line-height: 24px;
           font-size: 14px;
           font-weight: 400;
           text-align: left;
@@ -224,19 +190,14 @@ export default {
     /** 额外条目 */
     .nobreakul {
       li {
-        height: 22px;
-        line-height: 22px;
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
         span {
           display: inline-block;
           vertical-align: middle;
           float: left;
         }
-      }
-      li:first-child {
-        width: 59.9%;
-      }
-      li:last-child {
-        width: 39.9%;
       }
     }
     /** 滚动框 */

@@ -70,11 +70,15 @@ export default new Vuex.Store({
      */
     async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
-      const buildS = {};
+      const buildS = {
+        规上企业复工复产: { name: "规上企业复工复产", count: 0, arr: [] },
+        县市区网格: { name: "县市区网格", count: 0, arr: [] },
+        街道网格: { name: "街道网格", count: 0, arr: [] },
+        村社网格: { name: "村社网格", count: 0, arr: [] }
+      };
       data.features.map(({ attributes, geometry }) => {
-        !buildS[attributes['XMSZD']] && (buildS[attributes['XMSZD']] = { name: attributes['XMSZD'], count: 0, arr: [] })
-        buildS[attributes['XMSZD']].arr.push({ name: attributes['NAME'], geometry, attributes })
-        buildS[attributes['XMSZD']].count += 1;
+        buildS["规上企业复工复产"].arr.push({ name: attributes['qymc'], geometry, attributes })
+        buildS["规上企业复工复产"].count += 1;
       })
       const menu = Object.keys(buildS).map(key => {
         const { name, count, arr } = buildS[key];

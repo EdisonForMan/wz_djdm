@@ -6,28 +6,9 @@
       </el-input>
       <el-button type="primary" @click="query">查询</el-button>
     </div>
-    <el-tabs
-      v-model="activeTabsPane"
-      type="card"
-      class="my-tabs"
-      :class="{vsb:!shallTabs}"
-      @tab-click="tabsPaneClickHandler"
-    >
-      <el-tab-pane
-        v-for="(value, index) of tabsPane"
-        :key="index"
-        :label="value.label"
-        :name="value.name"
-      ></el-tab-pane>
-    </el-tabs>
     <div class="custom-document-content">
       <el-menu active-text-color="#000" text-color="#000" class="my-menu">
-        <el-submenu
-          v-for="(value, index) of tabsMenuData[activeTabsPane]"
-          v-if="value.children && value.children.length > 0"
-          :key="index"
-          :index="index + ''"
-        >
+        <el-submenu v-for="(value, index) of tabsMenuData" :key="index" :index="index + ''">
           <template slot="title">
             <el-checkbox
               v-model="value.check"
@@ -51,18 +32,8 @@
               v-show="false"
             ></el-checkbox>
             {{ item.name }}
-            <button @click="goVideo(item)">视频</button>
           </el-menu-item>
         </el-submenu>
-        <el-menu-item v-else :key="index" :index="index + ''" @click="menuItemClickHandler(value)">
-          <el-checkbox
-            v-model="value.check"
-            class="my-checkbox"
-            @change="changeCheckboxHandler(index)"
-          ></el-checkbox>
-          {{ item.name }}
-          <span v-if="value.innerText">{{ value.innerText }}</span>
-        </el-menu-item>
       </el-menu>
     </div>
   </div>
@@ -73,82 +44,38 @@ export default {
   name: "custom-document",
   data() {
     return {
-      tabsPane: [
-        {
-          label: "区域划分",
-          name: "qyhf"
-        },
-        {
-          label: "形象进度",
-          name: "xxjd"
-        },
-        {
-          label: "行业分类",
-          name: "hyfl"
-        }
-      ],
-      activeTabsPane: "xm", // 当前头部tab索引位置
       queryValue: undefined,
-      tabsMenuData: { qyhf: [], xxjd: [], hyfl: [], xm: [] }
+      tabsMenuData: []
     };
   },
   computed: {
     ...mapState({
-      xmMenu: state => state.xmMenu,
-      djdmMenuQyhf: state => state.djdmMenuQyhf,
-      djdmMenuXxjd: state => state.djdmMenuXxjd,
-      djdmMenuHyfl: state => state.djdmMenuHyfl
-    }),
-    shallTabs() {
-      return this.activeTabsPane != "xm";
-    }
+      xmMenu: state => state.xmMenu
+    })
   },
   watch: {
     xmMenu(n, o) {
-      this.tabsMenuData["xm"] = n;
-    },
-    djdmMenuQyhf(n, o) {
-      this.tabsMenuData["qyhf"] = n;
-    },
-    djdmMenuXxjd(n, o) {
-      this.tabsMenuData["xxjd"] = n;
-    },
-    djdmMenuHyfl(n, o) {
-      this.tabsMenuData["hyfl"] = n;
+      console.log(n);
+      this.tabsMenuData = n;
     }
   },
   created() {
-    this.xmMenu.length && (this.tabsMenuData["xm"] = this.xmMenu);
-    this.djdmMenuQyhf.length && (this.tabsMenuData["qyhf"] = this.djdmMenuQyhf);
-    this.djdmMenuXxjd.length && (this.tabsMenuData["xxjd"] = this.djdmMenuXxjd);
-    this.djdmMenuHyfl.length && (this.tabsMenuData["hyfl"] = this.djdmMenuHyfl);
+    this.xmMenu.length && (this.tabsMenuData = this.xmMenu);
   },
   mounted() {
     this.eventRegister();
   },
   methods: {
-    eventRegister() {
-      this.$hub.$on("topDocumentClick", val => {
-        this.activeTabsPane = val ? "qyhf" : "xm";
-      });
-    },
+    eventRegister() {},
     goVideo(item) {
       window.open("http://120.199.110.111:8989/SPJK/spjkwcj/demo1.html");
     },
-    tabsPaneClickHandler() {
-      this.$hub.$emit("tabsPane-click");
-    },
     changeCheckboxHandler(parentIndex, childrenIndex) {
-      const currentMenu = this.tabsMenuData[this.activeTabsPane];
+      const currentMenu = this.tabsMenuData;
       if (childrenIndex !== null && childrenIndex !== undefined) {
         let parentCheck = currentMenu[parentIndex].check;
         let allCheck = true;
         currentMenu[parentIndex].children.map((item, index) => {
-          // if (index === childrenIndex) {
-          //   item.check
-          //     ? this.$hub.$emit("document-single-choose", item)
-          //     : this.$hub.$emit("document-single-close", item);
-          // }
           if (!item.check) allCheck = false;
         });
         this.$set(currentMenu[parentIndex], "check", allCheck);
@@ -165,9 +92,6 @@ export default {
           }
         });
         this.$set(currentMenu[parentIndex], "check", parentCheck);
-        // parentCheck
-        //   ? this.$hub.$emit("document-single-list-choose", items)
-        //   : this.$hub.$emit("document-single-list-close", items);
         this.$hub.$emit("document-checkbox");
       }
     },
@@ -294,7 +218,9 @@ export default {
   background-color: #1e3663;
   border-color: #1e3663;
 }
-
+.custom-document-content > .my-menu {
+  top: 80px;
+}
 .my-menu,
 .my-menu /deep/ .el-menu {
   background: transparent;

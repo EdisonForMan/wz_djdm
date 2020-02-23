@@ -56,6 +56,9 @@ export default {
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
 }
+.topDocument-inner:last-child{
+  margin-right: 0px!important;
+}
 .current-active {
   color: #ffd068;
 }
