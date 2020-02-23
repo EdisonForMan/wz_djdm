@@ -46,7 +46,8 @@ export default {
           { t: "复工数", v: 0, c: "#54FFA6" }
         ];
         this.buildDataList
-          .filter(item => item.attributes.qy)
+          // .filter(item => item.attributes.qy)
+          .filter(item => item.attributes.id == "1")
           .map(({ attributes }) => {
             const { yyysxms, yyysfgs } = attributes;
             topData[0].v += yyysxms ? parseInt(yyysxms) : 0;
@@ -61,7 +62,8 @@ export default {
           { t: "复工人数", v: 0, c: "#FF4D7A" }
         ];
         this.buildDataList
-          .filter(item => item.attributes.qy)
+          // .filter(item => item.attributes.qy)
+          .filter(item => item.attributes.id == "1")
           .map(({ attributes }) => {
             const { djdmxms, djdmfgs, zrs, fgrs } = attributes;
             topData[0].v += djdmxms ? parseInt(djdmxms) : 0;

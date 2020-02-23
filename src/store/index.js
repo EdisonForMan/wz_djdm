@@ -94,17 +94,17 @@ export default new Vuex.Store({
       const hyflObj = {};
       data.features.map(({ attributes, geometry }) => {
         //  qyhf
-        !qyhfObj[attributes['xmszd']] && (qyhfObj[attributes['xmszd']] = { name: attributes['xmszd'], count: 0, arr: [] })
-        qyhfObj[attributes['xmszd']].arr.push({ name: attributes['NAME'], geometry, attributes })
-        qyhfObj[attributes['xmszd']].count += 1;
+        !qyhfObj[attributes['XMSZD']] && (qyhfObj[attributes['XMSZD']] = { name: attributes['XMSZD'], count: 0, arr: [] })
+        qyhfObj[attributes['XMSZD']].arr.push({ name: attributes['NAME'], geometry, attributes })
+        qyhfObj[attributes['XMSZD']].count += 1;
         //  xxjd
         !xxjdObj[attributes['STATE']] && (xxjdObj[attributes['STATE']] = { name: attributes['STATE'], count: 0, arr: [] })
-        xxjdObj[attributes['STATE']].arr.push({ name: attributes['NAMEE'], geometry, attributes })
+        xxjdObj[attributes['STATE']].arr.push({ name: attributes['NAME'], geometry, attributes })
         xxjdObj[attributes['STATE']].count += 1;
         //  hyfl
-        !hyflObj[attributes['constype2']] && (hyflObj[attributes['constype2']] = { name: attributes['constype2'], count: 0, arr: [] })
-        hyflObj[attributes['constype2']].arr.push({ name: attributes['NAME'], geometry, attributes })
-        hyflObj[attributes['constype2']].count += 1;
+        !hyflObj[attributes['CONSTYPE2']] && (hyflObj[attributes['CONSTYPE2']] = { name: attributes['CONSTYPE2'], count: 0, arr: [] })
+        hyflObj[attributes['CONSTYPE2']].arr.push({ name: attributes['NAME'], geometry, attributes })
+        hyflObj[attributes['CONSTYPE2']].count += 1;
       })
       const qyhf = Object.keys(qyhfObj).map(key => {
         const { name, count, arr } = qyhfObj[key];

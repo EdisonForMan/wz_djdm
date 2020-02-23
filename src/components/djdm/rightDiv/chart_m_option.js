@@ -2,7 +2,7 @@ import echarts from "echarts"
 /** 中部图表 */
 export default {
     title: {
-        text: "单位:     万人",
+        text: "单位:   人",
         textStyle: {
             color: "#fff",
             fontSize: 12,

@@ -30,6 +30,7 @@ import chart_b_option from "./chart_b_option";
 export default {
   data() {
     return {
+      //  无用,先放着
       chart_t: undefined,
       chart_t_data: {},
       chart_m: undefined,
@@ -97,19 +98,35 @@ export default {
           return { ...attributes };
         })
         .filter(item => item.qy);
+      const t_itemStyle_0 = {
+        color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: "#DA414F" },
+          { offset: 1, color: "#FF7783" }
+        ])
+      };
+      const t_itemStyle_1 = {
+        color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: "#FF8146" },
+          { offset: 1, color: "#FFD699" }
+        ])
+      };
       if (this.force == "xm") {
         //  顶部
         const chart_t_arr = _data_
           .sort(this.$util.compare("yyysxms"))
           .reverse();
         const chart_t_option_clone = this.$util.clone(chart_t_option);
-        chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item => item.qy);
+        chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
+          item.qy.replace(/集聚区/g, "")
+        );
         chart_t_option_clone.series[0].data = chart_t_arr.map(
           item => item.yyysfgs
         );
         chart_t_option_clone.series[1].data = chart_t_arr.map(
           item => item.yyysxms
         );
+        chart_t_option_clone.series[0].itemStyle = t_itemStyle_0;
+        chart_t_option_clone.series[1].itemStyle = t_itemStyle_1;
         this.doChartOption({ t: chart_t_option_clone });
       } else {
         //  顶部
@@ -117,13 +134,17 @@ export default {
           .sort(this.$util.compare("djdmxms"))
           .reverse();
         const chart_t_option_clone = this.$util.clone(chart_t_option);
-        chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item => item.qy);
+        chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
+          item.qy.replace(/集聚区/g, "")
+        );
         chart_t_option_clone.series[0].data = chart_t_arr.map(
           item => item.djdmfgs
         );
         chart_t_option_clone.series[1].data = chart_t_arr.map(
           item => item.djdmxms
         );
+        chart_t_option_clone.series[0].itemStyle = t_itemStyle_0;
+        chart_t_option_clone.series[1].itemStyle = t_itemStyle_1;
         //  下部
         const chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
           return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };

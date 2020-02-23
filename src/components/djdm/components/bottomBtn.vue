@@ -5,8 +5,8 @@
         区划图
         <div>
           <ul class="subList">
-            <li @click="$parent.$refs.macroArcgis.switchColorLayer(1)">亿元以上项目五色图</li>
-            <li @click="$parent.$refs.macroArcgis.switchColorLayer(0)">省市重点项目五色图</li>
+            <li @click="doSwitch(1)" :class="{active:forceColor == 1}">亿元以上项目五色图</li>
+            <li @click="doSwitch(0)" :class="{active:forceColor == 0}">省市重点项目五色图</li>
           </ul>
         </div>
       </li>
@@ -33,17 +33,25 @@
 export default {
   name: "bottomBtn",
   data() {
-    return {};
+    return {
+      forceColor: 1
+    };
   },
-  created() {},
-  mounted() {},
-  computed: {},
   methods: {
     xzqh() {},
     yxt() {},
     slt() {},
     ygt() {},
-    clean() {},
+    clean() {
+      const context = this.$parent.$refs.macroArcgis;
+      const id = "colorLayer";
+      context.map.findLayerById(id) &&
+        context.map.remove(context.map.findLayerById(id));
+    },
+    doSwitch(val) {
+      this.forceColor = val;
+      this.$parent.$refs.macroArcgis.switchColorLayer(val);
+    },
     doCircleQuery() {
       this.$parent.$refs.macroArcgis.doCircleQuery();
     },
@@ -89,6 +97,10 @@ export default {
           background-color: #243968;
           border: 1px solid #05fff8;
           cursor: pointer;
+        }
+        .active {
+          background-color: #0754e2;
+          color: #fff;
         }
       }
     }

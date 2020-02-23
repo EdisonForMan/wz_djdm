@@ -25,13 +25,12 @@ export default {
         top: "8%",
         left: "2%",
         right: "0",
-        bottom: "27%"
+        bottom: "25%"
     },
     legend: {
         show: true,
-        right: "5%",
-        orient: "vertical",
-        top: "10%",
+        bottom: "3%",
+        left: "2%",
         textStyle: {
             color: "#fff"
         },

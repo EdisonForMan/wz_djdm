@@ -180,6 +180,7 @@ export default {
 </script>
 <style scoped>
 .custom-document {
+  top: 50px!important;
   width: 296px;
   background: url(./img/document_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
