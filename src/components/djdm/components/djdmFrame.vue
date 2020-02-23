@@ -8,73 +8,73 @@
         <ul>
           <li>
             <span>投资类型</span>
-            <span>{{attributes.FUNDTYPE}}</span>
+            <span>{{attributes.FUNDTYPE || attributes.投资类型}}</span>
           </li>
           <li>
             <span>建设类型大类</span>
-            <span>{{attributes.CONSTYPE}}</span>
+            <span>{{attributes.CONSTYPE || attributes.建设类型大类}}</span>
           </li>
           <li>
             <span>建设类型小类</span>
-            <span>{{attributes.CONSTYPE2}}</span>
+            <span>{{attributes.CONSTYPE2 || attributes.建设类型小类}}</span>
           </li>
           <li>
             <span>建设进度</span>
-            <span>{{attributes.STATE}}</span>
+            <span>{{attributes.STATE || attributes.建设进度}}</span>
           </li>
           <li>
             <span>所在范围</span>
-            <span>{{attributes.XMSZD}}</span>
+            <span>{{attributes.XMSZD || attributes.所在范围}}</span>
           </li>
         </ul>
         <ul>
           <li>
             <span>所属街道</span>
-            <span>{{attributes.XZJD || attributes.xzjd}}</span>
+            <span>{{attributes.XZJD || attributes.所属街道}}</span>
           </li>
           <li>
             <span>计划开工时间</span>
-            <span>{{attributes.CONSYEARB2}}</span>
+            <span>{{attributes.CONSYEARB2 || attributes.计划开工时间}}</span>
           </li>
           <li>
             <span>计划建成时间</span>
-            <span>{{attributes.CONSYEARE2}}</span>
+            <span>{{attributes.CONSYEARE2 || attributes.计划建成时间}}</span>
           </li>
           <li>
             <span>总投资</span>
-            <span>{{attributes.TOTALAMOUNT}}万</span>
+            <span>{{attributes.TOTALAMOUNT || attributes.总投资}}万</span>
           </li>
           <li>
             <span>去年累计投资</span>
-            <span>{{attributes.YEARSUM}}万</span>
+            <span>{{attributes.YEARSUM || attributes.当年累计投资}}万</span>
           </li>
         </ul>
         <ul>
           <li>
             <span>当年投资计划</span>
-            <span>{{attributes.NEXTAMOUNT}}万</span>
+            <span>{{attributes.NEXTAMOUNT || attributes.当年投资计划}}万</span>
           </li>
           <li>
             <span>当年累计投资</span>
-            <span>{{attributes.YEARSUM}}万</span>
+            <span>{{attributes.YEARSUM || attributes.当年累计投资}}万</span>
           </li>
           <li>
             <span>剩余投资额</span>
-            <span>{{attributes.YEARREMAIN}}万</span>
+            <span>{{attributes.YEARREMAIN || attributes.剩余投资额}}万</span>
           </li>
           <li>
             <span>责任单位</span>
-            <span>{{attributes.ZR_DEPT}}</span>
+            <span>{{attributes.ZR_DEPT || attributes.责任单位}}</span>
           </li>
         </ul>
         <ul class="nobreakul">
           <li>
             <span>实施单位:</span>
-            <span>{{attributes.SS_DEPT}}</span>
+            <span>{{attributes.SS_DEPT || attributes.实施单位}}</span>
           </li>
           <li>
             <span>项目范围:</span>
-            <span>{{attributes.ZHB_DEPT}}</span>
+            <span>{{attributes.ZHB_DEPT || attributes.项目范围}}</span>
           </li>
         </ul>
         <div class="scroll">

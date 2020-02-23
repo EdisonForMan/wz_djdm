@@ -8,15 +8,15 @@
     </div>
     <div class="yjfw">
       <div class="right-div-title">
-        <span class="right-div-title-inner">回温人员户籍省份统计</span>
+        <span class="right-div-title-inner">{{force=="xm"?"省市重点建设项目":"回温人员户籍省份统计"}}</span>
       </div>
-      <div id="yjfw-chart" :style="{visibility:chartVisibility}" />
+      <div id="yjfw-chart" />
     </div>
     <div class="wlfg">
       <div class="right-div-title">
-        <span class="right-div-title-inner">外来人口复工区县分布</span>
+        <span class="right-div-title-inner">{{force=="xm"?"亿元以上建设项目":"外来人口复工区县分布"}}</span>
       </div>
-      <div id="wlfg-chart" :style="{visibility:chartVisibility}" />
+      <div id="wlfg-chart" />
     </div>
   </div>
 </template>
@@ -27,6 +27,7 @@ import { mapState } from "vuex";
 import chart_t_option from "./chart_t_option";
 import chart_m_option from "./chart_m_option";
 import chart_b_option from "./chart_b_option";
+import { sszdJson, yyysJson } from "./chart_xm_json";
 export default {
   data() {
     return {
@@ -98,24 +99,12 @@ export default {
           return { ...attributes };
         })
         .filter(item => item.qy);
-      const t_itemStyle_0 = {
-        color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: "#DA414F" },
-          { offset: 1, color: "#FF7783" }
-        ])
-      };
-      const t_itemStyle_1 = {
-        color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: "#FF8146" },
-          { offset: 1, color: "#FFD699" }
-        ])
-      };
       if (this.force == "xm") {
         //  顶部
         const chart_t_arr = _data_
           .sort(this.$util.compare("yyysxms"))
           .reverse();
-        const chart_t_option_clone = this.$util.clone(chart_t_option);
+        const chart_t_option_clone = this.chart_T_fixed();
         chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
           item.qy.replace(/集聚区/g, "")
         );
@@ -123,17 +112,42 @@ export default {
           item => item.yyysfgs
         );
         chart_t_option_clone.series[1].data = chart_t_arr.map(
-          item => item.yyysxms
+          item => item.yyysxms - item.yyysfgs
         );
-        chart_t_option_clone.series[0].itemStyle = t_itemStyle_0;
-        chart_t_option_clone.series[1].itemStyle = t_itemStyle_1;
-        this.doChartOption({ t: chart_t_option_clone });
+        chart_t_option_clone.series[1].label.formatter = param => {
+          return chart_t_arr[param.dataIndex].yyysxms;
+        };
+        //  中部
+        const chart_m_option_clone = this.chart_T_fixed();
+        chart_m_option_clone.xAxis[0].data = sszdJson.name;
+        chart_m_option_clone.series[0].data = sszdJson.fg;
+        chart_m_option_clone.series[1].data = sszdJson.xm.map((item, index) => {
+          return item - sszdJson.fg[index];
+        });
+        chart_m_option_clone.series[1].label.formatter = param => {
+          return sszdJson.xm[param.dataIndex];
+        };
+        //  下部
+        const chart_b_option_clone = this.chart_T_fixed();
+        chart_b_option_clone.xAxis[0].data = yyysJson.name;
+        chart_b_option_clone.series[0].data = yyysJson.fg;
+        chart_b_option_clone.series[1].data = yyysJson.xm.map((item, index) => {
+          return item - yyysJson.fg[index];
+        });
+        chart_b_option_clone.series[1].label.formatter = param => {
+          return yyysJson.xm[param.dataIndex];
+        };
+        this.doChartOption({
+          t: chart_t_option_clone,
+          m: chart_m_option_clone,
+          b: chart_b_option_clone
+        });
       } else {
         //  顶部
         const chart_t_arr = _data_
           .sort(this.$util.compare("djdmxms"))
           .reverse();
-        const chart_t_option_clone = this.$util.clone(chart_t_option);
+        const chart_t_option_clone = this.chart_T_fixed();
         chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
           item.qy.replace(/集聚区/g, "")
         );
@@ -141,10 +155,11 @@ export default {
           item => item.djdmfgs
         );
         chart_t_option_clone.series[1].data = chart_t_arr.map(
-          item => item.djdmxms
+          item => item.djdmxms - item.djdmfgs
         );
-        chart_t_option_clone.series[0].itemStyle = t_itemStyle_0;
-        chart_t_option_clone.series[1].itemStyle = t_itemStyle_1;
+        chart_t_option_clone.series[1].label.formatter = param => {
+          return chart_t_arr[param.dataIndex].yyysxms;
+        };
         //  下部
         const chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
           return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
@@ -161,6 +176,24 @@ export default {
       t && this.chart_t.setOption(t);
       m && this.chart_m.setOption(m);
       b && this.chart_b.setOption(b);
+    },
+    chart_T_fixed() {
+      const t_itemStyle_0 = {
+        color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: "#DA414F" },
+          { offset: 1, color: "#FF7783" }
+        ])
+      };
+      const t_itemStyle_1 = {
+        color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: "#FF8146" },
+          { offset: 1, color: "#FFD699" }
+        ])
+      };
+      const json = this.$util.clone(chart_t_option);
+      json.series[0].itemStyle = t_itemStyle_0;
+      json.series[1].itemStyle = t_itemStyle_1;
+      return json;
     }
   }
 };
@@ -171,7 +204,7 @@ export default {
   height: 100%;
   background: url(../img/rightDiv_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
-  padding: 0 26px;
+  padding: 20px 26px;
   box-sizing: border-box;
 }
 .gqx {

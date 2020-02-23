@@ -1,5 +1,3 @@
-import echarts from "echarts"
-const $echarts = echarts;
 /** 各区县 */
 export default {
     title: {
@@ -25,7 +23,7 @@ export default {
         top: "8%",
         left: "2%",
         right: "0",
-        bottom: "25%"
+        bottom: "30%"
     },
     legend: {
         show: true,
@@ -34,7 +32,7 @@ export default {
         textStyle: {
             color: "#fff"
         },
-        data: [{ name: "总工地数" }, { name: "复工工地数" }]
+        data: [{ name: "未复工工地数" }, { name: "复工工地数" }]
     },
     xAxis: [
         {
@@ -103,17 +101,11 @@ export default {
             label: {
                 show: false,
             },
-            // itemStyle: {
-            //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            //         { offset: 0, color: "#DA414F" },
-            //         { offset: 1, color: "#FF7783" }
-            //     ])
-            // },
             barWidth: 16,
             data: []
         },
         {
-            name: "总工地数",
+            name: "未复工工地数",
             type: "bar",
             stack: "one",
             label: {
@@ -121,15 +113,10 @@ export default {
                 position: "top",
                 color: "#fff",
                 formatter: function (param) {
+                    console.log(param)
                     return param.value;
                 }
             },
-            // itemStyle: {
-            //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            //         { offset: 0, color: "#FF8146" },
-            //         { offset: 1, color: "#FFD699" }
-            //     ])
-            // },
             barWidth: 16,
             data: []
         }
