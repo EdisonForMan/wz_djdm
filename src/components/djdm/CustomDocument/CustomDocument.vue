@@ -51,6 +51,7 @@
               v-show="false"
             ></el-checkbox>
             {{ item.name }}
+            <button @click="goVideo(item)">视频</button>
           </el-menu-item>
         </el-submenu>
         <el-menu-item v-else :key="index" :index="index + ''" @click="menuItemClickHandler(value)">
@@ -131,6 +132,9 @@ export default {
         this.activeTabsPane = val ? "qyhf" : "xm";
       });
     },
+    goVideo(item) {
+      window.open("http://120.199.110.111:8989/SPJK/spjkwcj/demo1.html");
+    },
     tabsPaneClickHandler() {
       this.$hub.$emit("tabsPane-click");
     },
@@ -180,7 +184,7 @@ export default {
 </script>
 <style scoped>
 .custom-document {
-  top: 50px!important;
+  top: 50px !important;
   width: 296px;
   background: url(./img/document_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
@@ -324,9 +328,22 @@ export default {
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #fff !important;
+  position: relative;
 }
 .children-menu-item:hover {
   background: rgba(19, 88, 183, 0.84);
+}
+.children-menu-item > button {
+  position: absolute;
+  right: 10px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 8px;
+  top: 12px;
+  background-color: #243968;
+  border: 1px solid #05fff8;
+  color: #fff;
+  cursor: pointer;
 }
 .my-menu /deep/ .el-submenu .children-menu-item:last-child {
   border-bottom: none;
