@@ -14,7 +14,7 @@ import { mapState } from "vuex";
 
 export default {
   data: () => {
-    return { TOP_DATA: [], force: "xm" };
+    return { TOP_DATA: [] };
   },
   computed: {
     ...mapState({
@@ -40,39 +40,19 @@ export default {
       });
     },
     doTopData() {
-      if (this.force == "xm") {
-        const topData = [
-          { t: "项目数", v: 0, c: "#FF835F" },
-          { t: "复工数", v: 0, c: "#54FFA6" }
-        ];
-        this.buildDataList
-          // .filter(item => item.attributes.qy)
-          .filter(item => item.attributes.id == "1")
-          .map(({ attributes }) => {
-            const { yyysxms, yyysfgs } = attributes;
-            topData[0].v += yyysxms ? parseInt(yyysxms) : 0;
-            topData[1].v += yyysxms ? parseInt(yyysfgs) : 0;
-          });
-        this.TOP_DATA = topData;
-      } else {
-        const topData = [
-          { t: "项目数", v: 0, c: "#FF835F" },
-          { t: "复工数", v: 0, c: "#54FFA6" },
-          { t: "总人数", v: 0, c: "#BD70FF" },
-          { t: "复工人数", v: 0, c: "#FF4D7A" }
-        ];
-        this.buildDataList
-          // .filter(item => item.attributes.qy)
-          .filter(item => item.attributes.id == "1")
-          .map(({ attributes }) => {
-            const { djdmxms, djdmfgs, zrs, fgrs } = attributes;
-            topData[0].v += djdmxms ? parseInt(djdmxms) : 0;
-            topData[1].v += djdmfgs ? parseInt(djdmfgs) : 0;
-            topData[2].v += zrs ? parseInt(zrs) : 0;
-            topData[3].v += fgrs ? parseInt(fgrs) : 0;
-          });
-        this.TOP_DATA = topData;
-      }
+      const topData = [
+        { t: "规上企业数", v: 0, c: "#FF835F" },
+        { t: "规上企业复工数", v: 0, c: "#54FFA6" }
+      ];
+      this.buildDataList
+        // .filter(item => item.attributes.qy)
+        .filter(item => item.attributes.id == "1")
+        .map(({ attributes }) => {
+          const { yyysxms, yyysfgs } = attributes;
+          topData[0].v += yyysxms ? parseInt(yyysxms) : 0;
+          topData[1].v += yyysxms ? parseInt(yyysfgs) : 0;
+        });
+      this.TOP_DATA = topData;
     }
   }
 };
@@ -81,11 +61,11 @@ export default {
 <style lang="less" scoped>
 .topDateDiv {
   position: absolute;
-  top: 50px;
+  top: 120px;
   width: 100%;
 }
 .topDateDiv ul li {
-  width: 120px;
+  width: 140px;
   margin: auto;
   display: inline-block;
   background-color: #1b45a7;

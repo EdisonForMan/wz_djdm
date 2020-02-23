@@ -1,21 +1,24 @@
 <template>
   <div class="Com_content Djdm">
-    <div class="Com_map">
+    <div class="Com_map" v-if="shallActive == 2">
       <commonArcgis id="macroArcgis" ref="macroArcgis" />
     </div>
-    <div class="Com_container" style="z-index: 10;">
+    <div class="Com_container" style="z-index: 10;" v-if="shallActive == 2">
       <div id="fy-rightDiv">
         <rightDiv />
       </div>
     </div>
     <topDocument />
     <CustomDocument
+      v-if="shallActive == 2"
       ref="leftMenu"
       style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
     />
-    <xzDate />
-    <bottomBtn />
-    <topDate />
+    <xzDate v-if="shallActive == 2" />
+    <bottomBtn v-if="shallActive == 2" />
+    <topDate v-if="shallActive == 2" />
+    <yqImg v-if="shallActive == 0" />
+    <fgImg v-if="shallActive == 1" />
   </div>
 </template>
 
@@ -27,6 +30,8 @@
  * 1.点击勾选左侧,右侧列表Object[]的替换
  * 2.点击列表<RightDiv>,地图<commonArcgis>定位并显示内容
  */
+import yqImg from "./components/yqImg";
+import fgImg from "./components/fgImg";
 import commonArcgis from "./Arcgis.vue";
 import bottomBtn from "./components/bottomBtn";
 import rightDiv from "./rightDiv/rightDiv.vue";
@@ -38,9 +43,11 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "Djdm",
   data() {
-    return {};
+    return { shallActive: 0 };
   },
   components: {
+    yqImg,
+    fgImg,
     topDocument,
     CustomDocument,
     commonArcgis,
@@ -65,6 +72,7 @@ export default {
     !this.djdmBuildSiteList.length && this.fetchDjdmBuildSiteList();
     !this.buildDataList.length && this.fetchBuildDataList();
     !this.backToWzList.length && this.fetchBackToWzList();
+    this.eventRegister();
   },
   methods: {
     ...mapActions([
@@ -72,7 +80,13 @@ export default {
       "fetchDjdmBuildSiteList",
       "fetchBuildDataList",
       "fetchBackToWzList"
-    ])
+    ]),
+    eventRegister() {
+      this.$hub.$on("topDocumentClick", val => {
+        console.log(val);
+        this.shallActive = val;
+      });
+    }
   }
 };
 </script>

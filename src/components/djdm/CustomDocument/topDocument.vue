@@ -4,12 +4,17 @@
       class="topDocument-inner"
       :class="[active == 0 ? 'current-active' : '']"
       @click="topDocumentClick(0)"
-    >重点项目</div>
+    >疫情风险图</div>
     <div
       class="topDocument-inner"
       :class="[active == 1 ? 'current-active' : '']"
       @click="topDocumentClick(1)"
-    >大建大美</div>
+    >复工风险图</div>
+    <div
+      class="topDocument-inner"
+      :class="[active == 2 ? 'current-active' : '']"
+      @click="topDocumentClick(2)"
+    >企业复工图</div>
   </div>
 </template>
 <script>
@@ -22,7 +27,6 @@ export default {
   },
   methods: {
     topDocumentClick(val) {
-      // 0 重点项目 1 大建大美
       this.active = val;
       this.$hub.$emit("topDocumentClick", val);
     }
@@ -32,8 +36,9 @@ export default {
 <style scoped>
 .topDocument {
   position: absolute;
-  top: 10px;
+  top: 80px;
   left: 50%;
+  z-index: 1001;
   transform: translateX(-50%);
   overflow: hidden;
 }

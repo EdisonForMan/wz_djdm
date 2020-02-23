@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <!-- <header :class="`app_header `" v-if="showHeader">
-      <div class="app_icon" style>温州市新冠肺炎防控作战地图</div>
-      <div class="app_toptab_position app_toptab_normal">
+    <header :class="`app_header `" v-if="showHeader">
+      <div class="app_icon" style>乐清市工业复工复产大数据平台</div>
+      <!-- <div class="app_toptab_position app_toptab_normal">
         <ul class="app_toptab">
           <li
             v-for="(item,index) in toptab"
@@ -11,15 +11,8 @@
             @click="$goRoute(item.route),selected(index)"
           >{{item.label}}</li>
         </ul>
-        <p style="color: #23c9f3;font-size: 18px;font-weight: bolder;">截至{{SHI_QU_DATA.updateTime}}</p>
-        <p style="position: absolute;right: 15px;top: 15px;font-size: 13px;text-align: right;">
-            温州市大数据发展管理局 <br>
-            温州市卫生健康委员会 <br>
-            温州设计集团勘测院
-        </p>
-        <p style="position: absolute;right: 15px;top: 67px;font-size: 13px;">{{time}}</p>
-      </div>
-    </header>-->
+      </div> -->
+    </header>
     <div class="app_container">
       <router-view ref="router" />
       <transition name="frame"></transition>
@@ -43,7 +36,7 @@ export default {
       ],
       current: 1,
       time: " ",
-      showHeader: false // 显示头部
+      showHeader: true // 显示头部
     };
   },
   mounted() {

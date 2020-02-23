@@ -6,18 +6,6 @@
       </div>
       <div id="gqx-chart"></div>
     </div>
-    <div class="yjfw">
-      <div class="right-div-title">
-        <span class="right-div-title-inner">{{force=="xm"?"省市重点建设项目":"回温人员户籍省份统计"}}</span>
-      </div>
-      <div id="yjfw-chart" />
-    </div>
-    <div class="wlfg">
-      <div class="right-div-title">
-        <span class="right-div-title-inner">{{force=="xm"?"亿元以上建设项目":"外来人口复工区县分布"}}</span>
-      </div>
-      <div id="wlfg-chart" />
-    </div>
   </div>
 </template>
 
@@ -25,30 +13,15 @@
 /* eslint-disable */
 import { mapState } from "vuex";
 import chart_t_option from "./chart_t_option";
-import chart_m_option from "./chart_m_option";
-import chart_b_option from "./chart_b_option";
-import { sszdJson, yyysJson } from "./chart_xm_json";
 export default {
   data() {
-    return {
-      //  无用,先放着
-      chart_t: undefined,
-      chart_t_data: {},
-      chart_m: undefined,
-      chart_m_data: {},
-      chart_b: undefined,
-      chart_b_data: {},
-      force: "xm"
-    };
+    return {};
   },
   computed: {
     ...mapState({
       buildDataList: state => state.buildDataList,
       backToWzList: state => state.backToWzList
-    }),
-    chartVisibility() {
-      return this.force == "xm" ? "hidden" : "visible";
-    }
+    })
   },
   watch: {
     buildDataList(n, o) {
@@ -63,35 +36,12 @@ export default {
     this.chartRegister();
     if (this.buildDataList.length) {
       this.doChartData();
-      this.doChartExtra();
     }
   },
   methods: {
-    eventRegister() {
-      this.$hub.$on("topDocumentClick", val => {
-        this.force = val ? "djdm" : "xm";
-        this.$nextTick(() => {
-          this.doChartData();
-          this.doChartExtra();
-        });
-      });
-    },
+    eventRegister() {},
     chartRegister() {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
-      this.chart_m = this.$echarts.init(document.getElementById("yjfw-chart"));
-      this.chart_b = this.$echarts.init(document.getElementById("wlfg-chart"));
-    },
-    doChartExtra() {
-      if (this.force == "xm") return;
-      const _data_ = this.backToWzList
-        .map(({ attributes }) => {
-          return { ...attributes };
-        })
-        .filter(item => item.djdmryhj);
-      const chart_m_option_clone = this.$util.clone(chart_m_option);
-      chart_m_option_clone.xAxis.data = _data_.map(item => item.djdmryhj);
-      chart_m_option_clone.series[0].data = _data_.map(item => item.djdmrs);
-      this.doChartOption({ m: chart_m_option_clone });
     },
     doChartData() {
       const _data_ = this.buildDataList
@@ -99,83 +49,27 @@ export default {
           return { ...attributes };
         })
         .filter(item => item.qy);
-      if (this.force == "xm") {
-        //  顶部
-        const chart_t_arr = _data_
-          .sort(this.$util.compare("yyysxms"))
-          .reverse();
-        const chart_t_option_clone = this.chart_T_fixed();
-        chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
-          item.qy.replace(/集聚区/g, "")
-        );
-        chart_t_option_clone.series[0].data = chart_t_arr.map(
-          item => item.yyysfgs
-        );
-        chart_t_option_clone.series[1].data = chart_t_arr.map(
-          item => item.yyysxms - item.yyysfgs
-        );
-        chart_t_option_clone.series[1].label.formatter = param => {
-          return chart_t_arr[param.dataIndex].yyysxms;
-        };
-        //  中部
-        const chart_m_option_clone = this.chart_T_fixed();
-        chart_m_option_clone.xAxis[0].data = sszdJson.name;
-        chart_m_option_clone.series[0].data = sszdJson.fg;
-        chart_m_option_clone.series[1].data = sszdJson.xm.map((item, index) => {
-          return item - sszdJson.fg[index];
-        });
-        chart_m_option_clone.series[1].label.formatter = param => {
-          return sszdJson.xm[param.dataIndex];
-        };
-        //  下部
-        const chart_b_option_clone = this.chart_T_fixed();
-        chart_b_option_clone.xAxis[0].data = yyysJson.name;
-        chart_b_option_clone.series[0].data = yyysJson.fg;
-        chart_b_option_clone.series[1].data = yyysJson.xm.map((item, index) => {
-          return item - yyysJson.fg[index];
-        });
-        chart_b_option_clone.series[1].label.formatter = param => {
-          return yyysJson.xm[param.dataIndex];
-        };
-        this.doChartOption({
-          t: chart_t_option_clone,
-          m: chart_m_option_clone,
-          b: chart_b_option_clone
-        });
-      } else {
-        //  顶部
-        const chart_t_arr = _data_
-          .sort(this.$util.compare("djdmxms"))
-          .reverse();
-        const chart_t_option_clone = this.chart_T_fixed();
-        chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
-          item.qy.replace(/集聚区/g, "")
-        );
-        chart_t_option_clone.series[0].data = chart_t_arr.map(
-          item => item.djdmfgs
-        );
-        chart_t_option_clone.series[1].data = chart_t_arr.map(
-          item => item.djdmxms - item.djdmfgs
-        );
-        chart_t_option_clone.series[1].label.formatter = param => {
-          return chart_t_arr[param.dataIndex].yyysxms;
-        };
-        //  下部
-        const chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
-          return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
-        });
-        const chart_b_option_clone = this.$util.clone(chart_b_option);
-        chart_b_option_clone.series[0].data = chart_b_arr;
-        this.doChartOption({
-          t: chart_t_option_clone,
-          b: chart_b_option_clone
-        });
-      }
+      //  顶部
+      const chart_t_arr = _data_.sort(this.$util.compare("yyysxms")).reverse();
+      const chart_t_option_clone = this.chart_T_fixed();
+      chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
+        item.qy.replace(/集聚区/g, "")
+      );
+      chart_t_option_clone.series[0].data = chart_t_arr.map(
+        item => item.yyysfgs
+      );
+      chart_t_option_clone.series[1].data = chart_t_arr.map(
+        item => item.yyysxms - item.yyysfgs
+      );
+      chart_t_option_clone.series[1].label.formatter = param => {
+        return chart_t_arr[param.dataIndex].yyysxms;
+      };
+      this.doChartOption({
+        t: chart_t_option_clone
+      });
     },
-    doChartOption({ t, m, b }) {
+    doChartOption({ t }) {
       t && this.chart_t.setOption(t);
-      m && this.chart_m.setOption(m);
-      b && this.chart_b.setOption(b);
     },
     chart_T_fixed() {
       const t_itemStyle_0 = {
