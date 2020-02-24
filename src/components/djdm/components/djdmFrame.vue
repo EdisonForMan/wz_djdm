@@ -78,7 +78,6 @@ export default {
   methods: {
     eventRegister() {
       this.$hub.$on("menu-item-click", ({ attributes }) => {
-        console.log(attributes)
         this.attributes = attributes;
       });
     }

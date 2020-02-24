@@ -15,7 +15,7 @@
       style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
     />
     <xzDate v-if="shallActive == 2" />
-    <bottomBtn v-if="shallActive == 2" />
+    <bottomBtn v-if="false" />
     <topDate v-if="shallActive == 2" />
     <yqImg v-if="shallActive == 0" />
     <fgImg v-if="shallActive == 1" />
