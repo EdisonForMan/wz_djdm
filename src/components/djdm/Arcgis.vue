@@ -101,7 +101,7 @@ export default {
       });
     },
     goloaction({ x, y }) {
-      this.view.goTo({ center: [x, y], zoom: 16 });
+      this.view.goTo({ center: [x, y] });
     },
     switchColorLayer(val) {
       val ? doYqStreetLayer(this) : doSzColorLayer(this);
