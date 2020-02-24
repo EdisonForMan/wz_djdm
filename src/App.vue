@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <header :class="`app_header `" v-if="showHeader">
-      <div class="app_icon" style>乐清市工业复工复产大数据平台</div>
+    <header :class="`app_header `"
+            v-if="showHeader">
+      <div class="app_icon"
+           style>乐清市工业复工复产大数据平台</div>
       <!-- <div class="app_toptab_position app_toptab_normal">
         <ul class="app_toptab">
           <li
@@ -27,6 +29,7 @@
 import router from "@/router";
 import { OPTION, GET_ARCGIS_TOKEN, WRT_config } from "./components/common/Tmap";
 import { fixMenuList } from "./components/common/user/menuHash";
+import { Store } from "vuex";
 export default {
   name: "app",
   data() {
