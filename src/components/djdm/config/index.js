@@ -5,7 +5,7 @@
 
 export const SERVER = "http://172.20.89.88:5001/s/yq/";
 /** 范围查询 */
-export const buildSiteIdentify = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/yq/MapServer"
+export const buildSiteIdentify = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/yqgsqy/MapServer"
 /** 重点项目工地点 */
 export const xmBuildSiteURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/yq/MapServer/0";
 /** 亿元以上项目五色图 */
@@ -24,4 +24,8 @@ export const backToWzURL = "http://172.20.83.215:6080/arcgis/rest/services/SYQ/H
 /** 乐清企业点 */
 export const yqCompanyURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/yq/MapServer/0";
 /** 乐清街镇 */
-export const yqStreetURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/yq/MapServer/1"
+export const yqStreetURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/YQ_XZQH/MapServer/1"
+/** 乐清社区 */
+export const yqSQURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/YQ_XZQH/MapServer/2"
+/** 乐清县市区网格 */
+export const yqXSQURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/YQ_XZQH/MapServer/0"

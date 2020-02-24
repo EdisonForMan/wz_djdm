@@ -1,128 +1,104 @@
 /* eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
-import { xmBuildSiteURL, djdmBuildSiteURL, buildDataURL, backToWzURL } from "@/components/djdm/config/index"
+import { xmBuildSiteURL, yqStreetURL, yqSQURL, yqXSQURL } from "@/components/djdm/config/index"
 Vue.use(Vuex);
 import { fetchArcgisServer } from "@/api/beans/space";
 export default new Vuex.Store({
   state: {
     /** 原始地图数据 */
-    xmBuildSiteList: [],  //  重点项目工地点
-    djdmBuildSiteList: [],  //  大建大美工地点
-    /** 指标数据 */
-    buildDataList: [],
-    backToWzList: [],
+    xmBuildSiteList: [],  //  企业数据
+    xsqList: [],
+    streetList: [],
+    sqList: [],
     /** 菜单数组 */
-    xmMenu: [],
-    djdmMenuQyhf: [],
-    djdmMenuXxjd: [],
-    djdmMenuHyfl: []
+    xmMenu: [{ name: "规上企业复工复产", innerText: undefined, check: true, children: [] },
+    { name: "县市区网格", innerText: undefined, check: true, children: [] },
+    { name: "乡镇街道功能区", innerText: undefined, check: true, children: [] },
+    { name: "村社网络", innerText: undefined, check: true, children: [] }],
   },
   mutations: {
-    /**
-     * 修改重点项目工地点
-     */
-    updateXmBuildSiteList(state, { list = [], menu = [] }) {
+    updateXmBuildSiteList(state, { list = [], menu }) {
       state.xmBuildSiteList = list;
-      state.xmMenu = menu;
+      state.xmMenu[0] = menu;
     },
-    /**
-     * 修改大建大美工地点
-     */
-    updateDjdmBuildSiteList(state, { list = [], qyhf = [], xxjd = [], hyfl = [] }) {
-      state.djdmBuildSiteList = list;
-      state.djdmMenuQyhf = qyhf;
-      state.djdmMenuXxjd = xxjd;
-      state.djdmMenuHyfl = hyfl;
+    updateXsqList(state, { list = [], menu }) {
+      state.xsqList = list;
+      state.xmMenu[1] = menu;
     },
-    /**
-     * 修改指标数据
-     */
-    updateBuildDataList(state, data) {
-      state.buildDataList = data;
+    updateStreetList(state, { list = [], menu }) {
+      state.streetList = list;
+      state.xmMenu[2] = menu;
     },
-    /**
-     * 修改回温数据
-     */
-    updateBackToWzList(state, data) {
-      state.backToWzList = data;
+    updateSqList(state, { list = [], menu }) {
+      state.sqList = list;
+      state.xmMenu[3] = menu;
     },
   },
   actions: {
-    async fetchBackToWzList({ state, commit }) {
-      const { data } = await fetchArcgisServer({ url: backToWzURL });
-      commit('updateBackToWzList', data.features)
-    },
-    async fetchBuildDataList({ state, commit }) {
-      const { data } = await fetchArcgisServer({ url: buildDataURL });
-      const _data_ = data.features.map(item => {
-        const _item_ = item;
-        _item_.attributes.yyysxms = parseInt(_item_.attributes.yyysxms);
-        _item_.attributes.djdmxms = parseInt(_item_.attributes.djdmxms)
-        return _item_;
-      })
-      commit('updateBuildDataList', _data_)
-    },
     /**
-     * xmbuild fetch
+     * 规上企业复工复产
      * @param {*} param0 
      * @param {*} option 
      */
     async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
-      const buildS = {
-        规上企业复工复产: { name: "规上企业复工复产", count: 0, arr: [] },
-        县市区网格: { name: "县市区网格", count: 0, arr: [] },
-        街道网格: { name: "街道网格", count: 0, arr: [] },
-        村社网格: { name: "村社网格", count: 0, arr: [] }
-      };
+      const buildS = { name: "规上企业复工复产", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
-        buildS["规上企业复工复产"].arr.push({ name: attributes['qymc'], geometry, attributes })
-        buildS["规上企业复工复产"].count += 1;
+        buildS.arr.push({ name: attributes['qymc'], geometry, attributes })
+        buildS.count += 1;
       })
-      const menu = Object.keys(buildS).map(key => {
-        const { name, count, arr } = buildS[key];
-        return { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes } }) }
-      })
+      const { name, count, arr } = buildS;
+      const menu = { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes, type: "point" } }) }
       commit('updateXmBuildSiteList', { list: data.features, menu })
     },
     /**
-     * djdm fetch
+     * 规上企业复工复产
      * @param {*} param0 
      * @param {*} option 
      */
-    async fetchDjdmBuildSiteList({ state, commit }) {
-      const { data } = await fetchArcgisServer({ url: djdmBuildSiteURL });
-      const qyhfObj = {};
-      const xxjdObj = {};
-      const hyflObj = {};
+    async fetchXsqList({ state, commit }) {
+      const { data } = await fetchArcgisServer({ url: yqXSQURL });
+      const buildS = { name: "县市区网格", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
-        //  qyhf
-        !qyhfObj[attributes['XMSZD']] && (qyhfObj[attributes['XMSZD']] = { name: attributes['XMSZD'], count: 0, arr: [] })
-        qyhfObj[attributes['XMSZD']].arr.push({ name: attributes['NAME'], geometry, attributes })
-        qyhfObj[attributes['XMSZD']].count += 1;
-        //  xxjd
-        !xxjdObj[attributes['STATE']] && (xxjdObj[attributes['STATE']] = { name: attributes['STATE'], count: 0, arr: [] })
-        xxjdObj[attributes['STATE']].arr.push({ name: attributes['NAME'], geometry, attributes })
-        xxjdObj[attributes['STATE']].count += 1;
-        //  hyfl
-        !hyflObj[attributes['CONSTYPE2']] && (hyflObj[attributes['CONSTYPE2']] = { name: attributes['CONSTYPE2'], count: 0, arr: [] })
-        hyflObj[attributes['CONSTYPE2']].arr.push({ name: attributes['NAME'], geometry, attributes })
-        hyflObj[attributes['CONSTYPE2']].count += 1;
+        buildS.arr.push({ name: attributes['qymc'], geometry, attributes })
+        buildS.count += 1;
       })
-      const qyhf = Object.keys(qyhfObj).map(key => {
-        const { name, count, arr } = qyhfObj[key];
-        return { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes } }) }
-      })
-      const xxjd = Object.keys(xxjdObj).map(key => {
-        const { name, count, arr } = xxjdObj[key];
-        return { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes } }) }
-      })
-      const hyfl = Object.keys(hyflObj).map(key => {
-        const { name, count, arr } = hyflObj[key];
-        return { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes } }) }
-      })
-      commit('updateDjdmBuildSiteList', { list: data.features, qyhf, xxjd, hyfl })
+      const { name, count, arr } = buildS;
+      const menu = { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes, type: "point" } }) }
+      commit('updateXsqList', { list: data.features, menu })
     },
+    /**
+     * 规上企业复工复产
+     * @param {*} param0 
+     * @param {*} option 
+     */
+    async fetchStreetList({ state, commit }) {
+      const { data } = await fetchArcgisServer({ url: yqStreetURL });
+      const buildS = { name: "乡镇街道功能区", count: 0, arr: [] };
+      data.features.map(({ attributes, geometry }) => {
+        buildS.arr.push({ name: attributes['qymc'], geometry, attributes })
+        buildS.count += 1;
+      })
+      const { name, count, arr } = buildS;
+      const menu = { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes, type: "point" } }) }
+      commit('updateStreetList', { list: data.features, menu })
+    },
+    /**
+     * 规上企业复工复产
+     * @param {*} param0 
+     * @param {*} option 
+     */
+    async fetchSqList({ state, commit }) {
+      const { data } = await fetchArcgisServer({ url: yqSQURL });
+      const buildS = { name: "村社网络", count: 0, arr: [] };
+      data.features.map(({ attributes, geometry }) => {
+        buildS.arr.push({ name: attributes['qymc'], geometry, attributes })
+        buildS.count += 1;
+      })
+      const { name, count, arr } = buildS;
+      const menu = { name, innerText: ` (${count})`, check: true, children: arr.map(i => { return { name: i.name, geometry: i.geometry, attributes: i.attributes, type: "point" } }) }
+      commit('updateSqList', { list: data.features, menu })
+    }
   }
 });

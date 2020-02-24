@@ -14,7 +14,8 @@ import { OPTION, spatialReference, IMAGELAYER } from "@/components/common/Tmap";
 import {
   doPointLayer,
   doYqStreetLayer,
-  doSzColorLayer,
+  doYqXSQLayer,
+  doYqXqLayer,
   fetchPoint
 } from "./Arcgis.js";
 import djdmFrame from "./components/djdmFrame.vue";
@@ -34,7 +35,9 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    // await doYqStreetLayer(this);
+    doYqStreetLayer(this);
+    doYqXSQLayer(this);
+    doYqXqLayer(this);
     doPointLayer(this);
   },
   methods: {
@@ -104,9 +107,6 @@ export default {
     },
     goloaction({ x, y }) {
       this.view.goTo({ center: [x, y] });
-    },
-    switchColorLayer(val) {
-      val ? doYqStreetLayer(this) : doSzColorLayer(this);
     }
   }
 };

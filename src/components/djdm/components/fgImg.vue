@@ -1,10 +1,10 @@
 <template>
   <div class="fgimg">
     <div>
-      <img :src="image" @click="goPicture" />
+      <img :src="image1" @click="goPicture" />
     </div>
     <div>
-      <img :src="image" @click="goPicture" />
+      <img :src="image2" @click="goPicture" />
     </div>
   </div>
 </template>
@@ -13,7 +13,8 @@
 export default {
   data() {
     return {
-      image: require("./img/demo.jpg")
+      image1: require("./img/yqImgleft.jpg"),
+      image2: require("./img/yqImgright.jpg")
     };
   },
   methods: {

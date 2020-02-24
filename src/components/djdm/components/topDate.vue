@@ -16,16 +16,6 @@ export default {
   data: () => {
     return { TOP_DATA: [] };
   },
-  computed: {
-    ...mapState({
-      buildDataList: state => state.buildDataList
-    })
-  },
-  watch: {
-    buildDataList(n, o) {
-      this.doTopData();
-    }
-  },
   mounted() {
     this.eventRegister();
     this.doTopData();
@@ -41,17 +31,9 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上企业数", v: 1359, c: "#FF835F" },
-        { t: "规上企业复工数", v: 1236, c: "#54FFA6" }
+        { t: "规上工业企业", v: 1359, c: "#FF835F" },
+        { t: "规上工业企业复工数", v: 1236, c: "#54FFA6" }
       ];
-      // this.buildDataList
-      //   // .filter(item => item.attributes.qy)
-      //   .filter(item => item.attributes.id == "1")
-      //   .map(({ attributes }) => {
-      //     const { yyysxms, yyysfgs } = attributes;
-      //     topData[0].v += yyysxms ? parseInt(yyysxms) : 0;
-      //     topData[1].v += yyysxms ? parseInt(yyysfgs) : 0;
-      //   });
       this.TOP_DATA = topData;
     }
   }
@@ -65,7 +47,7 @@ export default {
   width: 100%;
 }
 .topDateDiv ul li {
-  width: 140px;
+  width: 170px;
   margin: auto;
   display: inline-block;
   background-color: #1b45a7;

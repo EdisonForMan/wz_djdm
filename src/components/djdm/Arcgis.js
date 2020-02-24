@@ -1,11 +1,6 @@
-import { SERVER, xmBuildSiteURL, yqStreetURL, ssBuildColorURL, djdmBuildSiteURL, buildSiteIdentify } from "./config/index";
+import { SERVER, xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, buildSiteIdentify } from "./config/index";
 import { loadModules } from "esri-loader";
-const _URIS_ = {
-    xm: [xmBuildSiteURL, "XMSZD", "SFYFG", "是"],
-    qyhf: [djdmBuildSiteURL, "xmszd", "sffg", "是"],
-    xxjd: [djdmBuildSiteURL, "STATE", "sffg", "是"],
-    hyfl: [djdmBuildSiteURL, "constype2", "sffg", "是"]
-}
+
 /**
  * FeatureLayer
  * @param {*} context 
@@ -32,10 +27,10 @@ const doMassImageLayer = (context, { url, id }) => {
     context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
     return new Promise((resolve, reject) => {
         loadModules(
-            ["esri/layers/MapImageLayer"]
-        ).then(([MapImageLayer]) => {
+            ["esri/layers/FeatureLayer"]
+        ).then(([FeatureLayer]) => {
             const option = { url, id, opacity: 0.8 }
-            const img = new MapImageLayer(option);
+            const img = new FeatureLayer(option);
             context.map.add(img, 1)
             resolve(true);
         })
@@ -43,18 +38,25 @@ const doMassImageLayer = (context, { url, id }) => {
 }
 
 /**
- * 亿元以上项目五色图
+ * 街道网格
  * @param {*} context 
  */
 export const doYqStreetLayer = (context) => {
-    doMassImageLayer(context, { url: yqStreetURL, id: "colorLayer" })
+    doMassImageLayer(context, { url: yqStreetURL, id: "streetLayer" })
 }
 /**
- * 省市重点项目五色图
+ * 县市区网格
  * @param {*} context 
  */
-export const doSzColorLayer = (context) => {
-    doMassImageLayer(context, { url: ssBuildColorURL, id: "colorLayer" })
+export const doYqXSQLayer = (context) => {
+    doMassImageLayer(context, { url: yqXSQURL, id: "xsqLayer" })
+}
+/**
+ * 社区网格
+ * @param {*} context 
+ */
+export const doYqXqLayer = (context) => {
+    doMassImageLayer(context, { url: yqSQURL, id: "sqLayer" })
 }
 
 /**
@@ -76,7 +78,7 @@ export const fetchPoint = (mapPoint, view, fn) => {
     loadModules(
         ["esri/tasks/IdentifyTask", "esri/tasks/support/IdentifyParameters"]
     ).then(async ([IdentifyTask, IdentifyParameters]) => {
-        const identifyTask = new IdentifyTask("http://172.20.89.87:6080/arcgis/rest/services/yueqing/yqgsqy/MapServer");
+        const identifyTask = new IdentifyTask(buildSiteIdentify);
         const params = new IdentifyParameters();
         params.layerIds = [0]
         params.tolerance = 5;

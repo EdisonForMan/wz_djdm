@@ -157,13 +157,23 @@ export default {
       padding-left: 10px;
     }
     /** 排列条目 */
+    ul::-webkit-scrollbar {
+      border: 1px solid rgba(109, 225, 255, 1);
+      width: 6px;
+    }
+    ul::-webkit-scrollbar-thumb {
+      background: rgba(109, 225, 255, 1);
+      border-radius: 3px;
+    }
     ul {
       clear: both;
-      overflow: hidden;
+      overflow-y: scroll;
       padding: 10px 0;
+      height: 450px;
+
       > li {
         list-style: none;
-        width: 49.9%;
+        width: 100%;
         display: inline-block;
         border-bottom: 1px #979797 solid;
         vertical-align: super;
@@ -172,8 +182,8 @@ export default {
         span {
           word-break: break-all;
           display: block;
-          line-height: 24px;
-          font-size: 14px;
+          line-height: 28px;
+          font-size: 16px;
           font-weight: 400;
           text-align: left;
         }
@@ -181,7 +191,7 @@ export default {
           color: rgba(255, 255, 255, 1);
         }
         > span:last-child {
-          font-size: 12px;
+          font-size: 14px;
           color: rgba(255, 208, 86, 1);
         }
       }

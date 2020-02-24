@@ -1,24 +1,26 @@
 <template>
   <div class="yqimg">
     <div>
-      <img :src="image" @click="goPicture" />
+      <img :src="image1" @click="goPicture(image1)" />
     </div>
     <div>
-      <img :src="image" @click="goPicture" />
+      <img :src="image2" @click="goPicture(image2)" />
     </div>
   </div>
 </template>
 
 <script>
+import { SERVER } from "../config/index";
 export default {
   data() {
     return {
-      image: require("./img/demo.jpg")
+      image1: `${SERVER}/icon/yqImgleft.jpg`,
+      image2: `${SERVER}/icon/yqImgright.jpg`
     };
   },
   methods: {
-    goPicture() {
-      window.open("http://172.20.89.88:5001/yq/icon/demo.jpg");
+    goPicture(url) {
+      window.open(url);
     }
   }
 };

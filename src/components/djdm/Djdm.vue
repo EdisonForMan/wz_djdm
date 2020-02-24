@@ -14,7 +14,7 @@
       ref="leftMenu"
       style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
     />
-    <xzDate v-if="shallActive == 2" />
+    <xzDate v-if="false" />
     <bottomBtn v-if="false" />
     <topDate v-if="shallActive == 2" />
     <yqImg v-if="shallActive == 0" />
@@ -58,7 +58,10 @@ export default {
   },
   computed: {
     ...mapState({
-      xmBuildSiteList: state => state.xmBuildSiteList
+      xmBuildSiteList: state => state.xmBuildSiteList,
+      xsqList: state => state.xsqList,
+      streetList: state => state.streetList,
+      sqList: state => state.sqList
     })
   },
   /**
@@ -66,10 +69,18 @@ export default {
    */
   mounted() {
     !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
+    !this.xsqList.length && this.fetchXsqList();
+    !this.streetList.length && this.fetchStreetList();
+    !this.sqList.length && this.fetchSqList();
     this.eventRegister();
   },
   methods: {
-    ...mapActions(["fetchXmBuildSiteList"]),
+    ...mapActions([
+      "fetchXmBuildSiteList",
+      "fetchXsqList",
+      "fetchStreetList",
+      "fetchSqList"
+    ]),
     eventRegister() {
       this.$hub.$on("topDocumentClick", val => {
         this.shallActive = val;

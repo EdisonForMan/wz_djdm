@@ -2,8 +2,16 @@
   <div class="right-div">
     <div class="gqx">
       <div class="right-div-title">
-        <span class="right-div-title-inner">各街镇规上企业复工情况</span>
+        <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
       </div>
+      <el-select size="small" v-model="selectVal" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
       <div id="gqx-chart"></div>
     </div>
   </div>
@@ -13,9 +21,22 @@
 /* eslint-disable */
 import { mapState } from "vuex";
 import chart_t_option from "./chart_t_option";
+import chart_m_option from "./chart_m_option";
 export default {
   data() {
-    return {};
+    return {
+      options: [
+        {
+          value: 0,
+          label: "功能区复工情况"
+        },
+        {
+          value: 1,
+          label: "到岗率分析"
+        }
+      ],
+      selectVal: 0
+    };
   },
   computed: {
     ...mapState({
@@ -24,6 +45,9 @@ export default {
   },
   watch: {
     xmBuildSiteList(n, o) {
+      this.doChartData();
+    },
+    selectVal(n, o) {
       this.doChartData();
     }
   },
@@ -42,10 +66,15 @@ export default {
     doChartData() {
       const _obj_ = {};
       const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
-        const { zj, cnfhqk } = attributes;
+        const { zj, cnfhqk, ydyg, ydygs } = attributes;
         !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
-        _obj_[zj].ydyg += 1;
-        _obj_[zj].ydygs += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+        if (this.selectVal) {
+          _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0;
+          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0;
+        } else {
+          _obj_[zj].ydyg += 1;
+          _obj_[zj].ydygs += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+        }
       });
       const data = Object.keys(_obj_).map(item => {
         return { zj: item, ..._obj_[item] };
@@ -81,7 +110,9 @@ export default {
           { offset: 1, color: "#FFD699" }
         ])
       };
-      const json = this.$util.clone(chart_t_option);
+      const json = this.$util.clone(
+        this.selectVal ? chart_m_option : chart_t_option
+      );
       json.series[0].itemStyle = t_itemStyle_0;
       json.series[1].itemStyle = t_itemStyle_1;
       return json;
@@ -178,5 +209,8 @@ export default {
   flex-grow: 1;
   min-height: 0;
   width: 100%;
+}
+.el-select{
+  margin-top: 10px;
 }
 </style>

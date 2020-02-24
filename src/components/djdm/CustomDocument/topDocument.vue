@@ -5,11 +5,11 @@
       :class="[active == 0 ? 'current-active' : '']"
       @click="topDocumentClick(0)"
     >疫情风险图</div>
-    <div
+    <!-- <div
       class="topDocument-inner"
       :class="[active == 1 ? 'current-active' : '']"
       @click="topDocumentClick(1)"
-    >复工风险图</div>
+    >复工风险图</div> -->
     <div
       class="topDocument-inner"
       :class="[active == 2 ? 'current-active' : '']"
