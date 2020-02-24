@@ -11,7 +11,9 @@
             @click="$goRoute(item.route),selected(index)"
           >{{item.label}}</li>
         </ul>
-      </div> -->
+      </div>-->
+      <p style="position: absolute;right: 15px;top: 7px;">温州设计集团勘测院</p>
+      <p style="position: absolute;right: 15px;top: 33px;">{{time}}</p>
     </header>
     <div class="app_container">
       <router-view ref="router" />
@@ -36,7 +38,8 @@ export default {
       ],
       current: 1,
       time: " ",
-      showHeader: true // 显示头部
+      showHeader: true, // 显示头部
+       time: " ",
     };
   },
   mounted() {

@@ -4,6 +4,7 @@
     <transition name="fade">
       <djdmFrame ref="djdm" v-show="doFrame" />
     </transition>
+    <img :src="tlimg" style=" position: absolute;bottom: 10px;right: 348px;" />
   </div>
 </template>
 
@@ -22,7 +23,8 @@ export default {
   name: "DjdmArcgis",
   data() {
     return {
-      doFrame: false
+      doFrame: false,
+      tlimg: require("./img/tl.png")
     };
   },
   components: { djdmFrame },
@@ -123,6 +125,8 @@ export default {
   .arcgisMap {
     width: 100%;
     height: 100%;
+  }
+  img {
   }
 }
 </style>

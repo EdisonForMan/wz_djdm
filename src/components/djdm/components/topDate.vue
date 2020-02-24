@@ -71,7 +71,7 @@ export default {
   background-color: #1b45a7;
   border: 1px solid #07e2e8;
   margin-left: 20px;
-  padding: 15px 10px;
+  padding: 8px 5px;
   color: #07e2e8;
   i {
     font-style: normal;

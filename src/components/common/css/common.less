@@ -26,14 +26,16 @@ body {
 
 
 .app_header {
-  height: 120px;
+  height: 84px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0 0 10px;
   position: absolute;
   width: 100%;
   z-index: 1000;
-  background-image: linear-gradient(rgba(22,80,195,1), rgba(0,0,0,0));
+  background-image: url("../image/headbg.png");
+  background-size: 100% 100%;
+  // background-image: linear-gradient(rgba(22,80,195,1), rgba(0,0,0,0));
 
 
   .app_icon,
@@ -209,7 +211,16 @@ body {
     font-size: 38px;
     font-weight: bolder;
     letter-spacing: 4px;
-    margin-top: 20px;;
+    background-image: -webkit-gradient(
+      linear,
+      0 0,
+      0 bottom,
+      from(#C9E3FF),
+      to(#BEF6FF)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+     margin-top: 5px;;
 
     i {
       vertical-align: top;
