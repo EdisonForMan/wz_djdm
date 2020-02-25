@@ -8,7 +8,7 @@
     </div>
     <div class="custom-document-content">
       <el-menu active-text-color="#000" text-color="#000" class="my-menu">
-        <el-submenu v-for="(value, index) of selecedtDate" :key="index" :index="index + ''">
+        <el-submenu v-for="(value, index) of tabsMenuData" :key="index" :index="index + ''">
           <template slot="title">
             <el-checkbox
               v-model="value.check"
@@ -46,8 +46,7 @@ export default {
   data() {
     return {
       queryValue: undefined,
-      tabsMenuData: [],
-      selecedtDate: []
+      tabsMenuData: []
     };
   },
   computed: {
@@ -61,9 +60,7 @@ export default {
     }
   },
   created() {
-    this.xmMenu.length &&
-      (this.tabsMenuData = [...this.xmMenu]) &&
-      (this.selecedtDate = [...this.xmMenu]);
+    this.xmMenu.length && (this.tabsMenuData = [...this.xmMenu]);
   },
   mounted() {
     this.eventRegister();
@@ -74,8 +71,8 @@ export default {
       window.open("http://120.199.110.111:8989/SPJK/spjkwcj/demo1.html");
     },
     changeCheckboxHandler(parentIndex, childrenIndex) {
-      const currentMenu = this.selecedtDate;
-      let parentCheck = currentMenu[parentIndex].check;
+      const currentMenu = this.tabsMenuData;
+      const parentCheck = currentMenu[parentIndex].check;
       this.$set(currentMenu[parentIndex], "check", parentCheck);
       this.$hub.$emit("document-checkbox", currentMenu[parentIndex]);
     },
@@ -85,25 +82,18 @@ export default {
     },
     // 查询
     query() {
-      // this.$hub.$emit("query-handler", this.queryValue);
-      const selecedtDate = []; //每一次搜索完清空数据
-      var reg = new RegExp(this.queryValue); //匹配
-      let resultMenu = selecedtDate; //新建一个菜单数组
+      const tabsMenuData = [];
+      const reg = new RegExp(this.queryValue);
       this.xmMenu.forEach(Element => {
-        let regData = []; //新建一个匹配数据数组
-        Element.children.map(item => {
-          if (item.name.match(reg)) {
-            regData.push(item);
-          }
-        });
-        resultMenu.push({
+        const children = Element.children.filter(item => item.name.match(reg));
+        tabsMenuData.push({
           check: Element["check"],
-          children: regData,
-          innerText: "(" + regData.length + ")",
+          children,
+          innerText: `(${children.length})`,
           name: Element["name"]
         });
       });
-      this.selecedtDate = [...selecedtDate];
+      this.tabsMenuData = [...tabsMenuData];
     }
   }
 };

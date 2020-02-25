@@ -65,7 +65,6 @@ export default {
   name: "djdmFrame",
   data: () => {
     return {
-      //  懒得写逻辑了就这么分吧
       attributes: {},
       isField: false
     };
@@ -74,8 +73,15 @@ export default {
     this.eventRegister();
   },
   methods: {
+    /**
+     * 判断展示数据内容
+     * @param obj 数据内容
+     * @param fieldAliases  服务返回数据hash对应表,用于遍历obj↑
+     * *左侧菜单栏点击事件触发,代入fieldAliases进行遍历
+     * *地图点击事件触发,没有fieldAliases入参
+     */
     eventRegister() {
-      this.$hub.$on("menu-item-click", ({ obj, fieldAliases }) => {
+      this.$hub.$on("menu-item-click", ({ obj, fieldAliases = null }) => {
         if (!fieldAliases) {
           this.isField = false;
           this.attributes = obj.attributes;
