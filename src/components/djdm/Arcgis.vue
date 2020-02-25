@@ -4,7 +4,7 @@
     <transition name="fade">
       <djdmFrame ref="djdm" v-show="doFrame" />
     </transition>
-    <img :src="tlimg" style=" position: absolute;bottom: 10px;right: 348px;" />
+    <img :src="tlimg" class="tlimg" />
   </div>
 </template>
 
@@ -16,7 +16,8 @@ import {
   doYqStreetLayer,
   doYqXSQLayer,
   doYqXqLayer,
-  fetchPoint
+  fetchPoint,
+  removeLayer
 } from "./Arcgis.js";
 import djdmFrame from "./components/djdmFrame.vue";
 
@@ -37,14 +38,21 @@ export default {
     /** default xm */
     doYqStreetLayer(this);
     doYqXSQLayer(this);
-    doYqXqLayer(this);
+    // doYqXqLayer(this);
     doPointLayer(this);
   },
   methods: {
     eventRegister() {
       //  顶部点击、左侧菜单点击,刷新点
-      this.$hub.$on("document-checkbox", val => {
-        doPointLayer(this);
+      this.$hub.$on("document-checkbox", ({ check, id }) => {
+        const hash = {
+          PointLayer: doPointLayer,
+          xsqLayer: doYqXSQLayer,
+          sqLayer: doYqXqLayer,
+          streetLayer: doYqStreetLayer
+        };
+        check && hash[id](this);
+        !check && removeLayer(this, id);
       });
       this.$hub.$on("topDocumentClick", val => {
         doPointLayer(this);
@@ -53,8 +61,11 @@ export default {
         doPointLayer(this);
       });
       //  点击工地
-      this.$hub.$on("menu-item-click", ({ geometry }) => {
-        this.goloaction(geometry);
+      this.$hub.$on("menu-item-click", ({ obj }) => {
+        const { type, geometry } = obj;
+        type == "point"
+          ? this.goPointLoaction(geometry)
+          : this.goPolygonLocation(geometry);
         this.doFrame = true;
       });
     },
@@ -97,7 +108,7 @@ export default {
           });
           that.view.on("click", evt => {
             fetchPoint(evt.mapPoint, that.view, obj => {
-              this.$hub.$emit("menu-item-click", obj);
+              this.$hub.$emit("menu-item-click", { obj });
             });
           });
           that.view.on("mouse-wheel", evt => {});
@@ -105,8 +116,20 @@ export default {
         });
       });
     },
-    goloaction({ x, y }) {
+    goPointLoaction({ x, y }) {
       this.view.goTo({ center: [x, y] });
+    },
+    goPolygonLocation({ rings }) {
+      let x_ = 0,
+        y_ = 0;
+      rings[0].map(item => {
+        x_ += item[0];
+        y_ += item[1];
+      });
+      this.view.goTo({
+        center: [x_ / rings[0].length, y_ / rings[0].length],
+        zoom: 15
+      });
     }
   }
 };
@@ -126,7 +149,10 @@ export default {
     width: 100%;
     height: 100%;
   }
-  img {
+  .tlimg {
+    position: absolute;
+    bottom: 20px;
+    right: 420px;
   }
 }
 </style>

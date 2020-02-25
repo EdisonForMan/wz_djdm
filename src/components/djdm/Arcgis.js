@@ -7,8 +7,7 @@ import { loadModules } from "esri-loader";
  * @param {*} item 
  */
 const doMassFeatureLayer = (context, { url, id, renderer }) => {
-    context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
-    return new Promise((resolve, reject) => {
+    removeLayer(context, id); return new Promise((resolve, reject) => {
         loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
             //  地址用老金发的，彤彤发的叠不出来，但数据是彤彤的服务拿的
             const option = { url: "http://172.20.89.87:6080/arcgis/rest/services/yueqing/yqgsqy/MapServer/0", id }
@@ -24,7 +23,7 @@ const doMassFeatureLayer = (context, { url, id, renderer }) => {
  * @param {*} item 
  */
 const doMassImageLayer = (context, { url, id }) => {
-    context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
+    removeLayer(context, id);
     return new Promise((resolve, reject) => {
         loadModules(
             ["esri/layers/FeatureLayer"]
@@ -86,6 +85,17 @@ export const fetchPoint = (mapPoint, view, fn) => {
         params.mapExtent = view.extent;
         params.returnGeometry = true;
         const { results } = await identifyTask.execute(params);
-        results.length && fn && fn(results[0].feature)
+        const obj = results[0].feature;
+        obj.type = "point";
+        results.length && fn && fn(obj)
     });
+}
+
+/**
+ * removeLayer
+ * @param {*} context 
+ * @param {*} id 
+ */
+export const removeLayer = (context, id) => {
+    context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
 }

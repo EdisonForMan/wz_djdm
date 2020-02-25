@@ -3,7 +3,7 @@
     <div class="close" @click="()=>{$parent.doFrame=false}" />
     <div class="basic">
       <header>基本信息</header>
-      <div>
+      <div v-if="!isField">
         <div class="name">{{attributes.qymc || attributes.企业名称}}</div>
         <ul>
           <li>
@@ -47,18 +47,15 @@
             <span>{{attributes.ydygs || attributes.已到员工数}}</span>
           </li>
         </ul>
-        <div class="scroll" v-if="false">
-          <span>项目建设规模和内容:</span>
-          无
-        </div>
       </div>
-    </div>
-    <div class="worker" v-if="false">
-      <header>返工信息</header>
-      <ul>
-        <li>人员数量:</li>
-        <li>人员数量:</li>
-      </ul>
+      <div v-if="isField">
+        <ul>
+          <li v-for="(item,key,index) in attributes" :key="index">
+            <span>{{key}}</span>
+            <span>{{item}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +66,8 @@ export default {
   data: () => {
     return {
       //  懒得写逻辑了就这么分吧
-      attributes: {}
+      attributes: {},
+      isField: false
     };
   },
   mounted() {
@@ -77,8 +75,30 @@ export default {
   },
   methods: {
     eventRegister() {
-      this.$hub.$on("menu-item-click", ({ attributes }) => {
-        this.attributes = attributes;
+      this.$hub.$on("menu-item-click", ({ obj, fieldAliases }) => {
+        if (!fieldAliases) {
+          this.isField = false;
+          this.attributes = obj.attributes;
+        } else {
+          const attributes = {};
+          Object.keys(fieldAliases)
+            .filter(
+              item =>
+                ![
+                  "OBJECTID",
+                  "Shape_Area",
+                  "Shape_Leng",
+                  "Shape_Length",
+                  "x",
+                  "y"
+                ].includes(item)
+            )
+            .map(item => {
+              attributes[fieldAliases[item]] = obj.attributes[item];
+            });
+          this.isField = true;
+          this.attributes = attributes;
+        }
       });
     }
   }

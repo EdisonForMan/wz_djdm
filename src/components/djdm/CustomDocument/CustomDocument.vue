@@ -2,35 +2,36 @@
   <div class="custom-document">
     <div class="custom-query">
       <el-input v-model="queryValue">
-        <i slot="prefix"
-           class="el-input__icon el-icon-search"></i>
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
-      <el-button type="primary"
-                 @click="query">查询</el-button>
+      <el-button type="primary" @click.stop="query">查询</el-button>
     </div>
     <div class="custom-document-content">
-      <el-menu active-text-color="#000"
-               text-color="#000"
-               class="my-menu">
-        <el-submenu v-for="(value, index) of (judgeSelect?selecedtDate:tabsMenuData)"
-                    :key="index"
-                    :index="index + ''">
+      <el-menu active-text-color="#000" text-color="#000" class="my-menu">
+        <el-submenu v-for="(value, index) of selecedtDate" :key="index" :index="index + ''">
           <template slot="title">
-            <el-checkbox v-model="value.check"
-                         class="my-checkbox"
-                         @change="changeCheckboxHandler(index)"></el-checkbox>
+            <el-checkbox
+              v-model="value.check"
+              class="my-checkbox"
+              @click.stop.native="()=>{}"
+              @change="changeCheckboxHandler(index)"
+            ></el-checkbox>
             <span>{{ value.name }}</span>
             <span v-if="value.innerText">{{ value.innerText }}</span>
           </template>
-          <el-menu-item :index="index + '-' + ind"
-                        v-for="(item, ind) of value.children"
-                        :key="ind"
-                        @click="menuItemClickHandler(item)"
-                        class="children-menu-item">
-            <el-checkbox v-model="item.check"
-                         class="my-checkbox"
-                         @change="changeCheckboxHandler(index, ind)"
-                         v-show="false"></el-checkbox>
+          <el-menu-item
+            :index="index + '-' + ind"
+            v-for="(item, ind) of value.children"
+            :key="ind"
+            @click="menuItemClickHandler(item,value.fieldAliases)"
+            class="children-menu-item"
+          >
+            <el-checkbox
+              v-model="item.check"
+              class="my-checkbox"
+              @change="changeCheckboxHandler(index, ind)"
+              v-show="false"
+            ></el-checkbox>
             {{ item.name }}
           </el-menu-item>
         </el-submenu>
@@ -46,8 +47,7 @@ export default {
     return {
       queryValue: undefined,
       tabsMenuData: [],
-      selecedtDate: [],
-      judgeSelect: false
+      selecedtDate: []
     };
   },
   computed: {
@@ -57,19 +57,16 @@ export default {
   },
   watch: {
     xmMenu(n, o) {
-      console.log(n);
       this.tabsMenuData = n;
     }
   },
   created() {
-    // console.log("xmBuildSiteList", this.$store.state.xmBuildSiteList);
-    console.log("xmMenu", this.$store.state.xmMenu);
-    this.xmMenu.length && (this.tabsMenuData = this.xmMenu);
+    this.xmMenu.length &&
+      (this.tabsMenuData = [...this.xmMenu]) &&
+      (this.selecedtDate = [...this.xmMenu]);
   },
   mounted() {
     this.eventRegister();
-    // console.log("judgeSelect的值", this.judgeSelect);
-    // console.log("筛选的数据", this.selecedtDate);
   },
   methods: {
     eventRegister() {},
@@ -77,45 +74,24 @@ export default {
       window.open("http://120.199.110.111:8989/SPJK/spjkwcj/demo1.html");
     },
     changeCheckboxHandler(parentIndex, childrenIndex) {
-      const currentMenu = this.tabsMenuData;
-      if (childrenIndex !== null && childrenIndex !== undefined) {
-        let parentCheck = currentMenu[parentIndex].check;
-        let allCheck = true;
-        currentMenu[parentIndex].children.map((item, index) => {
-          if (!item.check) allCheck = false;
-        });
-        this.$set(currentMenu[parentIndex], "check", allCheck);
-      } else {
-        let parentCheck = currentMenu[parentIndex].check;
-        let items = [];
-        currentMenu[parentIndex].children.map((item, index) => {
-          if (parentCheck && !item.check) {
-            items.push(item);
-            item.check = true;
-          } else if (!parentCheck && item.check) {
-            items.push(item);
-            item.check = false;
-          }
-        });
-        this.$set(currentMenu[parentIndex], "check", parentCheck);
-        this.$hub.$emit("document-checkbox");
-      }
+      const currentMenu = this.selecedtDate;
+      let parentCheck = currentMenu[parentIndex].check;
+      this.$set(currentMenu[parentIndex], "check", parentCheck);
+      this.$hub.$emit("document-checkbox", currentMenu[parentIndex]);
     },
     // 单独点击一个侧目录的子项
-    menuItemClickHandler(obj) {
-      this.$hub.$emit("menu-item-click", obj);
+    menuItemClickHandler(obj, fieldAliases) {
+      this.$hub.$emit("menu-item-click", { obj, fieldAliases });
     },
     // 查询
     query() {
-      this.$hub.$emit("query-handler", this.queryValue);
-      this.selecedtDate = []; //每一次搜索完清空数据
-      this.judgeSelect = true;
+      // this.$hub.$emit("query-handler", this.queryValue);
+      const selecedtDate = []; //每一次搜索完清空数据
       var reg = new RegExp(this.queryValue); //匹配
-      let resultMenu = this.selecedtDate; //新建一个菜单数组
+      let resultMenu = selecedtDate; //新建一个菜单数组
       this.xmMenu.forEach(Element => {
-        let companies = Element;
         let regData = []; //新建一个匹配数据数组
-        companies.children.forEach(item => {
+        Element.children.map(item => {
           if (item.name.match(reg)) {
             regData.push(item);
           }
@@ -127,6 +103,7 @@ export default {
           name: Element["name"]
         });
       });
+      this.selecedtDate = [...selecedtDate];
     }
   }
 };

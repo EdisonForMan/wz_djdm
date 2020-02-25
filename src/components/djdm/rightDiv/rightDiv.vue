@@ -88,7 +88,7 @@ export default {
         item => item.ydyg - item.ydygs
       );
       chart_t_option_clone.series[1].label.formatter = param => {
-        return data[param.dataIndex].ydyg;
+        return data[param.dataIndex].ydyg + " / " + (data[param.dataIndex].ydygs/data[param.dataIndex].ydyg*100).toFixed(2) + "%";
       };
       this.doChartOption({
         t: chart_t_option_clone
@@ -126,7 +126,7 @@ export default {
   height: 100%;
   background: url(../img/rightDiv_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
-  padding: 20px 26px;
+  padding: 20px 10px 20px 20px;
   box-sizing: border-box;
 }
 .gqx {

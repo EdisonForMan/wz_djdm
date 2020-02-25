@@ -3,7 +3,10 @@
     <ul>
       <li v-for="(item,index) in TOP_DATA" :key="index">
         <p>{{item.t}}</p>
-        <h3 :style="`color:${item.c}`">{{item.v}}</h3>
+        <h3 :style="`color:${item.c}`">
+          {{item.v}}
+          <i>家</i>
+        </h3>
       </li>
     </ul>
   </div>
@@ -32,7 +35,7 @@ export default {
     doTopData() {
       const topData = [
         { t: "规上工业企业", v: 1359, c: "#FF835F" },
-        { t: "规上工业企业复工数", v: 1236, c: "#54FFA6" }
+        { t: "规上工业企业复工数", v: 1208, c: "#54FFA6" }
       ];
       this.TOP_DATA = topData;
     }
@@ -41,6 +44,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@fontbg: linear-gradient(180deg, #36dcff 0%, #8ceaff 100%);
 .topDateDiv {
   position: absolute;
   top: 120px;
@@ -62,11 +66,7 @@ export default {
   }
   p {
     font-size: 18px;
-    background: linear-gradient(
-      180deg,
-      rgba(54, 220, 255, 1) 0%,
-      rgba(140, 234, 255, 1) 100%
-    );
+    background: @fontbg;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -74,6 +74,13 @@ export default {
   }
   h3 {
     font-size: 20px;
+    display: inline;
+    i {
+      font-style: normal;
+      font-size: 16px;
+      color: #36dcff;
+      font-weight: 300;
+    }
   }
 }
 </style>
