@@ -4,7 +4,7 @@
     <div class="basic">
       <header>基本信息</header>
       <div>
-        <div class="name">{{attributes.NAME}}</div>
+        <div class="name">{{attributes.NAME || attributes.项目名称}}</div>
         <ul>
           <li>
             <span>投资类型</span>
@@ -62,7 +62,7 @@
             <span>剩余投资额</span>
             <span>{{attributes.YEARREMAIN || attributes.剩余投资额}}万</span>
           </li>
-          <li>
+          <li style="width:40%">
             <span>责任单位</span>
             <span>{{attributes.ZR_DEPT || attributes.责任单位}}</span>
           </li>
@@ -79,7 +79,7 @@
         </ul>
         <div class="scroll">
           <span>项目建设规模和内容:</span>
-          无
+          {{attributes.CONTENTGM || attributes.建设规模与内容}}
         </div>
       </div>
     </div>
@@ -200,13 +200,11 @@ export default {
         width: 20%;
         display: inline-block;
         float: left;
-        height: 44px;
         border-right: 1px #979797 solid;
         .box();
         padding: 0px 12px;
         span {
           display: block;
-          height: 22px;
           line-height: 22px;
           font-size: 14px;
           font-weight: 400;
@@ -224,7 +222,6 @@ export default {
     /** 额外条目 */
     .nobreakul {
       li {
-        height: 22px;
         line-height: 22px;
         span {
           display: inline-block;
@@ -249,6 +246,9 @@ export default {
       word-break: break-all;
       text-align: left;
       font-size: 14px;
+      span {
+        display: block;
+      }
     }
     .scroll::-webkit-scrollbar {
       border: 1px solid rgba(109, 225, 255, 1);
