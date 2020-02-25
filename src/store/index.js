@@ -15,7 +15,11 @@ export default new Vuex.Store({
     xmMenu: [{ id: "PointLayer", name: "规上企业复工复产", innerText: undefined, check: true, children: [] },
     { id: "xsqLayer", name: "县市区网格", innerText: undefined, check: true, children: [] },
     { id: "streetLayer", name: "乡镇街道功能区", innerText: undefined, check: true, children: [] },
-    { id: "sqLayer", name: "村社网络", innerText: undefined, check: false, children: [] }],
+    { id: "sqLayer", name: "村社网络", innerText: undefined, check: false, children: [] },
+    { id: "", name: "服务业", innerText: undefined, check: false, children: [] },
+    { id: "", name: "亿元以上建设项目", innerText: undefined, check: false, children: [] },
+    { id: "", name: "省市重点建设项目", innerText: undefined, check: false, children: [] }
+    ],
   },
   mutations: {
     updateXmBuildSiteList(state, { list = [], menu }) {

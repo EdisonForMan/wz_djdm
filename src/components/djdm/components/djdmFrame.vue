@@ -61,6 +61,27 @@
 </template>
 
 <script>
+const BANNED_PARAMS = [
+  "OBJECTID",
+  "Shape",
+  "Shape_Area",
+  "Shape_Leng",
+  "Shape_Length",
+  "x",
+  "y",
+  "type"
+];
+const EXTRA_HASH = {
+  ysq_snfg_green_cnt: "市内员工-绿码(人)",
+  ysq_snfg_yellow_cnt: "市内员工-黄码(人)",
+  ysq_snfg_red_cnt: "市内员工-红码(人)",
+  ysq_swfg_green_cnt: "市外员工-绿码(人)",
+  ysq_swfg_yellow_cnt: "市外员工-黄码(人)",
+  ysq_swfg_red_cnt: "市外员工-红码(人)",
+  ysq_ygqs_green_cnt: "员工亲属-绿码(人)",
+  ysq_ygqs_yellow_cnt: "员工亲属-黄码(人)",
+  ysq_ygqs_red_cnt: "员工亲属-红码(人)"
+};
 export default {
   name: "djdmFrame",
   data: () => {
@@ -74,33 +95,34 @@ export default {
   },
   methods: {
     /**
-     * 判断展示数据内容
+     * 判断展示数据内容 [***后续需优化,有点乱***]
      * @param obj 数据内容
      * @param fieldAliases  服务返回数据hash对应表,用于遍历obj↑
      * *左侧菜单栏点击事件触发,代入fieldAliases进行遍历
      * *地图点击事件触发,没有fieldAliases入参
      */
     eventRegister() {
-      this.$hub.$on("menu-item-click", ({ obj, fieldAliases = null }) => {
-        if (!fieldAliases) {
+      this.$hub.$on("menu-item-click", ({ obj, fieldAliases }) => {
+        if (!fieldAliases && obj.type == "point") {
           this.isField = false;
           this.attributes = obj.attributes;
+        } else if (!fieldAliases && obj.type == "polygon") {
+          const attributes = {};
+          for (let v in obj.attributes) {
+            if (!BANNED_PARAMS.includes(v)) {
+              const name = EXTRA_HASH[v] || v;
+              attributes[name] = obj.attributes[v];
+            }
+          }
+          this.isField = true;
+          this.attributes = attributes;
         } else {
           const attributes = {};
           Object.keys(fieldAliases)
-            .filter(
-              item =>
-                ![
-                  "OBJECTID",
-                  "Shape_Area",
-                  "Shape_Leng",
-                  "Shape_Length",
-                  "x",
-                  "y"
-                ].includes(item)
-            )
+            .filter(item => !BANNED_PARAMS.includes(item))
             .map(item => {
-              attributes[fieldAliases[item]] = obj.attributes[item];
+              const name = EXTRA_HASH[fieldAliases[item]] || fieldAliases[item];
+              attributes[name] = obj.attributes[item];
             });
           this.isField = true;
           this.attributes = attributes;

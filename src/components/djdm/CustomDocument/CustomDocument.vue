@@ -23,7 +23,7 @@
             :index="index + '-' + ind"
             v-for="(item, ind) of value.children"
             :key="ind"
-            @click="menuItemClickHandler(item,value.fieldAliases)"
+            @click="menuItemClickHandler(item,value)"
             class="children-menu-item"
           >
             <el-checkbox
@@ -77,7 +77,7 @@ export default {
       this.$hub.$emit("document-checkbox", currentMenu[parentIndex]);
     },
     // 单独点击一个侧目录的子项
-    menuItemClickHandler(obj, fieldAliases) {
+    menuItemClickHandler(obj, { fieldAliases }) {
       this.$hub.$emit("menu-item-click", { obj, fieldAliases });
     },
     // 查询
@@ -90,7 +90,8 @@ export default {
           check: Element["check"],
           children,
           innerText: `(${children.length})`,
-          name: Element["name"]
+          name: Element["name"],
+          fieldAliases: Element["fieldAliases"]
         });
       });
       this.tabsMenuData = [...tabsMenuData];

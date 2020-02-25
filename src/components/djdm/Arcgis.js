@@ -1,4 +1,4 @@
-import { SERVER, xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, buildSiteIdentify } from "./config/index";
+import { SERVER, xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, buildSiteIdentify, yqIdentify } from "./config/index";
 import { loadModules } from "esri-loader";
 
 /**
@@ -68,26 +68,49 @@ export const doPointLayer = (context) => {
 
 /**
  * 点击获取
+ * 优先级 企业点 > 村社 > 街道
  * @param {*} mapPoint 
  * @param {*} activeTabsPane 
  * @param {*} view 
  * @param {*} fn 
  */
-export const fetchPoint = (mapPoint, view, fn) => {
+export const fetchPoint = (tabsMenuData, mapPoint, view, fn) => {
+    const _clone_ = obj => JSON.parse(JSON.stringify(obj));
     loadModules(
         ["esri/tasks/IdentifyTask", "esri/tasks/support/IdentifyParameters"]
     ).then(async ([IdentifyTask, IdentifyParameters]) => {
-        const identifyTask = new IdentifyTask(buildSiteIdentify);
-        const params = new IdentifyParameters();
-        params.layerIds = [0]
-        params.tolerance = 5;
-        params.geometry = mapPoint;
-        params.mapExtent = view.extent;
-        params.returnGeometry = true;
-        const { results } = await identifyTask.execute(params);
-        const obj = results[0].feature;
-        obj.type = "point";
-        results.length && fn && fn(obj)
+        const identifyResult = [, , ,];
+        //  企业点
+        if (tabsMenuData[0].check) {
+            const identifyTask = new IdentifyTask(buildSiteIdentify);
+            const params = new IdentifyParameters();
+            params.layerIds = [0]
+            params.tolerance = 5;
+            params.geometry = mapPoint;
+            params.mapExtent = view.extent;
+            params.returnGeometry = true;
+            const { results } = await identifyTask.execute(params);
+            identifyResult[0] = results.length ? { ..._clone_(results[0].feature), type: 'point' } : undefined;
+        }
+        //  街道面 && 社区面
+        if (tabsMenuData[2].check || tabsMenuData[3].check) {
+            const identifyTask = new IdentifyTask(yqIdentify);
+            const params = new IdentifyParameters();
+            params.layerIds = [1, 2]
+            params.tolerance = 5;
+            params.geometry = mapPoint;
+            params.mapExtent = view.extent;
+            params.returnGeometry = true;
+            params.layerOption = IdentifyParameters.LAYER_OPTION_ALL;
+            const { results } = await identifyTask.execute(params);
+            results.length && results.map(({ feature, layerName }) => {
+                const obj = { ..._clone_(feature), type: "polygon" };
+                tabsMenuData[2].check && layerName == 'jd' && !identifyResult[2] && (identifyResult[2] = obj)
+                tabsMenuData[3].check && layerName == 'cs' && !identifyResult[1] && (identifyResult[1] = obj)
+            })
+        }
+        const result = identifyResult.filter(item => item);
+        result.length && fn && fn(result[0]);
     });
 }
 

@@ -45,6 +45,7 @@ export default {
     eventRegister() {
       //  顶部点击、左侧菜单点击,刷新点
       this.$hub.$on("document-checkbox", ({ check, id }) => {
+        if (!id) return;
         const hash = {
           PointLayer: doPointLayer,
           xsqLayer: doYqXSQLayer,
@@ -107,9 +108,14 @@ export default {
             view: that.view
           });
           that.view.on("click", evt => {
-            fetchPoint(evt.mapPoint, that.view, obj => {
-              this.$hub.$emit("menu-item-click", { obj });
-            });
+            fetchPoint(
+              that.$parent.$refs.leftMenu.tabsMenuData,
+              evt.mapPoint,
+              that.view,
+              obj => {
+                this.$hub.$emit("menu-item-click", { obj });
+              }
+            );
           });
           that.view.on("mouse-wheel", evt => {});
           resolve(true);
@@ -127,8 +133,7 @@ export default {
         y_ += item[1];
       });
       this.view.goTo({
-        center: [x_ / rings[0].length, y_ / rings[0].length],
-        zoom: 15
+        center: [x_ / rings[0].length, y_ / rings[0].length]
       });
     }
   }

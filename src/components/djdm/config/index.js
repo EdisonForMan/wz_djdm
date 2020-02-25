@@ -21,8 +21,8 @@ export const buildDataURL = "http://172.20.83.215:6080/arcgis/rest/services/SYQ/
 /** 回温人员数据 */
 export const backToWzURL = "http://172.20.83.215:6080/arcgis/rest/services/SYQ/HWRYHJFB/MapServer/0"
 
-/** 乐清企业点 */
-export const yqCompanyURL = "http://172.20.89.7:6082/arcgis/rest/services/yueqing/yq/MapServer/0";
+/** 乐清范围查询 */
+export const yqIdentify = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/YQQH/MapServer"
 /** 乐清街镇 */
 export const yqStreetURL = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/YQQH/MapServer/1"
 /** 乐清社区 */
