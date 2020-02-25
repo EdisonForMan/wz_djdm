@@ -71,6 +71,7 @@ export default {
       this.$hub.$on("topDocumentClick", val => {
         this.force = val ? "djdm" : "xm";
         this.$nextTick(() => {
+          this.chartRegister();
           this.doChartData();
           this.doChartExtra();
         });
@@ -173,9 +174,9 @@ export default {
       }
     },
     doChartOption({ t, m, b }) {
-      t && this.chart_t.setOption(t);
-      m && this.chart_m.setOption(m);
-      b && this.chart_b.setOption(b);
+      t && this.chart_t.setOption(t, true);
+      m && this.chart_m.setOption(m, true);
+      b && this.chart_b.setOption(b, true);
     },
     chart_T_fixed() {
       const t_itemStyle_0 = {

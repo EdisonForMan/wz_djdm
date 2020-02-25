@@ -46,7 +46,7 @@
           </li>
           <li>
             <span>去年累计投资</span>
-            <span>{{attributes.YEARSUM || attributes.当年累计投资}}万</span>
+            <span>{{attributes.PREVAMOUNT || attributes.去年累计投资}}万</span>
           </li>
         </ul>
         <ul>
