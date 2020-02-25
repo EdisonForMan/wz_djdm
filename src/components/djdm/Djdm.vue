@@ -61,7 +61,8 @@ export default {
       xmBuildSiteList: state => state.xmBuildSiteList,
       xsqList: state => state.xsqList,
       streetList: state => state.streetList,
-      sqList: state => state.sqList
+      sqList: state => state.sqList,
+      fwLayer: state => state.fwLayer
     })
   },
   /**
@@ -72,6 +73,7 @@ export default {
     !this.xsqList.length && this.fetchXsqList();
     !this.streetList.length && this.fetchStreetList();
     !this.sqList.length && this.fetchSqList();
+    !this.fwLayer.length && this.fetchFwList();
     this.eventRegister();
   },
   methods: {
@@ -79,7 +81,8 @@ export default {
       "fetchXmBuildSiteList",
       "fetchXsqList",
       "fetchStreetList",
-      "fetchSqList"
+      "fetchSqList",
+      "fetchFwList"
     ]),
     eventRegister() {
       this.$hub.$on("topDocumentClick", val => {

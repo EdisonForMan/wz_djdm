@@ -103,15 +103,15 @@ export default {
      */
     eventRegister() {
       this.$hub.$on("menu-item-click", ({ obj, fieldAliases }) => {
-        if (!fieldAliases && obj.type == "point") {
-          this.isField = false;
-          this.attributes = obj.attributes;
-        } else if (!fieldAliases && obj.type == "polygon") {
+        if (!fieldAliases) {
           const attributes = {};
           for (let v in obj.attributes) {
             if (!BANNED_PARAMS.includes(v)) {
               const name = EXTRA_HASH[v] || v;
-              attributes[name] = obj.attributes[v];
+              attributes[name] =
+                name == "到岗率"
+                  ? `${(obj.attributes[v] * 100).toFixed(2)}%`
+                  : obj.attributes[v];
             }
           }
           this.isField = true;

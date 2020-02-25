@@ -73,8 +73,12 @@ export default {
     changeCheckboxHandler(parentIndex, childrenIndex) {
       const currentMenu = this.tabsMenuData;
       const parentCheck = currentMenu[parentIndex].check;
-      this.$set(currentMenu[parentIndex], "check", parentCheck);
-      this.$hub.$emit("document-checkbox", currentMenu[parentIndex]);
+      if (currentMenu[parentIndex].id) {
+        this.$set(currentMenu[parentIndex], "check", parentCheck);
+        this.$hub.$emit("document-checkbox", currentMenu[parentIndex]);
+      } else {
+        return alert("功能建设中，敬请期待!");
+      }
     },
     // 单独点击一个侧目录的子项
     menuItemClickHandler(obj, { fieldAliases }) {
