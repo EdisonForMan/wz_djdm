@@ -349,7 +349,6 @@ body {
 
     .esri-popup__main-container {
       width: 467px;
-      //height: 348px;
       box-sizing: border-box;
       padding: 10px;
       background-repeat: no-repeat;
@@ -357,9 +356,7 @@ body {
       overflow: hidden;
       background-repeat: repeat;
       color: #2AFFFA;
-      //background-color: #162449;
       background-image: url("../image/yqpop.png");
-      //border: 1px solid #02fffc;
       .bottomBtn {
             position: absolute;
             height: 30px;
@@ -375,6 +372,35 @@ body {
             border: 1px #fff solid;
             color: #fff;
             cursor: pointer;
+      }
+      .yqPopFrame::-webkit-scrollbar {
+        border: 1px solid rgba(109, 225, 255, 1);
+        width: 6px;
+      }
+      .yqPopFrame::-webkit-scrollbar-thumb {
+        background: rgba(109, 225, 255, 1);
+        border-radius: 3px;
+      }
+      .yqPopFrame{
+        height: 300px;
+        overflow-y: auto;
+        > div {
+          width: 100%;
+          border-bottom: 1px rgba(42,255,250,0.7) solid;
+          box-sizing: border-box;
+          padding: 0 10px;
+          > span {
+            display: inline-block;
+            line-height: 24px;
+            text-align: left;
+          }
+          > span:first-child{
+            width: 39.9%;
+          }
+          > span:last-child{
+            width:59.9%;
+          }
+        }
       }
     }
 

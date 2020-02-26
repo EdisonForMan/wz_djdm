@@ -70,7 +70,7 @@ export default new Vuex.Store({
       const { data } = await fetchArcgisServer({ url: yqFWURL });
       const buildS = { id: "fwLayer", name: "规上服务业复工复产", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
-        buildS.arr.push({ name: attributes['企业名称'], geometry, attributes: { ...attributes, 到岗率: `${(attributes.到岗率 * 100).toFixed(2)}%` } })
+        buildS.arr.push({ name: attributes['qymc'], geometry, attributes: { ...attributes, ygdgqk: `${(attributes.ygdgqk * 100).toFixed(2)}%` } })
         buildS.count += 1;
       })
       const { id, name, count, arr } = buildS;

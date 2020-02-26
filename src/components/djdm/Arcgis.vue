@@ -1,9 +1,6 @@
 <template>
   <div class="Map">
     <div :id="id" class="arcgisMap"></div>
-    <transition name="fade">
-      <djdmFrame ref="djdm" v-show="doFrame" />
-    </transition>
     <img :src="tlimg" class="tlimg" />
   </div>
 </template>
@@ -11,6 +8,7 @@
 <script>
 import { loadModules } from "esri-loader";
 import { OPTION, spatialReference, IMAGELAYER } from "@/components/common/Tmap";
+import { mapState } from "vuex";
 import {
   doPointLayer,
   doYqStreetLayer,
@@ -18,9 +16,9 @@ import {
   doYqXqLayer,
   doYqFWLayer,
   fetchPoint,
+  doArcgisPopup,
   removeLayer
 } from "./Arcgis.js";
-import djdmFrame from "./components/djdmFrame.vue";
 
 export default {
   name: "DjdmArcgis",
@@ -30,13 +28,21 @@ export default {
       tlimg: require("./img/tl.png")
     };
   },
-  components: { djdmFrame },
   props: ["id"],
-  created() {},
+  computed: {
+    ...mapState({
+      xmMenu: state => state.xmMenu
+    }),
+    xmFieldAliases() {
+      return this.xmMenu.map(({ id, fieldAliases }) => {
+        return { id, fieldAliases };
+      });
+    }
+  },
   async mounted() {
     await this.createMap();
     this.eventRegister();
-    /** default xm */
+    /** default layer */
     doYqStreetLayer(this);
     doYqXSQLayer(this);
     // doYqXqLayer(this);
@@ -45,7 +51,6 @@ export default {
   },
   methods: {
     eventRegister() {
-      //  顶部点击、左侧菜单点击,刷新点
       this.$hub.$on("document-checkbox", ({ check, id }) => {
         if (!id) return;
         const hash = {
@@ -65,12 +70,12 @@ export default {
         doPointLayer(this);
       });
       //  点击工地
-      this.$hub.$on("menu-item-click", ({ obj }) => {
+      this.$hub.$on("menu-item-click", ({ obj, fieldAliases }) => {
         const { type, geometry } = obj;
         type == "point"
           ? this.goPointLoaction(geometry)
           : this.goPolygonLocation(geometry);
-        this.doFrame = true;
+        doArcgisPopup(this.view, obj, fieldAliases);
       });
     },
     /**
@@ -109,16 +114,6 @@ export default {
           that.map.add(layer);
           that.legend = new Legend({
             view: that.view
-          });
-          that.view.on("click", evt => {
-            fetchPoint(
-              that.$parent.$refs.leftMenu.tabsMenuData,
-              evt.mapPoint,
-              that.view,
-              obj => {
-                this.$hub.$emit("menu-item-click", { obj });
-              }
-            );
           });
           that.view.on("mouse-wheel", evt => {});
           resolve(true);

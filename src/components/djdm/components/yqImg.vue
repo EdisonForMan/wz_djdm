@@ -30,6 +30,8 @@ export default {
 .yqimg {
   height: 100%;
   width: 100%;
+  padding-top:100px;
+  box-sizing: border-box;
   > div {
     display: inline-block;
     width: 49.9%;
