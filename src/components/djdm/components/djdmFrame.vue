@@ -84,10 +84,16 @@
       </div>
     </div>
     <div class="worker">
-      <header>返工信息</header>
+      <header>复工信息</header>
       <ul>
-        <li>人员数量:</li>
-        <li>人员数量:</li>
+        <li>
+          复工总人数:
+          <span>{{attributes.FGZRS || attributes.复工总人数}}</span> 人
+        </li>
+        <li>
+          已复工人数:
+          <span>{{attributes.YFGRS || attributes.已复工人数}}</span> 人
+        </li>
       </ul>
     </div>
   </div>
@@ -274,6 +280,10 @@ export default {
         display: inline-block;
         width: 49.8%;
         background-color: #364f87;
+        span {
+          font-size: 14px;
+          color: rgba(255, 208, 86, 1);
+        }
       }
       li:first-child {
         border-right: 1px #202253 solid;
