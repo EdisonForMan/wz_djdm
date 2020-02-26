@@ -19,6 +19,12 @@ export default {
   data: () => {
     return { TOP_DATA: [] };
   },
+  computed: {
+    ...mapState({
+      xmBuildSiteList: state => state.xmBuildSiteList,
+      fwLayer: state => state.fwLayer
+    })
+  },
   mounted() {
     this.eventRegister();
     this.doTopData();
@@ -34,11 +40,21 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上工业企业", v: 1359, c: "#FF835F" },
-        { t: "规上工业企业复工数", v: 1208, c: "#54FFA6" },
-        { t: "限上服务业企业", v: 388, c: "#FF835F" },
-        { t: "限上服务业企业复工数", v: 386, c: "#54FFA6" }
+        { t: "规上工业企业", v: 0, c: "#FF835F" },
+        { t: "规上工业企业复工数", v: 0, c: "#54FFA6" },
+        { t: "限上服务业企业", v: 0, c: "#FF835F" },
+        { t: "限上服务业企业复工数", v: 0, c: "#54FFA6" }
       ];
+      this.xmBuildSiteList.map(({ attributes }) => {
+        const { cnfhqk } = attributes;
+        topData[0].v += 1;
+        topData[1].v += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+      });
+      this.fwLayer.map(({ attributes }) => {
+        const { ydygs } = attributes;
+        topData[2].v += 1;
+        topData[3].v += ydygs && parseInt(ydygs) > 0 ? 1 : 0;
+      });
       this.TOP_DATA = topData;
     }
   }

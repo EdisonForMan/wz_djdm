@@ -4,13 +4,13 @@
       <div class="right-div-title">
         <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
       </div>
-      <el-select size="small"
-                 v-model="selectVal"
-                 placeholder="请选择">
-        <el-option v-for="item in options"
-                   :key="item.value"
-                   :label="item.label"
-                   :value="item.value"></el-option>
+      <el-select size="small" v-model="selectVal" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
       </el-select>
       <div id="gqx-chart"></div>
     </div>
@@ -96,13 +96,13 @@ export default {
           const { zj, cnfhqk, ydyg, ydygs } = attributes;
           !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
           _obj_[zj].ydyg += 1; //企业
-          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? 1 : 0; //已到员工
+          _obj_[zj].ydygs +=
+            ydygs && ydygs != "NULL" && parseInt(ydygs) > 0 ? 1 : 0; //已到员工
         });
       }
       // 服务业到岗率分析
       if (this.selectVal == 3) {
         const _data_ = this.fwLayer.map(({ attributes }) => {
-          console.log(attributes);
           const { zj, cnfhqk, ydyg, ydygs } = attributes;
           !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
           _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0; //总员工
