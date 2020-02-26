@@ -75,7 +75,7 @@ export default {
         type == "point"
           ? this.goPointLoaction(geometry)
           : this.goPolygonLocation(geometry);
-        doArcgisPopup(this.view, obj, fieldAliases);
+        doArcgisPopup(this, obj, fieldAliases);
       });
     },
     /**
@@ -124,14 +124,9 @@ export default {
       this.view.goTo({ center: [x, y] });
     },
     goPolygonLocation({ rings }) {
-      let x_ = 0,
-        y_ = 0;
-      rings[0].map(item => {
-        x_ += item[0];
-        y_ += item[1];
-      });
+      const { x, y } = this.$util.getPolygonCenter(rings);
       this.view.goTo({
-        center: [x_ / rings[0].length, y_ / rings[0].length]
+        center: [x, y]
       });
     }
   }

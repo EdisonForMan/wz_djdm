@@ -88,13 +88,13 @@ export const doPointLayer = (context) => {
  * @param {*} obj 
  * @param {*} fieldAliases 枚举
  */
-export const doArcgisPopup = (view, { attributes, geometry }, fieldAliases) => {
+export const doArcgisPopup = ({ view, $util }, { attributes, type, geometry }, fieldAliases) => {
     const _html_ = Object.keys(fieldAliases).filter(item => !BANNED_PARAMS.includes(item)).map(key => {
         return `<div><span>${EXTRA_HASH[fieldAliases[key]] || fieldAliases[key]}</span><span>${attributes[key]}</span></div>`
     }).join("");
     view.popup.open({
         content: `<div class="yqPopFrame">${_html_}</div>`,
-        location: geometry
+        location: type == "point" ? geometry : $util.getPolygonCenter(geometry.rings)
     });
 }
 

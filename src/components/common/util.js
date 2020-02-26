@@ -105,16 +105,23 @@ export default {
     const localVal = window.localStorage.getItem(val);
     return isJson ? JSON.parse(localVal) : localVal;
   },
-
   /**
- * 
- * @param {*} val 
- * @param {*} isJson 
- */
+   * 
+   * @param {*} val 
+   * @param {*} isJson 
+   */
   removeStorage(key, ) {
     window.localStorage.removeItem(key);
+  },
+  getPolygonCenter(rings) {
+    let x_ = 0,
+      y_ = 0;
+    rings[0].map(item => {
+      x_ += item[0];
+      y_ += item[1];
+    });
+    return { x: x_ / rings[0].length, y: y_ / rings[0].length }
   }
-
 };
 
 
