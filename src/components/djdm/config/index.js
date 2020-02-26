@@ -22,4 +22,4 @@ export const yqXSQURL = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/Y
 /** 乐清服务业范围 */
 export const yqFWIdentify = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/yqfwyqy/MapServer";
 /** 乐清服务业 */
-export const yqFWURL = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/yqfwyqy/MapServer/0";
+export const yqFWURL = "http://172.20.89.87:6080/arcgis/rest/services/yueqing/yqfwyqy/MapServer/0";  

@@ -7,16 +7,16 @@ import { fetchArcgisServer } from "@/api/beans/space";
 export default new Vuex.Store({
   state: {
     /** 原始地图数据 */
-    xmBuildSiteList: [],  //  企业数据
-    xsqList: [],
-    streetList: [],
-    sqList: [],
-    fwLayer: [],
+    xmBuildSiteList: [],  // 规上工业数据
+    fwLayer: [],          // 规上服务业数据
+    xsqList: [],          // 县市区数据
+    streetList: [],       // 街道数据
+    sqList: [],           // 村社数据
     /** 菜单数组 */
     xmMenu: [{ id: "PointLayer", name: "规上企业复工复产", innerText: undefined, check: true, children: [] },
     { id: "fwLayer", name: "规上服务业复工复产", innerText: undefined, check: true, children: [] },
     { id: "xsqLayer", name: "县市区网格", innerText: undefined, check: true, children: [] },
-      { id: "streetLayer", name: "乡镇街道功能区", innerText: undefined, check: false, children: [] },
+    { id: "streetLayer", name: "乡镇街道功能区", innerText: undefined, check: false, children: [] },
     { id: "sqLayer", name: "村社网络", innerText: undefined, check: false, children: [] },
     { id: "", name: "亿元以上建设项目", innerText: undefined, check: false, children: [] },
     { id: "", name: "省市重点建设项目", innerText: undefined, check: false, children: [] }

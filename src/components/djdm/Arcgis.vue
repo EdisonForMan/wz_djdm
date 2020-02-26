@@ -1,7 +1,7 @@
 <template>
   <div class="Map">
     <div :id="id" class="arcgisMap"></div>
-    <img :src="tlimg" class="tlimg" />
+    <img :src="tlimg" class="tlimg" v-if="false" />
   </div>
 </template>
 
@@ -112,10 +112,9 @@ export default {
             url: IMAGELAYER
           });
           that.map.add(layer);
-          that.legend = new Legend({
-            view: that.view
-          });
-          that.view.on("mouse-wheel", evt => {});
+          //  图例添加
+          that.legend = new Legend({ view: that.view });
+          that.view.ui.add(that.legend, "bottom-right");
           resolve(true);
         });
       });

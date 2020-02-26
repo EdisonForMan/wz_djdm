@@ -9,7 +9,7 @@ const BANNED_PARAMS = [
     "Shape_Length",
     "x",
     "y",
-    "type"
+    "type", "dz1", "zyy", "wt", "bz"
 ];
 const EXTRA_HASH = {
     ysq_snfg_green_cnt: "市内员工-绿码(人)",
@@ -34,12 +34,13 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
     }).join("");
     removeLayer(context, id); return new Promise((resolve, reject) => {
         loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
-            const option = { url, id, opacity: shallTop ? 1 : 0.8 }
+            const option = { url, id }
             option.popupTemplate = {
                 content: `<div class="yqPopFrame">${_html_}</div>`
             }
-            const feature = new FeatureLayer(option);
-            context.map.add(feature, shallTop ? 4 : 1)
+            const layer = new FeatureLayer(option);
+            context.map.add(layer, shallTop ? 4 : 1)
+            context.legend.layerInfos.push({ layer });
             resolve(true);
         })
     })

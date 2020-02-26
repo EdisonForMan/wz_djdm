@@ -18,7 +18,6 @@
     <bottomBtn v-if="false" />
     <topDate v-if="shallActive == 2" />
     <yqImg v-if="shallActive == 0" />
-    <fgImg v-if="shallActive == 1" />
   </div>
 </template>
 
@@ -31,7 +30,6 @@
  * 2.点击列表<RightDiv>,地图<commonArcgis>定位并显示内容
  */
 import yqImg from "./components/yqImg";
-import fgImg from "./components/fgImg";
 import commonArcgis from "./Arcgis.vue";
 import bottomBtn from "./components/bottomBtn";
 import rightDiv from "./rightDiv/rightDiv.vue";
@@ -47,7 +45,6 @@ export default {
   },
   components: {
     yqImg,
-    fgImg,
     topDocument,
     CustomDocument,
     commonArcgis,
@@ -59,10 +56,10 @@ export default {
   computed: {
     ...mapState({
       xmBuildSiteList: state => state.xmBuildSiteList,
+      fwLayer: state => state.fwLayer,
       xsqList: state => state.xsqList,
       streetList: state => state.streetList,
-      sqList: state => state.sqList,
-      fwLayer: state => state.fwLayer
+      sqList: state => state.sqList
     })
   },
   /**
@@ -70,10 +67,10 @@ export default {
    */
   mounted() {
     !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
+    !this.fwLayer.length && this.fetchFwList();
     !this.xsqList.length && this.fetchXsqList();
     !this.streetList.length && this.fetchStreetList();
     !this.sqList.length && this.fetchSqList();
-    !this.fwLayer.length && this.fetchFwList();
     this.eventRegister();
   },
   methods: {
