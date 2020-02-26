@@ -106,7 +106,7 @@ export default {
 <style scoped>
 .custom-document {
   top: 120px !important;
-  width: 296px;
+  width: 320px;
   background: url(./img/document_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
   display: flex;
@@ -117,6 +117,7 @@ export default {
   text-align: left;
 }
 .custom-document-content {
+  flex: 1;
   flex-grow: 1;
   overflow-x: hidden;
   overflow-y: auto;
@@ -138,11 +139,8 @@ export default {
 }
 
 .custom-query {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 23px;
-  display: flex;
+  height: 60px;
+  line-height: 60px;
 }
 .custom-query /deep/ .el-input {
   width: 180px;
@@ -216,7 +214,7 @@ export default {
   border-color: #1e3663;
 }
 .custom-document-content > .my-menu {
-  top: 80px;
+  /* top: 80px; */
 }
 .my-menu,
 .my-menu /deep/ .el-menu {

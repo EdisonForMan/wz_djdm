@@ -1,7 +1,8 @@
 /* eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
-import { xmBuildSiteURL, yqStreetURL, yqSQURL, yqXSQURL, yqFWURL } from "@/components/djdm/config/index"
+import { xmBuildSiteURL, yqStreetURL, yqSQURL, yqXSQURL, yqFWURL } from "@/components/djdm/config/index";
+import $util from "@/components/common/util";
 Vue.use(Vuex);
 import { fetchArcgisServer } from "@/api/beans/space";
 export default new Vuex.Store({
@@ -13,8 +14,8 @@ export default new Vuex.Store({
     streetList: [],       // 街道数据
     sqList: [],           // 村社数据
     /** 菜单数组 */
-    xmMenu: [{ id: "PointLayer", name: "规上企业复工复产", innerText: undefined, check: true, children: [] },
-    { id: "fwLayer", name: "规上服务业复工复产", innerText: undefined, check: true, children: [] },
+    xmMenu: [{ id: "PointLayer", name: "规上工业复工复产", innerText: undefined, check: true, children: [] },
+    { id: "fwLayer", name: "限上服务业复工复产", innerText: undefined, check: true, children: [] },
     { id: "xsqLayer", name: "县市区网格", innerText: undefined, check: true, children: [] },
     { id: "streetLayer", name: "乡镇街道功能区", innerText: undefined, check: false, children: [] },
     { id: "sqLayer", name: "村社网络", innerText: undefined, check: false, children: [] },
@@ -52,7 +53,7 @@ export default new Vuex.Store({
      */
     async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
-      const buildS = { id: "PointLayer", name: "规上企业复工复产", count: 0, arr: [] };
+      const buildS = { id: "PointLayer", name: "规上工业复工复产", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
         buildS.arr.push({ name: attributes['qymc'], geometry, attributes })
         buildS.count += 1;
@@ -68,7 +69,7 @@ export default new Vuex.Store({
      */
     async fetchFwList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqFWURL });
-      const buildS = { id: "fwLayer", name: "规上服务业复工复产", count: 0, arr: [] };
+      const buildS = { id: "fwLayer", name: "限上服务业复工复产", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
         buildS.arr.push({ name: attributes['qymc'], geometry, attributes: { ...attributes, ygdgqk: `${(attributes.ygdgqk * 100).toFixed(2)}%` } })
         buildS.count += 1;
@@ -100,7 +101,7 @@ export default new Vuex.Store({
       const { data } = await fetchArcgisServer({ url: yqStreetURL });
       const buildS = { id: "streetLayer", name: "乡镇街道功能区", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
-        buildS.arr.push({ name: attributes['街道'], geometry, attributes })
+        buildS.arr.push({ name: attributes['街道'], geometry, attributes: { ...attributes, 更新时间: $util.timestampToTime(attributes.更新时间) } })
         buildS.count += 1;
       })
       const { id, name, count, arr } = buildS;
