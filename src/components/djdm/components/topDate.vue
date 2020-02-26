@@ -35,7 +35,9 @@ export default {
     doTopData() {
       const topData = [
         { t: "规上工业企业", v: 1359, c: "#FF835F" },
-        { t: "规上工业企业复工数", v: 1208, c: "#54FFA6" }
+        { t: "规上工业企业复工数", v: 1208, c: "#54FFA6" },
+        { t: "限上服务业企业", v: 388, c: "#FF835F" },
+        { t: "限上服务业企业复工数", v: 386, c: "#54FFA6" }
       ];
       this.TOP_DATA = topData;
     }
@@ -65,7 +67,7 @@ export default {
     color: #fff;
   }
   p {
-    font-size: 18px;
+    font-size: 16px;
     background: @fontbg;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -73,7 +75,7 @@ export default {
     margin-bottom: 7px;
   }
   h3 {
-    font-size: 20px;
+    font-size: 18px;
     display: inline;
     i {
       font-style: normal;
