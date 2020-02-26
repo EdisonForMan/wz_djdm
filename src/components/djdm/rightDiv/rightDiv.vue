@@ -4,13 +4,13 @@
       <div class="right-div-title">
         <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
       </div>
-      <el-select size="small" v-model="selectVal" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select size="small"
+                 v-model="selectVal"
+                 placeholder="请选择">
+        <el-option v-for="item in options"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"></el-option>
       </el-select>
       <div id="gqx-chart"></div>
     </div>
@@ -28,11 +28,19 @@ export default {
       options: [
         {
           value: 0,
-          label: "功能区复工情况"
+          label: "功能区工业复工情况"
         },
         {
           value: 1,
-          label: "到岗率分析"
+          label: "工业到岗率分析"
+        },
+        {
+          value: 2,
+          label: "功能区服务业复工情况"
+        },
+        {
+          value: 3,
+          label: "服务到岗率分析"
         }
       ],
       selectVal: 0
@@ -40,7 +48,8 @@ export default {
   },
   computed: {
     ...mapState({
-      xmBuildSiteList: state => state.xmBuildSiteList
+      xmBuildSiteList: state => state.xmBuildSiteList,
+      fwLayer: state => state.fwLayer
     })
   },
   watch: {
@@ -65,17 +74,42 @@ export default {
     },
     doChartData() {
       const _obj_ = {};
-      const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
-        const { zj, cnfhqk, ydyg, ydygs } = attributes;
-        !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
-        if (this.selectVal) {
-          _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0;
-          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0;
-        } else {
+      if (this.selectVal == 0) {
+        const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
+          const { zj, cnfhqk, ydyg, ydygs } = attributes;
+          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
           _obj_[zj].ydyg += 1;
           _obj_[zj].ydygs += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
-        }
-      });
+        });
+      }
+      if (this.selectVal == 1) {
+        const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
+          const { zj, cnfhqk, ydyg, ydygs } = attributes;
+          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+          _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0;
+          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0;
+        });
+      }
+      //服务厂能区
+      if (this.selectVal == 2) {
+        const _data_ = this.fwLayer.map(({ attributes }) => {
+          const { zj, cnfhqk, ydyg, ydygs } = attributes;
+          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+          _obj_[zj].ydyg += 1; //企业
+          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? 1 : 0; //已到员工
+        });
+      }
+      // 服务业到岗率分析
+      if (this.selectVal == 3) {
+        const _data_ = this.fwLayer.map(({ attributes }) => {
+          console.log(attributes);
+          const { zj, cnfhqk, ydyg, ydygs } = attributes;
+          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+          _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0; //总员工
+          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0; //已到员工
+        });
+      }
+      // const data = {};
       const data = Object.keys(_obj_).map(item => {
         return { zj: item, ..._obj_[item] };
       });
@@ -88,8 +122,17 @@ export default {
         item => item.ydyg - item.ydygs
       );
       chart_t_option_clone.series[1].label.formatter = param => {
-        return data[param.dataIndex].ydyg + " / " + (data[param.dataIndex].ydygs/data[param.dataIndex].ydyg*100).toFixed(2) + "%";
+        return (
+          data[param.dataIndex].ydyg +
+          " / " +
+          (
+            (data[param.dataIndex].ydygs / data[param.dataIndex].ydyg) *
+            100
+          ).toFixed(2) +
+          "%"
+        );
       };
+
       this.doChartOption({
         t: chart_t_option_clone
       });
@@ -210,7 +253,7 @@ export default {
   min-height: 0;
   width: 100%;
 }
-.el-select{
+.el-select {
   margin-top: 10px;
 }
 </style>

@@ -1,19 +1,21 @@
 <template>
   <div class="Com_content Djdm">
-    <div class="Com_map" v-if="shallActive == 2">
-      <commonArcgis id="macroArcgis" ref="macroArcgis" />
+    <div class="Com_map"
+         v-if="shallActive == 2">
+      <commonArcgis id="macroArcgis"
+                    ref="macroArcgis" />
     </div>
-    <div class="Com_container" style="z-index: 10;" v-if="shallActive == 2">
+    <div class="Com_container"
+         style="z-index: 10;"
+         v-if="shallActive == 2">
       <div id="fy-rightDiv">
         <rightDiv />
       </div>
     </div>
     <topDocument />
-    <CustomDocument
-      v-if="shallActive == 2"
-      ref="leftMenu"
-      style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
-    />
+    <CustomDocument v-if="shallActive == 2"
+                    ref="leftMenu"
+                    style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;" />
     <xzDate v-if="false" />
     <bottomBtn v-if="false" />
     <topDate v-if="shallActive == 2" />
