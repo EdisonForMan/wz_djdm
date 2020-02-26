@@ -154,7 +154,7 @@ export default {
         ])
       };
       const json = this.$util.clone(
-        this.selectVal ? chart_m_option : chart_t_option
+        this.selectVal % 2 !== 0 ? chart_m_option : chart_t_option
       );
       json.series[0].itemStyle = t_itemStyle_0;
       json.series[1].itemStyle = t_itemStyle_1;
