@@ -37,10 +37,22 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
         if (context.map.findLayerById(id)) {
             //  存在图层,设置visible
             context.map.findLayerById(id).visible = true;
+            context.map.findLayerById(`${id}Img`).visible = true;
             resolve(true);
         } else {
             //  不存在图层,生成图层
-            loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+            loadModules(["esri/layers/FeatureLayer", "esri/layers/MapImageLayer"]).then(([FeatureLayer, MapImageLayer]) => {
+                //  image
+                const imageURL = url.replace(/\/[0-9]$/, "");
+                const endParam = url.match(/\/[0-9]$/);
+                const optionImg = {
+                    url: imageURL,
+                    id: `${id}Img`,
+                }
+                endParam.length && (optionImg.sublayers = [{ id: endParam[0].replace(/\//i, "") }]);
+                const imgLayer = new MapImageLayer(optionImg);
+                context.map.add(imgLayer, shallTop ? 4 : 1)
+                //  feature
                 const option = { url, id }
                 id != "xsqLayer" && (option.popupTemplate = {
                     content: `<div class="yqPopFrame">${_html_}</div>`
@@ -118,5 +130,8 @@ export const doArcgisPopup = ({ view, $util }, { attributes, type, geometry }, f
  * @param {*} id 
  */
 export const removeLayer = (context, id) => {
-    context.map.findLayerById(id) && (context.map.findLayerById(id).visible = false);
+    if (context.map.findLayerById(id)) {
+        context.map.findLayerById(`${id}Img`).visible = false
+        context.map.findLayerById(id).visible = false;
+    }
 }

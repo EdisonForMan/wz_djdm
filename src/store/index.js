@@ -16,7 +16,7 @@ export default new Vuex.Store({
     fjList: [],           // 房建数据
     /** 菜单数组 */
     xmMenu: [{ id: "PointLayer", name: "规上工业复工复产", innerText: undefined, check: true, children: [] },
-    { id: "fwLayer", name: "限上服务业复工复产", innerText: undefined, check: true, children: [] },
+    { id: "fwLayer", name: "限上服务业复工复产", innerText: undefined, check: false, children: [] },
     { id: "xsqLayer", name: "县市区网格", innerText: undefined, check: true, children: [] },
     { id: "streetLayer", name: "乡镇街道功能区", innerText: undefined, check: false, children: [] },
     { id: "sqLayer", name: "村社网络", innerText: undefined, check: false, children: [] },
@@ -120,7 +120,6 @@ export default new Vuex.Store({
     async fetchSqList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqSQURL });
       const buildS = { id: "sqLayer", name: "村社网络", count: 0, arr: [] };
-      console.log(data.features)
       data.features.map(({ attributes, geometry }) => {
         buildS.arr.push({ name: attributes['村社区'], geometry, attributes })
         buildS.count += 1;
