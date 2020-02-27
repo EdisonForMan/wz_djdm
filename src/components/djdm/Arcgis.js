@@ -1,4 +1,4 @@
-import { SERVER, xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, yqFWURL, yqFJURL } from "./config/index";
+import { xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, yqFWURL, yqFJURL } from "./config/index";
 import { loadModules } from "esri-loader";
 //  筛选排除的字段
 const BANNED_PARAMS = [
@@ -32,17 +32,25 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
     const _html_ = Object.keys(fieldAliases).filter(item => !BANNED_PARAMS.includes(item)).map(key => {
         return `<div><span>${EXTRA_HASH[fieldAliases[key]] || fieldAliases[key]}</span><span>{${key}}</span></div>`
     }).join("");
-    removeLayer(context, id); return new Promise((resolve, reject) => {
-        loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
-            const option = { url, id }
-            id != "xsqLayer" && (option.popupTemplate = {
-                content: `<div class="yqPopFrame">${_html_}</div>`
-            })
-            const layer = new FeatureLayer(option);
-            context.map.add(layer, shallTop ? 4 : 1)
-            context.legend.layerInfos.push({ layer });
+    return new Promise((resolve, reject) => {
+
+        if (context.map.findLayerById(id)) {
+            //  存在图层,设置visible
+            context.map.findLayerById(id).visible = true;
             resolve(true);
-        })
+        } else {
+            //  不存在图层,生成图层
+            loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+                const option = { url, id }
+                id != "xsqLayer" && (option.popupTemplate = {
+                    content: `<div class="yqPopFrame">${_html_}</div>`
+                })
+                const layer = new FeatureLayer(option);
+                context.map.add(layer, shallTop ? 4 : 1)
+                context.legend.layerInfos.push({ layer });
+                resolve(true);
+            })
+        }
     })
 }
 /**
@@ -110,5 +118,5 @@ export const doArcgisPopup = ({ view, $util }, { attributes, type, geometry }, f
  * @param {*} id 
  */
 export const removeLayer = (context, id) => {
-    context.map.findLayerById(id) && context.map.remove(context.map.findLayerById(id));
+    context.map.findLayerById(id) && (context.map.findLayerById(id).visible = false);
 }
