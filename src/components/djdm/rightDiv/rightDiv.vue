@@ -74,6 +74,7 @@ export default {
   methods: {
     hideSide() {
       this.hideVisible = !this.hideVisible;
+      this.$hub.$emit("hide_click", this.hideVisible);
     },
     eventRegister() {},
     chartRegister() {

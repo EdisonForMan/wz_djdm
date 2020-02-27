@@ -1,7 +1,10 @@
 <template>
   <div class="Map">
-    <div :id="id" class="arcgisMap"></div>
-    <img :src="tlimg" class="tlimg" v-if="false" />
+    <div :id="id"
+         class="arcgisMap"></div>
+    <img :src="tlimg"
+         class="tlimg"
+         v-if="false" />
   </div>
 </template>
 
@@ -50,6 +53,7 @@ export default {
     // doYqFWLayer(this);
     // doYqFJLayer(this);
     doPointLayer(this);
+    this.hideLegend();
   },
   methods: {
     eventRegister() {
@@ -129,6 +133,19 @@ export default {
       const { x, y } = this.$util.getPolygonCenter(rings);
       this.view.goTo({
         center: [x, y]
+      });
+    },
+    // 弹出隐藏图例
+    hideLegend() {
+      this.$hub.$on("hide_click", val => {
+        let Element = document.querySelector(".esri-ui-bottom-right");
+        console.log(Element);
+        console.log(val);
+        if (val) {
+          Element.style.right = 0;
+        } else {
+          Element.style.right = "410px";
+        }
       });
     }
   }
