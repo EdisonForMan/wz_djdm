@@ -79,7 +79,7 @@ export default {
     !this.xsqList.length && this.fetchXsqList();
     !this.streetList.length && this.fetchStreetList();
     !this.sqList.length && this.fetchSqList();
-    !this.fjList.length && this.fetchSqList();
+    !this.fjList.length && this.fetchFjList();
     this.eventRegister();
   },
   methods: {
@@ -89,7 +89,7 @@ export default {
       "fetchStreetList",
       "fetchSqList",
       "fetchFwList",
-      "fetchSqList"
+      "fetchFjList"
     ]),
     eventRegister() {
       this.$hub.$on("topDocumentClick", val => {
