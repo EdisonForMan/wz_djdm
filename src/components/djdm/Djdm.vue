@@ -1,19 +1,26 @@
 <template>
   <div class="Com_content Djdm">
-    <div class="Com_map" v-if="shallActive == 2">
-      <commonArcgis id="macroArcgis" ref="macroArcgis" />
+    <div class="Com_map"
+         v-if="shallActive == 2">
+      <commonArcgis id="macroArcgis"
+                    ref="macroArcgis" />
     </div>
-    <div class="Com_container" style="z-index: 10;" v-if="shallActive == 2">
+    <div class="Com_container"
+         style="z-index: 10;"
+         v-if="shallActive == 2">
       <div id="fy-rightDiv">
         <rightDiv />
       </div>
     </div>
     <topDocument />
-    <CustomDocument
-      v-if="shallActive == 2"
-      ref="leftMenu"
-      style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
-    />
+    <!-- <div class="left"> -->
+    <CustomDocument v-if="shallActive == 2"
+                    ref="leftMenu"
+                    style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;" />
+    <!-- <span class="hide_button">fff</span> -->
+
+    <!-- </div> -->
+
     <xzDate v-if="false" />
     <bottomBtn v-if="false" />
     <topDate v-if="shallActive == 2" />
@@ -94,4 +101,19 @@ export default {
 </script>
  <style scoped lang="less">
 @import url("./Djdm.less");
+
+// .left {
+//   display: inline-block;
+// }
+
+// .hide_button {
+//   position: absolute;
+//   top: 50%;
+//   height: 126px;
+//   width: 27px;
+//   background-image: url("./img/hide_button.png");
+//   background-size: 100% 100%;
+//   background-repeat: no-repeat;
+//   cursor: pointer;
+// }
 </style>

@@ -1,19 +1,22 @@
 <template>
-  <div class="right-div">
+  <div class="right-div animated"
+       :class="[hideVisible?'slideOutRight':'slideInRight']">
     <div class="gqx">
       <div class="right-div-title">
         <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
       </div>
-      <el-select size="small" v-model="selectVal" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select size="small"
+                 v-model="selectVal"
+                 placeholder="请选择">
+        <el-option v-for="item in options"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"></el-option>
       </el-select>
       <div id="gqx-chart"></div>
     </div>
+    <span class="hide_button"
+          @click="hideSide"></span>
   </div>
 </template>
 
@@ -43,7 +46,8 @@ export default {
           label: "服务业到岗率分析"
         }
       ],
-      selectVal: 0
+      selectVal: 0,
+      hideVisible: false
     };
   },
   computed: {
@@ -68,6 +72,9 @@ export default {
     }
   },
   methods: {
+    hideSide() {
+      this.hideVisible = !this.hideVisible;
+    },
     eventRegister() {},
     chartRegister() {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
@@ -164,6 +171,18 @@ export default {
 };
 </script>
 <style scoped>
+.hide_button {
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 40%;
+  right: 98%;
+  height: 126px;
+  width: 27px;
+  background: url("../img/hide_button.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
 .right-div {
   width: 100%;
   height: 100%;

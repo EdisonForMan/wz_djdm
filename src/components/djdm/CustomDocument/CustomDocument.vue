@@ -1,42 +1,45 @@
 <template>
-  <div class="custom-document">
+  <div class="custom-document animated "
+       :class="[hideVisible?'slideOutLeft':'slideInLeft']">
     <div class="custom-query">
       <el-input v-model="queryValue">
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        <i slot="prefix"
+           class="el-input__icon el-icon-search"></i>
       </el-input>
-      <el-button type="primary" @click.stop="query">查询</el-button>
+      <el-button type="primary"
+                 @click.stop="query">查询</el-button>
     </div>
     <div class="custom-document-content">
-      <el-menu active-text-color="#000" text-color="#000" class="my-menu">
-        <el-submenu v-for="(value, index) of tabsMenuData" :key="index" :index="index + ''">
+      <el-menu active-text-color="#000"
+               text-color="#000"
+               class="my-menu">
+        <el-submenu v-for="(value, index) of tabsMenuData"
+                    :key="index"
+                    :index="index + ''">
           <template slot="title">
-            <el-checkbox
-              v-model="value.check"
-              class="my-checkbox"
-              @click.stop.native="()=>{}"
-              @change="changeCheckboxHandler(index)"
-            ></el-checkbox>
+            <el-checkbox v-model="value.check"
+                         class="my-checkbox"
+                         @click.stop.native="()=>{}"
+                         @change="changeCheckboxHandler(index)"></el-checkbox>
             <span>{{ value.name }}</span>
             <span v-if="value.innerText">{{ value.innerText }}</span>
           </template>
-          <el-menu-item
-            :index="index + '-' + ind"
-            v-for="(item, ind) of value.children"
-            :key="ind"
-            @click="menuItemClickHandler(item,value)"
-            class="children-menu-item"
-          >
-            <el-checkbox
-              v-model="item.check"
-              class="my-checkbox"
-              @change="changeCheckboxHandler(index, ind)"
-              v-show="false"
-            ></el-checkbox>
+          <el-menu-item :index="index + '-' + ind"
+                        v-for="(item, ind) of value.children"
+                        :key="ind"
+                        @click="menuItemClickHandler(item,value)"
+                        class="children-menu-item">
+            <el-checkbox v-model="item.check"
+                         class="my-checkbox"
+                         @change="changeCheckboxHandler(index, ind)"
+                         v-show="false"></el-checkbox>
             {{ item.name }}
           </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
+    <span class="hide_button"
+          @click="hideSide"></span>
   </div>
 </template>
 <script>
@@ -46,7 +49,8 @@ export default {
   data() {
     return {
       queryValue: undefined,
-      tabsMenuData: []
+      tabsMenuData: [],
+      hideVisible: false
     };
   },
   computed: {
@@ -66,6 +70,9 @@ export default {
     this.eventRegister();
   },
   methods: {
+    hideSide() {
+      this.hideVisible = !this.hideVisible;
+    },
     eventRegister() {},
     goVideo(item) {
       window.open("http://120.199.110.111:8989/SPJK/spjkwcj/demo1.html");
@@ -104,6 +111,17 @@ export default {
 };
 </script>
 <style scoped>
+.hide_button {
+  position: absolute;
+  top: 40%;
+  left: 320px;
+  height: 126px;
+  width: 27px;
+  background: url("./img/hide_button.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
 .custom-document {
   top: 120px !important;
   width: 320px;

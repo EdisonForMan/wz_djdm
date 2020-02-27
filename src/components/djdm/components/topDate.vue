@@ -1,7 +1,8 @@
 <template>
   <div class="topDateDiv">
     <ul>
-      <li v-for="(item,index) in TOP_DATA" :key="index">
+      <li v-for="(item,index) in TOP_DATA"
+          :key="index">
         <p>{{item.t}}</p>
         <h3 :style="`color:${item.c}`">
           {{item.v}}
@@ -40,10 +41,10 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上工业企业", v: 0, c: "#FF835F" },
-        { t: "规上工业企业复工数", v: 0, c: "#54FFA6" },
-        { t: "限上服务业企业", v: 0, c: "#FF835F" },
-        { t: "限上服务业企业复工数", v: 0, c: "#54FFA6" }
+        { t: "规上工业企业", v: 0, c: "#FF283A" },
+        { t: "规上工业企业复工数", v: 0, c: "#FFC659" },
+        { t: "限上服务业企业", v: 0, c: "#F6E31B" },
+        { t: "限上服务业企业复工数", v: 0, c: "#1EFF95" }
       ];
       this.xmBuildSiteList.map(({ attributes }) => {
         const { cnfhqk } = attributes;
@@ -59,6 +60,14 @@ export default {
     }
   }
 };
+// width: 170px;
+// margin: auto;
+// display: inline-block;
+// background-color: #1b45a7;
+// border: 1px solid #07e2e8;
+// margin-left: 20px;
+// padding: 8px 5px;
+// color: #07e2e8;
 </script>
 
 <style lang="less" scoped>
@@ -75,7 +84,7 @@ export default {
   background-color: #1b45a7;
   border: 1px solid #07e2e8;
   margin-left: 20px;
-  padding: 8px 5px;
+  padding: 8px 0px;
   color: #07e2e8;
   i {
     font-style: normal;
@@ -86,18 +95,22 @@ export default {
     font-size: 16px;
     background: @fontbg;
     -webkit-background-clip: text;
+    // display: inline-block;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #07e2e8;
     -webkit-text-fill-color: transparent;
     font-family: PingFangSC-Medium, PingFang SC;
     margin-bottom: 7px;
+    font-weight: bold;
   }
   h3 {
-    font-size: 18px;
+    font-size: 20px;
     display: inline;
     i {
       font-style: normal;
       font-size: 16px;
       color: #36dcff;
-      font-weight: 300;
+      font-weight: bold;
     }
   }
 }
