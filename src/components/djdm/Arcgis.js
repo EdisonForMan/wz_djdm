@@ -1,15 +1,15 @@
-import { SERVER, xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, yqFWURL, buildSiteIdentify, yqIdentify, yqFWIdentify } from "./config/index";
+import { SERVER, xmBuildSiteURL, yqStreetURL, yqXSQURL, yqSQURL, yqFWURL, yqFJURL } from "./config/index";
 import { loadModules } from "esri-loader";
 //  筛选排除的字段
 const BANNED_PARAMS = [
     "OBJECTID",
     "Shape",
-    "Shape_Area",
-    "Shape_Leng",
+    "Shape_Area", "SHAPE_Area",
+    "Shape_Leng", "SHAPE_Length",
     "Shape_Length",
     "x",
     "y",
-    "type", "dz1", "zyy", "wt", "bz", "复工率颜色"
+    "type", "dz1", "zyy", "wt", "bz", "复工率颜色",
 ];
 const EXTRA_HASH = {
     ysq_snfg_green_cnt: "市内员工-绿码(人)",
@@ -45,7 +45,13 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
         })
     })
 }
-
+/**
+ * 重点项目
+ * @param {*} context 
+ */
+export const doPointLayer = (context) => {
+    doMassFeatureLayer(context, { url: xmBuildSiteURL, id: "PointLayer" })
+}
 /**
  * 街道网格
  * @param {*} context 
@@ -74,13 +80,12 @@ export const doYqXqLayer = (context) => {
 export const doYqFWLayer = (context) => {
     doMassFeatureLayer(context, { url: yqFWURL, id: "fwLayer" })
 }
-
 /**
- * 重点项目工地点
+ * 房建项目
  * @param {*} context 
  */
-export const doPointLayer = (context) => {
-    doMassFeatureLayer(context, { url: xmBuildSiteURL, id: "PointLayer" })
+export const doYqFJLayer = (context) => {
+    doMassFeatureLayer(context, { url: yqFJURL, id: "fjLayer" })
 }
 
 /**

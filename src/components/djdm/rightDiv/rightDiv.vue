@@ -40,7 +40,7 @@ export default {
         },
         {
           value: 3,
-          label: "服务到岗率分析"
+          label: "服务业到岗率分析"
         }
       ],
       selectVal: 0

@@ -15,6 +15,7 @@ import {
   doYqXSQLayer,
   doYqXqLayer,
   doYqFWLayer,
+  doYqFJLayer,
   fetchPoint,
   doArcgisPopup,
   removeLayer
@@ -47,6 +48,7 @@ export default {
     doYqXSQLayer(this);
     // doYqXqLayer(this);
     // doYqFWLayer(this);
+    // doYqFJLayer(this);
     doPointLayer(this);
   },
   methods: {
@@ -58,7 +60,8 @@ export default {
           xsqLayer: doYqXSQLayer,
           sqLayer: doYqXqLayer,
           streetLayer: doYqStreetLayer,
-          fwLayer: doYqFWLayer
+          fwLayer: doYqFWLayer,
+          fjLayer: doYqFJLayer
         };
         check && hash[id](this);
         !check && removeLayer(this, id);
