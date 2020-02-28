@@ -1,22 +1,20 @@
 <template>
-  <div class="right-div animated"
-       :class="[hideVisible?'slideOutRight':'slideInRight']">
+  <div class="right-div animated" :class="[hideVisible?'slideOutRight':'slideInRight']">
     <div class="gqx">
       <div class="right-div-title">
         <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
       </div>
-      <el-select size="small"
-                 v-model="selectVal"
-                 placeholder="请选择">
-        <el-option v-for="item in options"
-                   :key="item.value"
-                   :label="item.label"
-                   :value="item.value"></el-option>
+      <el-select size="small" v-model="selectVal" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
       </el-select>
       <div id="gqx-chart"></div>
     </div>
-    <span class="hide_button"
-          @click="hideSide"></span>
+    <span class="hide_button" @click="hideSide"></span>
   </div>
 </template>
 
@@ -25,6 +23,7 @@
 import { mapState } from "vuex";
 import chart_t_option from "./chart_t_option";
 import chart_m_option from "./chart_m_option";
+import chart_pie_option from "./chart_pie_option";
 export default {
   data() {
     return {
@@ -39,10 +38,14 @@ export default {
         },
         {
           value: 2,
-          label: "功能区服务业复工情况"
+          label: "工业新到岗员工分析"
         },
         {
           value: 3,
+          label: "功能区服务业复工情况"
+        },
+        {
+          value: 4,
           label: "服务业到岗率分析"
         }
       ],
@@ -81,72 +84,95 @@ export default {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
     },
     doChartData() {
-      const _obj_ = {};
-      if (this.selectVal == 0) {
-        const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
-          const { zj, cnfhqk, ydyg, ydygs } = attributes;
-          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
-          _obj_[zj].ydyg += 1;
-          _obj_[zj].ydygs += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+      if (this.selectVal != 2) {
+        const _obj_ = {};
+        if (this.selectVal == 0) {
+          const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
+            const { zj, cnfhqk, ydyg, ydygs } = attributes;
+            !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+            _obj_[zj].ydyg += 1;
+            _obj_[zj].ydygs += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+          });
+        }
+        if (this.selectVal == 1) {
+          const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
+            const { zj, cnfhqk, ydyg, ydygs } = attributes;
+            !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+            _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0;
+            _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0;
+          });
+        }
+        //服务厂能区
+        if (this.selectVal == 3) {
+          const _data_ = this.fwLayer.map(({ attributes }) => {
+            const { zj, cnfhqk, ydyg, ydygs } = attributes;
+            !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+            _obj_[zj].ydyg += 1; //企业
+            _obj_[zj].ydygs +=
+              ydygs && ydygs != "NULL" && parseInt(ydygs) > 0 ? 1 : 0; //已到员工
+          });
+        }
+        // 服务业到岗率分析
+        if (this.selectVal == 4) {
+          const _data_ = this.fwLayer.map(({ attributes }) => {
+            const { zj, cnfhqk, ydyg, ydygs } = attributes;
+            !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
+            _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0; //总员工
+            _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0; //已到员工
+          });
+        }
+        const data = Object.keys(_obj_).map(item => {
+          return { zj: item, ..._obj_[item] };
         });
-      }
-      if (this.selectVal == 1) {
-        const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
-          const { zj, cnfhqk, ydyg, ydygs } = attributes;
-          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
-          _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0;
-          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0;
-        });
-      }
-      //服务厂能区
-      if (this.selectVal == 2) {
-        const _data_ = this.fwLayer.map(({ attributes }) => {
-          const { zj, cnfhqk, ydyg, ydygs } = attributes;
-          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
-          _obj_[zj].ydyg += 1; //企业
-          _obj_[zj].ydygs +=
-            ydygs && ydygs != "NULL" && parseInt(ydygs) > 0 ? 1 : 0; //已到员工
-        });
-      }
-      // 服务业到岗率分析
-      if (this.selectVal == 3) {
-        const _data_ = this.fwLayer.map(({ attributes }) => {
-          const { zj, cnfhqk, ydyg, ydygs } = attributes;
-          !_obj_[zj] && (_obj_[zj] = { ydyg: 0, ydygs: 0 });
-          _obj_[zj].ydyg += ydyg && ydyg != "NULL" ? parseInt(ydyg) : 0; //总员工
-          _obj_[zj].ydygs += ydygs && ydygs != "NULL" ? parseInt(ydygs) : 0; //已到员工
-        });
-      }
-      // const data = {};
-      const data = Object.keys(_obj_).map(item => {
-        return { zj: item, ..._obj_[item] };
-      });
-      //  顶部
-      const chart_t_arr = data.sort(this.$util.compare("ydyg")).reverse();
-      const chart_t_option_clone = this.chart_T_fixed();
-      chart_t_option_clone.yAxis[0].data = data.map(item => item.zj);
-      chart_t_option_clone.series[0].data = data.map(item => item.ydygs);
-      chart_t_option_clone.series[1].data = data.map(
-        item => item.ydyg - item.ydygs
-      );
-      chart_t_option_clone.series[1].label.formatter = param => {
-        return (
-          data[param.dataIndex].ydyg +
-          " / " +
-          (
-            (data[param.dataIndex].ydygs / data[param.dataIndex].ydyg) *
-            100
-          ).toFixed(2) +
-          "%"
+        //  顶部
+        const chart_t_arr = data.sort(this.$util.compare("ydyg")).reverse();
+        const chart_t_option_clone = this.chart_T_fixed();
+        chart_t_option_clone.yAxis[0].data = data.map(item => item.zj);
+        chart_t_option_clone.series[0].data = data.map(item => item.ydygs);
+        chart_t_option_clone.series[1].data = data.map(
+          item => item.ydyg - item.ydygs
         );
-      };
-
-      this.doChartOption({
-        t: chart_t_option_clone
-      });
+        chart_t_option_clone.series[1].label.formatter = param => {
+          return (
+            data[param.dataIndex].ydyg +
+            " / " +
+            (
+              (data[param.dataIndex].ydygs / data[param.dataIndex].ydyg) *
+              100
+            ).toFixed(2) +
+            "%"
+          );
+        };
+        this.doChartOption({
+          t: chart_t_option_clone
+        });
+      } else {
+        //  市内外员工
+        const snwArr = [
+          { value: 0, name: "市内员工数" },
+          { value: 0, name: "市外员工数" }
+        ];
+        //  湖北非湖北
+        const hbArr = [
+          { value: 0, name: "湖北籍员工" },
+          { value: 0, name: "非湖北籍员工" }
+        ];
+        const _data_ = this.xmBuildSiteList.map(({ attributes }) => {
+          const { snyg, swyg, hbjyg, drxdw } = attributes;
+          snwArr[0].value += snyg ? parseInt(snyg) : 0;
+          snwArr[1].value += swyg ? parseInt(swyg) : 0;
+          hbArr[0].value += hbjyg ? parseInt(hbjyg) : 0;
+          hbArr[1].value +=
+            drxdw && hbjyg ? parseInt(drxdw) - parseInt(hbjyg) : 0;
+        });
+        const chart_pie_option_clone = this.$util.clone(chart_pie_option);
+        chart_pie_option_clone.series[0].data = snwArr;
+        chart_pie_option_clone.series[1].data = hbArr;
+        this.doChartOption({ t: chart_pie_option_clone });
+      }
     },
     doChartOption({ t }) {
-      t && this.chart_t.setOption(t);
+      t && this.chart_t.setOption(t, true);
     },
     chart_T_fixed() {
       const t_itemStyle_0 = {
