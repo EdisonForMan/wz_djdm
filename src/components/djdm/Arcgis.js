@@ -51,14 +51,14 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
                 }
                 endParam.length && (optionImg.sublayers = [{ id: endParam[0].replace(/\//i, "") }]);
                 const imgLayer = new MapImageLayer(optionImg);
-                context.map.add(imgLayer, shallTop ? 4 : 1)
+                context.map.add(imgLayer, shallTop ? 9 : 1)
                 //  feature
-                const option = { url, id }
+                const option = { url, id, opacity: 0 }
                 id != "xsqLayer" && (option.popupTemplate = {
                     content: `<div class="yqPopFrame">${_html_}</div>`
                 })
                 const layer = new FeatureLayer(option);
-                context.map.add(layer, shallTop ? 4 : 1)
+                context.map.add(layer, shallTop ? 10 : 2)
                 context.legend.layerInfos.push({ layer });
                 resolve(true);
             })
