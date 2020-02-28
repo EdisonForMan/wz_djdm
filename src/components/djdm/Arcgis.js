@@ -53,7 +53,7 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
                 const imgLayer = new MapImageLayer(optionImg);
                 context.map.add(imgLayer, shallTop ? 9 : 1)
                 //  feature
-                const option = { url, id, opacity: 0 }
+                const option = { url, id, opacity: 0, labelsVisible: false }
                 id != "xsqLayer" && (option.popupTemplate = {
                     content: `<div class="yqPopFrame">${_html_}</div>`
                 })
