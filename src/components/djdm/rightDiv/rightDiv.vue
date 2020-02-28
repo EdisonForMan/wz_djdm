@@ -231,20 +231,18 @@ export default {
         chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
           item.qy.replace(/集聚区/g, "")
         );
-        //复工数
+        //复工
         chart_t_option_clone.series[0].data = chart_t_arr.map(
           item => item[fgTotal]
         );
-        //总数
-        chart_t_option_clone.series[0].itemStyle.data = chart_t_arr.map(
-          item => item[xmTotal]
-        );
+
         //未复工
         chart_t_option_clone.series[1].data = chart_t_arr.map(
           item => item[xmTotal] - item[fgTotal]
         );
+
         chart_t_option_clone.series[1].label.formatter = param => {
-          return chart_t_arr[param.dataIndex].yyysxms;
+          return chart_t_arr[param.dataIndex].djdmxms;
         };
 
         //  下部
@@ -268,18 +266,23 @@ export default {
     chart_T_fixed() {
       const t_itemStyle_0 = {
         color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: "#7949FF" },
-          { offset: 1, color: "#938FFF" }
+          { offset: 0, color: "#FFB243" },
+          { offset: 1, color: "#FFE64E" }
+          // { offset: 0, color: "#7949FF" },
+          // { offset: 1, color: "#938FFF" }
         ])
       };
       const t_itemStyle_1 = {
         color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: "#FFB243" },
-          { offset: 1, color: "#FFE64E" }
+          // { offset: 0, color: "#FFB243" },
+          // { offset: 1, color: "#FFE64E" }
+          { offset: 0, color: "#7949FF" },
+          { offset: 1, color: "#938FFF" }
         ])
       };
 
       const json = this.$util.clone(chart_t_option);
+
       json.series[0].itemStyle = t_itemStyle_0;
       json.series[1].itemStyle = t_itemStyle_1;
       return json;
