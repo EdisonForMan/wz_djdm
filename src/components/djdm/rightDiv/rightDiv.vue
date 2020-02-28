@@ -2,7 +2,17 @@
   <div class="right-div">
     <div class="gqx">
       <div class="right-div-title">
-        <span class="right-div-title-inner">各县市区</span>
+        <span class="right-div-title-inner">{{force=="xm"?"各县市区":options[selectVal].label}}</span>
+        <el-select size="mini"
+                   popper-class="rightSelect"
+                   v-model="selectVal"
+                   placeholder="请选择"
+                   v-if="force == 'xm'?false:true">
+          <el-option v-for="item in options"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"></el-option>
+        </el-select>
       </div>
       <div id="gqx-chart"></div>
     </div>
@@ -38,7 +48,22 @@ export default {
       chart_m_data: {},
       chart_b: undefined,
       chart_b_data: {},
-      force: "xm"
+      force: "xm",
+      options: [
+        {
+          value: 0,
+          label: "总复工情况"
+        },
+        {
+          value: 1,
+          label: "安置房项目复工情况"
+        },
+        {
+          value: 2,
+          label: "上亿项目复工情况"
+        }
+      ],
+      selectVal: 0
     };
   },
   computed: {
@@ -56,6 +81,10 @@ export default {
     },
     backToWzList(n, o) {
       this.doChartExtra();
+    },
+    //监听切换
+    selectVal(n, o) {
+      this.doChartData();
     }
   },
   mounted() {
@@ -145,23 +174,81 @@ export default {
         });
       } else {
         //  顶部
-        const chart_t_arr = _data_
-          .sort(this.$util.compare("djdmxms"))
-          .reverse();
+        //总复工情况
+        let build_date = {};
+        let build_date_num = [];
+        let chart_t_arr = [];
+        if (this.selectVal == 0) {
+          // 拿到总项目的数据 djdmxms djdmfgs
+          _data_.forEach(({ djdmxms, djdmfgs, qy }) => {
+            build_date_num.push({
+              djdmxms: djdmxms,
+              djdmfgs: djdmfgs,
+              qy: qy
+            });
+          });
+          // console.log("build_date对象", build_date);
+          // console.log("build_date_num数组", build_date_num);
+          chart_t_arr = build_date_num
+            .sort(this.$util.compare("djdmxms"))
+            .reverse();
+          console.log("chart_t_arr总复工的数据", chart_t_arr);
+        }
+        if (this.selectVal == 1) {
+          // 拿到安置房的数据
+          _data_.forEach(({ djdmazxms, djdmazfgs, qy }) => {
+            build_date_num.push({
+              djdmazxms: djdmazxms,
+              djdmazfgs: djdmazfgs,
+              qy: qy
+            });
+          });
+          chart_t_arr = build_date_num
+            .sort(this.$util.compare("djdmazxms"))
+            .reverse();
+          console.log("chart_t_arr安置房的数据", chart_t_arr);
+        }
+        if (this.selectVal == 2) {
+          //拿到上亿元项目数据
+          _data_.forEach(({ djdmyyxms, djdmyyfgs, qy }) => {
+            build_date_num.push({
+              djdmyyxms: djdmyyxms,
+              djdmyyfgs: djdmyyfgs,
+              qy: qy
+            });
+          });
+          chart_t_arr = build_date_num
+            .sort(this.$util.compare("djdmyyxms"))
+            .reverse();
+        }
+        // 返回每个key数组
+        const keyData = Object.keys(build_date_num[0]);
+        const xmTotal = keyData[0];
+        const fgTotal = keyData[1];
+        const qy = keyData[2];
+
         const chart_t_option_clone = this.chart_T_fixed();
         chart_t_option_clone.xAxis[0].data = chart_t_arr.map(item =>
           item.qy.replace(/集聚区/g, "")
         );
+        //复工数
         chart_t_option_clone.series[0].data = chart_t_arr.map(
-          item => item.djdmfgs
+          item => item[fgTotal]
         );
+        //总数
+        chart_t_option_clone.series[0].itemStyle.data = chart_t_arr.map(
+          item => item[xmTotal]
+        );
+        //未复工
         chart_t_option_clone.series[1].data = chart_t_arr.map(
-          item => item.djdmxms - item.djdmfgs
+          item => item[xmTotal] - item[fgTotal]
         );
         chart_t_option_clone.series[1].label.formatter = param => {
           return chart_t_arr[param.dataIndex].yyysxms;
         };
+
         //  下部
+        //外来人口
         const chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
           return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
         });
@@ -181,16 +268,17 @@ export default {
     chart_T_fixed() {
       const t_itemStyle_0 = {
         color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: "#DA414F" },
-          { offset: 1, color: "#FF7783" }
+          { offset: 0, color: "#7949FF" },
+          { offset: 1, color: "#938FFF" }
         ])
       };
       const t_itemStyle_1 = {
         color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: "#FF8146" },
-          { offset: 1, color: "#FFD699" }
+          { offset: 0, color: "#FFB243" },
+          { offset: 1, color: "#FFE64E" }
         ])
       };
+
       const json = this.$util.clone(chart_t_option);
       json.series[0].itemStyle = t_itemStyle_0;
       json.series[1].itemStyle = t_itemStyle_1;
@@ -199,7 +287,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 .right-div {
   width: 100%;
   height: 100%;
@@ -248,6 +336,14 @@ export default {
   position: relative;
   z-index: 2;
 }
+.right-div-title .el-select {
+  margin-left: 20px !important;
+}
+.right-div-title .el-select .el-input input {
+  color: #7bb7df !important;
+  background: #01195a !important;
+}
+
 .gqx .right-div-title {
   padding-top: 20px;
   padding-bottom: 0;
