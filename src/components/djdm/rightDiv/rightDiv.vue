@@ -178,48 +178,46 @@ export default {
         let build_date = {};
         let build_date_num = [];
         let chart_t_arr = [];
+        console.log("_data_", _data_);
         if (this.selectVal == 0) {
           // 拿到总项目的数据 djdmxms djdmfgs
-          _data_.forEach(({ djdmxms, djdmfgs, qy }) => {
+          _data_.forEach(({ djdmxms, djdmfgs, qy, id }) => {
             build_date_num.push({
               djdmxms: djdmxms,
               djdmfgs: djdmfgs,
-              qy: qy
+              qy: qy,
+              id: id
             });
           });
           // console.log("build_date对象", build_date);
           // console.log("build_date_num数组", build_date_num);
-          chart_t_arr = build_date_num
-            .sort(this.$util.compare("djdmxms"))
-            .reverse();
+          chart_t_arr = build_date_num.sort(this.$util.compare("id"));
           console.log("chart_t_arr总复工的数据", chart_t_arr);
         }
         if (this.selectVal == 1) {
           // 拿到安置房的数据
-          _data_.forEach(({ djdmazxms, djdmazfgs, qy }) => {
+          _data_.forEach(({ djdmazxms, djdmazfgs, qy, id }) => {
             build_date_num.push({
               djdmazxms: djdmazxms,
               djdmazfgs: djdmazfgs,
-              qy: qy
+              qy: qy,
+              id: id
             });
           });
-          chart_t_arr = build_date_num
-            .sort(this.$util.compare("djdmazxms"))
-            .reverse();
+          chart_t_arr = build_date_num.sort(this.$util.compare("id"));
           console.log("chart_t_arr安置房的数据", chart_t_arr);
         }
         if (this.selectVal == 2) {
           //拿到上亿元项目数据
-          _data_.forEach(({ djdmyyxms, djdmyyfgs, qy }) => {
+          _data_.forEach(({ djdmyyxms, djdmyyfgs, qy, id }) => {
             build_date_num.push({
               djdmyyxms: djdmyyxms,
               djdmyyfgs: djdmyyfgs,
-              qy: qy
+              qy: qy,
+              id: id
             });
           });
-          chart_t_arr = build_date_num
-            .sort(this.$util.compare("djdmyyxms"))
-            .reverse();
+          chart_t_arr = build_date_num.sort(this.$util.compare("id"));
         }
         // 返回每个key数组
         const keyData = Object.keys(build_date_num[0]);
@@ -242,7 +240,7 @@ export default {
         );
 
         chart_t_option_clone.series[1].label.formatter = param => {
-          return chart_t_arr[param.dataIndex].djdmxms;
+          return chart_t_arr[param.dataIndex][xmTotal];
         };
 
         //  下部

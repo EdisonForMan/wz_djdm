@@ -2,11 +2,16 @@
   <div id="btnDiv">
     <ul>
       <li class="hover">
-        区划图
+        五色图
         <div>
           <ul class="subList">
-            <li @click="doSwitch(1)" :class="{active:forceColor == 1}">亿元以上项目五色图</li>
-            <li @click="doSwitch(0)" :class="{active:forceColor == 0}">省市重点项目五色图</li>
+            <li @click="doSwitch(1)"
+                :class="{active:forceColor == 1}">亿元以上项目复工强度</li>
+            <li @click="doSwitch(2)"
+                :class="{active:forceColor == 2}">省重点项目复工强度</li>
+            <li @click="doSwitch(0)"
+                :class="{active:forceColor == 0}">市重点项目复工强度</li>
+
           </ul>
         </div>
       </li>

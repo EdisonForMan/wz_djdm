@@ -1,8 +1,10 @@
 <template>
   <div class="Map">
-    <div :id="id" class="arcgisMap"></div>
+    <div :id="id"
+         class="arcgisMap"></div>
     <transition name="fade">
-      <djdmFrame ref="djdm" v-show="doFrame" />
+      <djdmFrame ref="djdm"
+                 v-show="doFrame" />
     </transition>
   </div>
 </template>
@@ -14,6 +16,7 @@ import {
   doPointLayer,
   doXmColorLayer,
   doSzColorLayer,
+  doProvColorLayer,
   fetchPoint
 } from "./Arcgis.js";
 import djdmFrame from "./components/djdmFrame.vue";
@@ -109,7 +112,17 @@ export default {
       this.view.goTo({ center: [x, y], zoom: 16 });
     },
     switchColorLayer(val) {
-      val ? doXmColorLayer(this) : doSzColorLayer(this);
+      // val ? doXmColorLayer(this) : doSzColorLayer(this);
+      console.log("val", val);
+      if (val == 0) {
+        doSzColorLayer(this);
+      }
+      if (val == 1) {
+        doXmColorLayer(this);
+      }
+      if (val == 2) {
+        doProvColorLayer(this);
+      }
     }
   }
 };
