@@ -18,13 +18,33 @@
     </div>
     <div class="yjfw">
       <div class="right-div-title">
-        <span class="right-div-title-inner">{{force=="xm"?"省市重点建设项目":"回温人员户籍省份统计"}}</span>
+        <span class="right-div-title-inner">{{force=="xm"?"省市重点建设项目":fgoptions[selectfgVal].label}}</span>
+        <el-select size="mini"
+                   popper-class="rightSelect"
+                   v-model="selectfgVal"
+                   placeholder="请选择"
+                   v-if="force == 'xm'?false:true">
+          <el-option v-for="item in fgoptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"></el-option>
+        </el-select>
       </div>
       <div id="yjfw-chart" />
     </div>
     <div class="wlfg">
       <div class="right-div-title">
-        <span class="right-div-title-inner">{{force=="xm"?"亿元以上建设项目":"外来人口复工区县分布"}}</span>
+        <span class="right-div-title-inner">{{force=="xm"?"亿元以上建设项目":backwzoptions[selectbackVal].label}}</span>
+        <el-select size="mini"
+                   popper-class="rightSelect"
+                   v-model="selectbackVal"
+                   placeholder="请选择"
+                   v-if="force == 'xm'?false:true">
+          <el-option v-for="item in backwzoptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"></el-option>
+        </el-select>
       </div>
       <div id="wlfg-chart" />
     </div>
@@ -37,6 +57,7 @@ import { mapState } from "vuex";
 import chart_t_option from "./chart_t_option";
 import chart_m_option from "./chart_m_option";
 import chart_b_option from "./chart_b_option";
+
 import { sszdJson, yyysJson } from "./chart_xm_json";
 export default {
   data() {
@@ -48,6 +69,8 @@ export default {
       chart_m_data: {},
       chart_b: undefined,
       chart_b_data: {},
+      chart_ren: undefined,
+      chart_ren_data: {},
       force: "xm",
       options: [
         {
@@ -63,7 +86,34 @@ export default {
           label: "上亿项目复工情况"
         }
       ],
-      selectVal: 0
+      backwzoptions: [
+        {
+          value: 0,
+          label: "回温人员户籍统计"
+        },
+        {
+          value: 1,
+          label: "外来人口复工区县"
+        }
+      ],
+      fgoptions: [
+        {
+          value: 0,
+          label: "总复工人员情况"
+        },
+        {
+          value: 1,
+          label: "安置房项目人员复工情况"
+        },
+        {
+          value: 2,
+          label: "上亿项目人员复工情况"
+        }
+      ],
+
+      selectVal: 0,
+      selectfgVal: 0,
+      selectbackVal: 0
     };
   },
   computed: {
@@ -82,8 +132,16 @@ export default {
     backToWzList(n, o) {
       this.doChartExtra();
     },
-    //监听切换
+    //总复工项目监听切换
     selectVal(n, o) {
+      this.doChartData();
+    },
+    //总复工人员切换
+    selectfgVal(n, o) {
+      this.doChartData();
+    },
+    //回温人员切换
+    selectbackVal(n, o) {
       this.doChartData();
     }
   },
@@ -92,7 +150,7 @@ export default {
     this.chartRegister();
     if (this.buildDataList.length) {
       this.doChartData();
-      this.doChartExtra();
+      // this.doChartExtra();
     }
   },
   methods: {
@@ -102,7 +160,7 @@ export default {
         this.$nextTick(() => {
           this.chartRegister();
           this.doChartData();
-          this.doChartExtra();
+          // this.doChartExtra();
         });
       });
     },
@@ -118,10 +176,10 @@ export default {
           return { ...attributes };
         })
         .filter(item => item.djdmryhj);
-      const chart_m_option_clone = this.$util.clone(chart_m_option);
-      chart_m_option_clone.xAxis.data = _data_.map(item => item.djdmryhj);
-      chart_m_option_clone.series[0].data = _data_.map(item => item.djdmrs);
-      this.doChartOption({ m: chart_m_option_clone });
+      const chart_b_option_clone = this.$util.clone(chart_m_option);
+      chart_b_option_clone.xAxis.data = _data_.map(item => item.djdmryhj);
+      chart_b_option_clone.series[0].data = _data_.map(item => item.djdmrs);
+      this.doChartOption({ b: chart_b_option_clone });
     },
     doChartData() {
       const _data_ = this.buildDataList
@@ -178,9 +236,9 @@ export default {
         let build_date = {};
         let build_date_num = [];
         let chart_t_arr = [];
-        console.log("_data_", _data_);
+        // console.log("大建大美数据_data_", _data_);
+        // 拿到总项目的数据 djdmxms djdmfgs
         if (this.selectVal == 0) {
-          // 拿到总项目的数据 djdmxms djdmfgs
           _data_.forEach(({ djdmxms, djdmfgs, qy, id }) => {
             build_date_num.push({
               djdmxms: djdmxms,
@@ -189,13 +247,10 @@ export default {
               id: id
             });
           });
-          // console.log("build_date对象", build_date);
-          // console.log("build_date_num数组", build_date_num);
           chart_t_arr = build_date_num.sort(this.$util.compare("id"));
-          console.log("chart_t_arr总复工的数据", chart_t_arr);
         }
+        // 拿到安置房的数据
         if (this.selectVal == 1) {
-          // 拿到安置房的数据
           _data_.forEach(({ djdmazxms, djdmazfgs, qy, id }) => {
             build_date_num.push({
               djdmazxms: djdmazxms,
@@ -205,10 +260,9 @@ export default {
             });
           });
           chart_t_arr = build_date_num.sort(this.$util.compare("id"));
-          console.log("chart_t_arr安置房的数据", chart_t_arr);
         }
+        //拿到上亿元项目数据
         if (this.selectVal == 2) {
-          //拿到上亿元项目数据
           _data_.forEach(({ djdmyyxms, djdmyyfgs, qy, id }) => {
             build_date_num.push({
               djdmyyxms: djdmyyxms,
@@ -243,15 +297,113 @@ export default {
           return chart_t_arr[param.dataIndex][xmTotal];
         };
 
-        //  下部
-        //外来人口
-        const chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
-          return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
-        });
-        const chart_b_option_clone = this.$util.clone(chart_b_option);
-        chart_b_option_clone.series[0].data = chart_b_arr;
+        //中部 复工人员统计
+        // zrs: "13272"  总项目复工
+        // fgrs: "11272"
+        // djdmazzfgrs: null 安置房
+        // djdmazyfgrs: null
+        // djdmyyzfgrs: null 上亿项目的
+        // djdmyyyfgrs: null
+
+        let build_data_people = [];
+        let char_ren_arr = [];
+
+        //总项目复工人员
+        if (this.selectfgVal == 0) {
+          _data_.forEach(({ zrs, fgrs, qy, id }) => {
+            build_data_people.push({
+              zrs: zrs,
+              fgrs: fgrs,
+              qy: qy,
+              id: id
+            });
+          });
+          char_ren_arr = build_data_people.sort(this.$util.compare("id"));
+        }
+        //安置房复工人员
+        if (this.selectfgVal == 1) {
+          _data_.forEach(({ djdmazzfgrs, djdmazyfgrs, qy, id }) => {
+            build_data_people.push({
+              djdmazzfgrs: djdmazzfgrs,
+              djdmazyfgrs: djdmazyfgrs,
+              qy: qy,
+              id: id
+            });
+          });
+          char_ren_arr = build_data_people.sort(this.$util.compare("id"));
+        }
+        //上亿项目复工人员
+        if (this.selectfgVal == 2) {
+          _data_.forEach(({ djdmyyzfgrs, djdmyyyfgrs, qy, id }) => {
+            build_data_people.push({
+              djdmyyzfgrs: djdmyyzfgrs,
+              djdmyyyfgrs: djdmyyyfgrs,
+              qy: qy,
+              id: id
+            });
+          });
+          char_ren_arr = build_data_people.sort(this.$util.compare("id"));
+        }
+
+        // 返回人员每个key数组
+        const PeopleKey = Object.keys(build_data_people[0]);
+        const zfgPeople = PeopleKey[0];
+        const fgPeople = PeopleKey[1];
+        const fgqy = PeopleKey[2];
+
+        const chart_m_option_clone = this.chart_T_fixed();
+        // console.log("char_ren_arr", char_ren_arr);
+        chart_m_option_clone.legend.data = ["未复工人数", "已复工人数"];
+        chart_m_option_clone.series[0].name = "已复工人数";
+        chart_m_option_clone.series[1].name = "未复工人数";
+        chart_m_option_clone.title.text = "单位:     人";
+
+        chart_m_option_clone.xAxis[0].data = char_ren_arr.map(
+          item => item.qy.replace(/集聚区/g, "")
+          // console.log(" item.qy.sdgsg", item)
+        );
+        //复工
+        chart_m_option_clone.series[0].data = char_ren_arr.map(
+          item => item[fgPeople]
+        );
+
+        //未复工
+        chart_m_option_clone.series[1].data = char_ren_arr.map(
+          item => item[zfgPeople] - item[fgPeople]
+        );
+
+        chart_m_option_clone.series[1].label.formatter = param => {
+          return char_ren_arr[param.dataIndex][zfgPeople];
+        };
+
+        //  下部 温州外来人口统计
+        let chart_b_arr = [];
+        const chart_b_option_clone = this.$util.clone(
+          this.selectbackVal ? chart_m_option : chart_b_option
+        );
+        if (this.selectbackVal == 0) {
+          let chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
+            return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
+          });
+          chart_b_option_clone.series[0].data = chart_b_arr;
+        }
+        if (this.selectbackVal == 1) {
+          chart_b_arr = this.backToWzList
+            .map(({ attributes }) => {
+              return { ...attributes };
+            })
+            .filter(item => item.djdmryhj);
+          chart_b_option_clone.xAxis.data = chart_b_arr.map(
+            item => item.djdmryhj
+          );
+          chart_b_option_clone.series[0].data = chart_b_arr.map(
+            item => item.djdmrs
+          );
+        }
+
         this.doChartOption({
           t: chart_t_option_clone,
+          m: chart_m_option_clone,
           b: chart_b_option_clone
         });
       }
@@ -261,7 +413,7 @@ export default {
       m && this.chart_m.setOption(m, true);
       b && this.chart_b.setOption(b, true);
     },
-    chart_T_fixed() {
+    chart_T_fixed(option) {
       const t_itemStyle_0 = {
         color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: "#FFB243" },
@@ -278,7 +430,6 @@ export default {
           { offset: 1, color: "#938FFF" }
         ])
       };
-
       const json = this.$util.clone(chart_t_option);
 
       json.series[0].itemStyle = t_itemStyle_0;
@@ -322,6 +473,7 @@ export default {
   text-align: left;
   padding: 15px 0;
 }
+
 .right-div-title::before {
   content: "";
   display: inline-block;
@@ -338,7 +490,9 @@ export default {
   z-index: 2;
 }
 .right-div-title .el-select {
-  margin-left: 20px !important;
+  position: absolute;
+  right: 16px;
+  /* margin-left: 20px !important; */
 }
 .right-div-title .el-select .el-input input {
   color: #7bb7df !important;

@@ -17,6 +17,7 @@ import {
   doXmColorLayer,
   doSzColorLayer,
   doProvColorLayer,
+  doDjdmColorLayer,
   fetchPoint
 } from "./Arcgis.js";
 import djdmFrame from "./components/djdmFrame.vue";
@@ -122,6 +123,9 @@ export default {
       }
       if (val == 2) {
         doProvColorLayer(this);
+      }
+      if (val == 3) {
+        doDjdmColorLayer(this);
       }
     }
   }

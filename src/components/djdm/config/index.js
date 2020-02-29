@@ -20,6 +20,10 @@ export const ssBuildColorURL =
 export const sjBuildColorURL =
   "http://172.20.83.215:6080/arcgis/rest/services/SYQ/wstsj/MapServer";
 
+/** 大建大美项目复工强度*/
+export const djdmBuildColorURL =
+  "http://172.20.83.215:6080/arcgis/rest/services/SYQ/wstdjdm/MapServer";
+
 /** 大建大美项目工地点 */
 export const djdmBuildSiteURL =
   "http://172.20.83.215:6080/arcgis/rest/services/SYQ/ZJGDFGXM/MapServer/2";

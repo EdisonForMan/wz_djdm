@@ -5,7 +5,8 @@ import {
   ssBuildColorURL,
   djdmBuildSiteURL,
   buildSiteIdentify,
-  sjBuildColorURL
+  sjBuildColorURL,
+  djdmBuildColorURL
 } from "./config/index";
 import { loadModules } from "esri-loader";
 const _URIS_ = {
@@ -73,6 +74,14 @@ export const doSzColorLayer = context => {
  */
 export const doProvColorLayer = context => {
   doMassImageLayer(context, { url: sjBuildColorURL, id: "colorLayer" });
+};
+
+/**
+ * 大建大美项目复工强度
+ * @param {*} context
+ */
+export const doDjdmColorLayer = context => {
+  doMassImageLayer(context, { url: djdmBuildColorURL, id: "colorLayer" });
 };
 
 /**

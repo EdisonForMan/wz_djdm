@@ -11,6 +11,8 @@
                 :class="{active:forceColor == 2}">省重点项目复工强度</li>
             <li @click="doSwitch(0)"
                 :class="{active:forceColor == 0}">市重点项目复工强度</li>
+            <li @click="doSwitch(3)"
+                :class="{active:forceColor == 3}">大建大美项目复工强度</li>
 
           </ul>
         </div>

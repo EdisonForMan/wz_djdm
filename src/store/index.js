@@ -63,7 +63,7 @@ export default new Vuex.Store({
     },
     async fetchBuildDataList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: buildDataURL });
-      console.log("在vuex", data.features);
+      // console.log("在vuex", data.features);
       const _data_ = data.features.map(item => {
         const _item_ = item;
         _item_.attributes.yyysxms = parseInt(_item_.attributes.yyysxms);
