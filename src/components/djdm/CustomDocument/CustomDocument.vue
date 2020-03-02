@@ -2,64 +2,57 @@
   <div class="custom-document">
     <div class="custom-query">
       <el-input v-model="queryValue">
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        <i slot="prefix"
+           class="el-input__icon el-icon-search"></i>
       </el-input>
-      <el-button type="primary" @click="query">查询</el-button>
+      <el-button type="primary"
+                 @click="query">查询</el-button>
     </div>
-    <el-tabs
-      v-model="activeTabsPane"
-      type="card"
-      class="my-tabs"
-      :class="{vsb:!shallTabs}"
-      @tab-click="tabsPaneClickHandler"
-    >
-      <el-tab-pane
-        v-for="(value, index) of tabsPane"
-        :key="index"
-        :label="value.label"
-        :name="value.name"
-      ></el-tab-pane>
+    <el-tabs v-model="activeTabsPane"
+             type="card"
+             class="my-tabs"
+             :class="{vsb:!shallTabs}"
+             @tab-click="tabsPaneClickHandler">
+      <el-tab-pane v-for="(value, index) of tabsPane"
+                   :key="index"
+                   :label="value.label"
+                   :name="value.name"></el-tab-pane>
     </el-tabs>
     <div class="custom-document-content">
-      <el-menu active-text-color="#000" text-color="#000" class="my-menu">
-        <el-submenu
-          v-for="(value, index) of tabsMenuData[activeTabsPane]"
-          v-if="value.children && value.children.length > 0"
-          :key="index"
-          :index="index + ''"
-        >
+      <el-menu active-text-color="#000"
+               text-color="#000"
+               class="my-menu">
+        <el-submenu v-for="(value, index) of tabsMenuData[activeTabsPane]"
+                    v-if="value.children && value.children.length > 0"
+                    :key="index"
+                    :index="index + ''">
           <template slot="title">
-            <el-checkbox
-              v-model="value.check"
-              class="my-checkbox"
-              @change="changeCheckboxHandler(index)"
-            ></el-checkbox>
+            <el-checkbox v-model="value.check"
+                         class="my-checkbox"
+                         @change="changeCheckboxHandler(index)"></el-checkbox>
             <span>{{ value.name }}</span>
             <span v-if="value.innerText">{{ value.innerText }}</span>
           </template>
-          <el-menu-item
-            :index="index + '-' + ind"
-            v-for="(item, ind) of value.children"
-            :key="ind"
-            @click="menuItemClickHandler(item)"
-            class="children-menu-item"
-          >
-            <el-checkbox
-              v-model="item.check"
-              class="my-checkbox"
-              @change="changeCheckboxHandler(index, ind)"
-              v-show="false"
-            ></el-checkbox>
+          <el-menu-item :index="index + '-' + ind"
+                        v-for="(item, ind) of value.children"
+                        :key="ind"
+                        @click="menuItemClickHandler(item)"
+                        class="children-menu-item">
+            <el-checkbox v-model="item.check"
+                         class="my-checkbox"
+                         @change="changeCheckboxHandler(index, ind)"
+                         v-show="false"></el-checkbox>
             {{ item.name }}
             <button @click="goVideo(item)">视频</button>
           </el-menu-item>
         </el-submenu>
-        <el-menu-item v-else :key="index" :index="index + ''" @click="menuItemClickHandler(value)">
-          <el-checkbox
-            v-model="value.check"
-            class="my-checkbox"
-            @change="changeCheckboxHandler(index)"
-          ></el-checkbox>
+        <el-menu-item v-else
+                      :key="index"
+                      :index="index + ''"
+                      @click="menuItemClickHandler(value)">
+          <el-checkbox v-model="value.check"
+                       class="my-checkbox"
+                       @change="changeCheckboxHandler(index)"></el-checkbox>
           {{ value.name }}
           <span v-if="value.innerText">{{ value.innerText }}</span>
         </el-menu-item>
@@ -174,51 +167,51 @@ export default {
     },
     // 单独点击一个侧目录的子项
     menuItemClickHandler(obj) {
-      console.log("侧边栏obj",obj)
+      console.log("侧边栏obj", obj);
       this.$hub.$emit("menu-item-click", obj);
     },
     // 筛选数据
-    shaixuan(arr,queryValue){
-       const Data = []
+    shaixuan(arr, queryValue) {
+      const Data = [];
       const reg = new RegExp(queryValue);
-               arr.forEach(Element => {
+      arr.forEach(Element => {
         const children = Element.children.filter(item => item.name.match(reg));
         Data.push({
-          name:Element["name"],
+          name: Element["name"],
           check: Element["check"],
           children,
-          innerText: `(${children.length})`,
+          innerText: `(${children.length})`
         });
       });
-      console.log("Date",Data)
-      return Data
+      console.log("Date", Data);
+      return Data;
     },
     // 查询
     query() {
       //重点项目页面搜索
-      let tabsMenuData = [];//筛选的数据初始化
-      if(this.activeTabsPane =="xm"){
-          tabsMenuData =this.shaixuan(this.xmMenu,this.queryValue)
-          this.tabsMenuData["xm"] = [...tabsMenuData];
-      }else{
-      //大建大美页面
-      //区域划分页面搜索
-      if(this.activeTabsPane=="qyhf"){
-          tabsMenuData =this.shaixuan(this.djdmMenuQyhf,this.queryValue)
+      let tabsMenuData = []; //筛选的数据初始化
+      if (this.activeTabsPane == "xm") {
+        tabsMenuData = this.shaixuan(this.xmMenu, this.queryValue);
+        this.tabsMenuData["xm"] = [...tabsMenuData];
+      } else {
+        //大建大美页面
+        //区域划分页面搜索
+        if (this.activeTabsPane == "qyhf") {
+          tabsMenuData = this.shaixuan(this.djdmMenuQyhf, this.queryValue);
           this.tabsMenuData["qyhf"] = [...tabsMenuData];
-          console.log("quyu划分",this.tabsMenuData["qyhf"])
-      }
-      // 形象进度搜索
-      if(this.activeTabsPane=="xxjd"){
-          tabsMenuData =this.shaixuan(this.djdmMenuXxjd,this.queryValue)
+          console.log("quyu划分", this.tabsMenuData["qyhf"]);
+        }
+        // 形象进度搜索
+        if (this.activeTabsPane == "xxjd") {
+          tabsMenuData = this.shaixuan(this.djdmMenuXxjd, this.queryValue);
           this.tabsMenuData["xxjd"] = [...tabsMenuData];
-      }
-      //行业分类搜索
-      if(this.activeTabsPane=="hyfl"){
-          tabsMenuData =this.shaixuan(this.djdmMenuHyfl,this.queryValue)
+        }
+        //行业分类搜索
+        if (this.activeTabsPane == "hyfl") {
+          tabsMenuData = this.shaixuan(this.djdmMenuHyfl, this.queryValue);
           this.tabsMenuData["hyfl"] = [...tabsMenuData];
+        }
       }
-    }
     }
   }
 };

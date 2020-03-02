@@ -1,19 +1,19 @@
 <template>
   <div class="Com_content Djdm">
     <div class="Com_map">
-      <commonArcgis id="macroArcgis" ref="macroArcgis" />
+      <commonArcgis id="macroArcgis"
+                    ref="macroArcgis" />
     </div>
-    <div class="Com_container" style="z-index: 10;">
+    <div class="Com_container"
+         style="z-index: 10;">
       <div id="fy-rightDiv">
         <rightDiv />
       </div>
     </div>
     <topDocument />
-    <CustomDocument
-      ref="leftMenu"
-      style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
-    />
-    <xzDate v-if="false"/>
+    <CustomDocument ref="leftMenu"
+                    style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;" />
+    <xzDate v-if="false" />
     <bottomBtn />
     <topDate />
   </div>
@@ -46,8 +46,8 @@ export default {
     commonArcgis,
     rightDiv, // 右侧图表
     bottomBtn, //底部按钮
-    topDate, //顶部数据
-    xzDate //详情须知
+    topDate //顶部数据
+    // xzDate //详情须知
   },
   computed: {
     ...mapState({
@@ -55,7 +55,7 @@ export default {
       djdmBuildSiteList: state => state.djdmBuildSiteList,
       buildDataList: state => state.buildDataList,
       backToWzList: state => state.backToWzList,
-      fields:state=>state.fieldAliases
+      fields: state => state.fieldAliases
     })
   },
   /**
@@ -72,7 +72,7 @@ export default {
       "fetchXmBuildSiteList",
       "fetchDjdmBuildSiteList",
       "fetchBuildDataList",
-      "fetchBackToWzList",
+      "fetchBackToWzList"
     ])
   }
 };
