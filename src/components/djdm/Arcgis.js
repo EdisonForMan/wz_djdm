@@ -10,6 +10,7 @@ const BANNED_PARAMS = [
     "x",
     "y",
     "type", "dz1", "zyy", "wt", "bz", "复工率颜色",
+    "gxsj" // 更新时间暂时隐藏  
 ];
 const EXTRA_HASH = {
     ysq_snfg_green_cnt: "市内员工-绿码(人)",

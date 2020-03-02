@@ -105,7 +105,7 @@ export default new Vuex.Store({
       const { data } = await fetchArcgisServer({ url: yqStreetURL });
       const buildS = { id: "streetLayer", name: "乡镇街道功能区", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
-        buildS.arr.push({ name: attributes['jd'], geometry, attributes: { ...attributes, 更新时间: $util.timestampToTime(attributes.更新时间) } })
+        buildS.arr.push({ name: attributes['jd'], geometry, attributes: { ...attributes, gxsj: $util.timestampToTime(attributes.gxsj) } })
         buildS.count += 1;
       })
       const { id, name, count, arr } = buildS;
