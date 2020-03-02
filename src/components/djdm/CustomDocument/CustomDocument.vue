@@ -177,7 +177,32 @@ export default {
     },
     // 查询
     query() {
-      this.$hub.$emit("query-handler", this.queryValue);
+      //重点项目页面搜索
+            const tabsMenuData = [];//筛选的数据
+            console.log("this.queryValue",this.queryValue)
+      const reg = new RegExp(this.queryValue);
+      if(this.activeTabsPane =="xm"){
+         this.xmMenu.forEach(Element => {
+           console.log("Elementname",Element["name"])
+        const children = Element.children.filter(item => item.name.match(reg));
+        console.log("查询的数据",children)
+        tabsMenuData.push({
+          name:Element["name"],
+          check: Element["check"],
+          children,
+          innerText: `(${children.length})`,
+        });
+      });
+      console.log("xmenu的数据",this.xmMenu)
+      console.log("查询的tabsMenuData",tabsMenuData)
+      this.tabsMenuData["xm"] = [...tabsMenuData];
+
+      }else{
+      //大建大美页面
+      //区域划分页面搜索
+      // 形象进度搜索
+      //行业分类搜索
+    }
     }
   }
 };
