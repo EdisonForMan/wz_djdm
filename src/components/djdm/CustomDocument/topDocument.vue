@@ -1,15 +1,13 @@
 <template>
   <div class="topDocument">
-    <div
-      class="topDocument-inner"
-      :class="[active == 0 ? 'current-active' : '']"
-      @click="topDocumentClick(0)"
-    >重点项目</div>
-    <div
-      class="topDocument-inner"
-      :class="[active == 1 ? 'current-active' : '']"
-      @click="topDocumentClick(1)"
-    >大建大美</div>
+    <div class="topDocument-inner"
+         :class="[active == 0 ? 'current-active' : '']"
+         @click="topDocumentClick(0)"
+         v-if="false">重点项目</div>
+    <div class="topDocument-inner"
+         :class="[active == 1 ? 'current-active' : '']"
+         @click="topDocumentClick(1)"
+         v-if="false">大建大美</div>
   </div>
 </template>
 <script>
@@ -17,8 +15,11 @@ export default {
   name: "topDocument",
   data() {
     return {
-      active: 0
+      active: 1
     };
+  },
+  mounted() {
+    this.topDocumentClick(1);
   },
   methods: {
     topDocumentClick(val) {

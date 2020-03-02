@@ -80,7 +80,7 @@ export default {
           name: "hyfl"
         }
       ],
-      activeTabsPane: "xm", // 当前头部tab索引位置
+      activeTabsPane: "qyhf", // 当前头部tab索引位置
       queryValue: undefined,
       tabsMenuData: { qyhf: [], xxjd: [], hyfl: [], xm: [] }
     };
@@ -88,7 +88,6 @@ export default {
   computed: {
     ...mapState({
       xmMenu: state => state.xmMenu,
-      // .sort(this.$util.compare("id"))
       djdmMenuQyhf: state => state.djdmMenuQyhf,
       djdmMenuXxjd: state => state.djdmMenuXxjd,
       djdmMenuHyfl: state => state.djdmMenuHyfl

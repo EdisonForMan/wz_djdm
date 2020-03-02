@@ -34,26 +34,33 @@ const BANNED_PARAMS = [
  */
 const doMassFeatureLayer = (
   context,
-  { url, id, definitionExpression = "1=1", renderer,fieldAliases }
+  { url, id, definitionExpression = "1=1", renderer, fieldAliases }
 ) => {
-  const _html_ = Object.keys(fieldAliases).filter(item => !BANNED_PARAMS.includes(item)).map(key => {
-    return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`
-}).join("");
+  const _html_ = Object.keys(fieldAliases)
+    .filter(item => !BANNED_PARAMS.includes(item))
+    .map(key => {
+      return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
+    })
+    .join("");
 
-console.log("模板",_html_)
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
+
   return new Promise((resolve, reject) => {
     loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
       const option = { url, id, definitionExpression };
-      option.popupTemplate ={
+      option.popupTemplate = {
         content: `<div class="djdmFrame">${_html_}</div>`
-      }
+      };
       renderer && (option.renderer = renderer);
       const feature = new FeatureLayer(option);
       context.map.add(feature, 4);
+      if (context.view.zoom == 10) {
+        context.map.findLayerById("PointLayer").visible = false;
+      }
+
       //添加图例
-      context.legend.layerInfos.push({ layer:feature });
+      // context.legend.layerInfos.push({});
     });
   });
 };
@@ -110,8 +117,8 @@ export const doDjdmColorLayer = context => {
  * 重点项目工地点
  * @param {*} context
  */
-export const doPointLayer = (context,fieldAliases) => {
-  console.log("在Arcgis 中fieldAliases",fieldAliases)
+export const doPointLayer = (context, fieldAliases) => {
+  console.log("在Arcgis 中fieldAliases", fieldAliases);
 
   const activeTabsPane = context.$parent.$refs.leftMenu.activeTabsPane;
   const menu = context.$parent.$refs.leftMenu.tabsMenuData[activeTabsPane];
@@ -188,12 +195,19 @@ export const fetchPoint = (mapPoint, activeTabsPane, view, fn) => {
 
 //view pop
 
-export const doArcgisPopup = ({ view }, { attributes,  geometry }, fieldAliases) => {
-  const _html_ = Object.keys(fieldAliases).filter(item => !BANNED_PARAMS.includes(item)).map(key => {
-      return `<div><span>${fieldAliases[key]}:</span><span>${attributes[key]}</span></div>`
-  }).join("");
+export const doArcgisPopup = (
+  { view },
+  { attributes, geometry },
+  fieldAliases
+) => {
+  const _html_ = Object.keys(fieldAliases)
+    .filter(item => !BANNED_PARAMS.includes(item))
+    .map(key => {
+      return `<div><span>${fieldAliases[key]}:</span><span>${attributes[key]}</span></div>`;
+    })
+    .join("");
   view.popup.open({
-      content: `<div class="djdmFrame">${_html_}</div>`,
-      location: geometry 
+    content: `<div class="djdmFrame">${_html_}</div>`,
+    location: geometry
   });
-}
+};
