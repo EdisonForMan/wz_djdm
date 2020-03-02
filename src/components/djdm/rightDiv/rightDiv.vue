@@ -89,11 +89,11 @@ export default {
       backwzoptions: [
         {
           value: 0,
-          label: "回温人员户籍统计"
+          label: "外来人口复工区县"
         },
         {
           value: 1,
-          label: "外来人口复工区县"
+          label: "回温人员户籍统计"
         }
       ],
       fgoptions: [

@@ -13,7 +13,7 @@
       ref="leftMenu"
       style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
     />
-    <xzDate />
+    <!-- <xzDate /> -->
     <bottomBtn />
     <topDate />
   </div>
@@ -47,7 +47,7 @@ export default {
     rightDiv, // 右侧图表
     bottomBtn, //底部按钮
     topDate, //顶部数据
-    xzDate //详情须知
+    // xzDate //详情须知
   },
   computed: {
     ...mapState({
