@@ -3,7 +3,10 @@
     <ul>
       <li v-for="(item,index) in TOP_DATA" :key="index">
         <p>{{item.t}}</p>
-        <h3 :style="`color:${item.c}`">{{item.v}}</h3>
+        <h3 :style="`color:${item.c}`" v-if="index==0">已建成{{item.v}}</h3>
+        <h3 :style="`color:${item.c}`" v-if="index==0">未建成{{item.v1}}</h3>
+        <h3 :style="`color:${item.c}`" v-else>{{item.v}}</h3>
+
       </li>
     </ul>
   </div>
@@ -29,6 +32,7 @@ export default {
   mounted() {
     this.eventRegister();
     this.doTopData();
+    console.log("topDate",this.buildDataList)
   },
   methods: {
     eventRegister() {
@@ -56,17 +60,18 @@ export default {
         this.TOP_DATA = topData;
       } else {
         const topData = [
-          { t: "项目数", v: 0, c: "#FF835F" },
-          { t: "复工数", v: 0, c: "#54FFA6" },
-          { t: "总人数", v: 0, c: "#BD70FF" },
-          { t: "复工人数", v: 0, c: "#FF4D7A" }
+          { t: "项目总数", v: 0,v1:0, c: "#FF835F" },
+          { t: "已复工项目数", v: 0, c: "#54FFA6" },
+          { t: "总复工人数", v: 0, c: "#BD70FF" },
+          { t: "已复工人数", v: 0, c: "#FF4D7A" }
         ];
         this.buildDataList
           // .filter(item => item.attributes.qy)
           .filter(item => item.attributes.id == "1")
           .map(({ attributes }) => {
-            const { djdmxms, djdmfgs, zrs, fgrs } = attributes;
-            topData[0].v += djdmxms ? parseInt(djdmxms) : 0;
+            const { djdmxms, djdmfgs, zrs, fgrs,djdmfgl} = attributes;
+            topData[0].v += djdmxms ? parseInt(djdmxms) : 0 ;
+            topData[0].v1 += djdmfgl? parseInt(djdmfgl) : 0 ;
             topData[1].v += djdmfgs ? parseInt(djdmfgs) : 0;
             topData[2].v += zrs ? parseInt(zrs) : 0;
             topData[3].v += fgrs ? parseInt(fgrs) : 0;

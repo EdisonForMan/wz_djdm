@@ -17,6 +17,9 @@ export default new Vuex.Store({
     /** 指标数据 */
     buildDataList: [],
     backToWzList: [],
+    /**字段名 */
+    xmfieldAliases:{},
+    djdmfieldAliases:{},
     /** 菜单数组 */
     xmMenu: [],
     djdmMenuQyhf: [],
@@ -27,21 +30,23 @@ export default new Vuex.Store({
     /**
      * 修改重点项目工地点
      */
-    updateXmBuildSiteList(state, { list = [], menu = [] }) {
+    updateXmBuildSiteList(state, { list = [], menu = [] ,fieldAliases={} }) {
       state.xmBuildSiteList = list;
       state.xmMenu = menu;
+      state.xmfieldAliases = fieldAliases;
     },
     /**
      * 修改大建大美工地点
      */
     updateDjdmBuildSiteList(
       state,
-      { list = [], qyhf = [], xxjd = [], hyfl = [] }
+      { list = [], qyhf = [], xxjd = [], hyfl = [],fieldAliases={} }
     ) {
       state.djdmBuildSiteList = list;
       state.djdmMenuQyhf = qyhf;
       state.djdmMenuXxjd = xxjd;
       state.djdmMenuHyfl = hyfl;
+      state.djdmfieldAliases = fieldAliases;
     },
     /**
      * 修改指标数据
@@ -57,6 +62,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    // async fetchFields({state,commit}){
+    //   const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
+    //   console.log("在vuex中fetchFields",data.fieldAliases)
+    //   commit("updatefields",data.fieldAliases)
+    // },
+
     async fetchBackToWzList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: backToWzURL });
       commit("updateBackToWzList", data.features);
@@ -86,21 +97,23 @@ export default new Vuex.Store({
      */
     async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
+      console.log("fetchXmBuildSiteList",data)
       const buildS = {};
       data.features.map(({ attributes, geometry }) => {
         !buildS[attributes["XMSZD"]] &&
           (buildS[attributes["XMSZD"]] = {
             name: attributes["XMSZD"],
             count: 0,
-            arr: []
+            arr: [],
           });
         buildS[attributes["XMSZD"]].arr.push({
           name: attributes["NAME"],
           geometry,
-          attributes
+          attributes,
         });
         buildS[attributes["XMSZD"]].count += 1;
       });
+      console.log("buildS,",buildS)
       const menu = Object.keys(buildS).map(key => {
         const { name, count, arr } = buildS[key];
         return {
@@ -116,7 +129,8 @@ export default new Vuex.Store({
           })
         };
       });
-      commit("updateXmBuildSiteList", { list: data.features, menu });
+      console.log("updateXmBuildSiteList",{ list: data.features, menu,fieldAliases:data.fieldAliases })
+      commit("updateXmBuildSiteList", { list: data.features, menu,fieldAliases:data.fieldAliases });
     },
     /**
      * djdm fetch
@@ -128,6 +142,8 @@ export default new Vuex.Store({
       const qyhfObj = {};
       const xxjdObj = {};
       const hyflObj = {};
+      console.log("在vuex区域",data)
+
       data.features.map(({ attributes, geometry }) => {
         //  qyhf
         !qyhfObj[attributes["XMSZD"]] &&
@@ -170,8 +186,11 @@ export default new Vuex.Store({
         hyflObj[attributes["CONSTYPE2"]].count += 1;
       });
       const qyhf = Object.keys(qyhfObj).map(key => {
-        const { name, count, arr } = qyhfObj[key];
+        console.log("在vuex区域",qyhfObj[key])
+
+        const { name, count, arr ,id} = qyhfObj[key];
         return {
+          id,
           name,
           innerText: ` (${count})`,
           check: true,
@@ -185,8 +204,9 @@ export default new Vuex.Store({
         };
       });
       const xxjd = Object.keys(xxjdObj).map(key => {
-        const { name, count, arr } = xxjdObj[key];
+        const { name, count, arr,id } = xxjdObj[key];
         return {
+          id,
           name,
           innerText: ` (${count})`,
           check: true,
@@ -200,11 +220,12 @@ export default new Vuex.Store({
         };
       });
       const hyfl = Object.keys(hyflObj).map(key => {
-        const { name, count, arr } = hyflObj[key];
+        const { id,name, count, arr } = hyflObj[key];
         return {
           name,
           innerText: ` (${count})`,
           check: true,
+          id:id,
           children: arr.map(i => {
             return {
               name: i.name,
@@ -218,7 +239,8 @@ export default new Vuex.Store({
         list: data.features,
         qyhf,
         xxjd,
-        hyfl
+        hyfl,
+        fieldAliases:data.fieldAliases
       });
     }
   }

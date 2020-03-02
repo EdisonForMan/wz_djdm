@@ -18,15 +18,18 @@ import {
   doSzColorLayer,
   doProvColorLayer,
   doDjdmColorLayer,
-  fetchPoint
+  fetchPoint,
+  doArcgisPopup
 } from "./Arcgis.js";
 import djdmFrame from "./components/djdmFrame.vue";
+import { mapState, mapActions } from "vuex";
+
 
 export default {
   name: "DjdmArcgis",
   data() {
     return {
-      doFrame: false
+      doFrame: false,
     };
   },
   components: { djdmFrame },
@@ -37,7 +40,15 @@ export default {
     this.eventRegister();
     /** default xm */
     await doXmColorLayer(this);
-    doPointLayer(this);
+    doPointLayer(this,this.xmfieldAliases);
+    console.log("this的字段",this)
+    this.upadteLegend();
+  },
+  computed:{
+        ...mapState({
+      xmfieldAliases: state => state.xmfieldAliases,
+      djdmfieldAliases:state=>state.djdmfieldAliases
+    }),
   },
   methods: {
     eventRegister() {
@@ -52,9 +63,13 @@ export default {
         doPointLayer(this);
       });
       //  点击工地
-      this.$hub.$on("menu-item-click", ({ geometry }) => {
+      this.$hub.$on("menu-item-click", ({ attributes,geometry }) => {
         this.goloaction(geometry);
-        this.doFrame = true;
+        console.log("点击工地",geometry)
+        console.log("点击工地this",this)
+
+        doArcgisPopup(this,{attributes,geometry},this.xmfieldAliases)
+        // this.doFrame = true;
       });
     },
     /**
@@ -83,7 +98,7 @@ export default {
             container: that.$props.id,
             spatialReference,
             map: that.map,
-            zoom: 10,
+            zoom: 9,
             center: [120.67819448808013, 28.039695289562555]
           });
           const layer = new VectorTileLayer({
@@ -92,8 +107,9 @@ export default {
           });
           that.map.add(layer);
           that.legend = new Legend({
-            view: that.view
+            view: that.view,
           });
+          that.view.ui.add(that.legend, "bottom-right");
           that.view.on("click", evt => {
             fetchPoint(
               evt.mapPoint,
@@ -104,7 +120,14 @@ export default {
               }
             );
           });
-          that.view.on("mouse-wheel", evt => {});
+          that.view.on("mouse-wheel", evt => {
+            console.log("evt",evt)
+            if(evt.deltaY<0){
+              that.view.map.zoom+1
+            }else{
+              that.view.map.zoom-1
+            }
+          });
           resolve(true);
         });
       });
@@ -127,6 +150,11 @@ export default {
       if (val == 3) {
         doDjdmColorLayer(this);
       }
+    },
+    //修改图例
+    upadteLegend(){
+      let legend_row = document.querySelectorAll(".esri-legend__layer-row")[0]
+      console.log(legend_row)
     }
   }
 };
@@ -147,4 +175,17 @@ export default {
     height: 100%;
   }
 }
+
+.esri-legend__layer{
+  background: red !important; 
+}
+.sri-legend__layer-body{
+
+}
+
+.esri-legend__layer-row{}
+
+.esri-legend__layer-cell .esri-legend__.layer-cell--symbols{}  
+
+.esri-legend__layer-cell .esri-legend__.layer-cell--info{}
 </style>

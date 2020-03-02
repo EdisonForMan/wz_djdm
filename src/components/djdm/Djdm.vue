@@ -13,7 +13,7 @@
       ref="leftMenu"
       style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
     />
-    <xzDate />
+    <xzDate v-if="false"/>
     <bottomBtn />
     <topDate />
   </div>
@@ -54,7 +54,8 @@ export default {
       xmBuildSiteList: state => state.xmBuildSiteList,
       djdmBuildSiteList: state => state.djdmBuildSiteList,
       buildDataList: state => state.buildDataList,
-      backToWzList: state => state.backToWzList
+      backToWzList: state => state.backToWzList,
+      fields:state=>state.fieldAliases
     })
   },
   /**
@@ -71,7 +72,7 @@ export default {
       "fetchXmBuildSiteList",
       "fetchDjdmBuildSiteList",
       "fetchBuildDataList",
-      "fetchBackToWzList"
+      "fetchBackToWzList",
     ])
   }
 };

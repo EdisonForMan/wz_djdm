@@ -60,7 +60,7 @@
             class="my-checkbox"
             @change="changeCheckboxHandler(index)"
           ></el-checkbox>
-          {{ item.name }}
+          {{ value.name }}
           <span v-if="value.innerText">{{ value.innerText }}</span>
         </el-menu-item>
       </el-menu>
@@ -95,6 +95,7 @@ export default {
   computed: {
     ...mapState({
       xmMenu: state => state.xmMenu,
+      // .sort(this.$util.compare("id"))
       djdmMenuQyhf: state => state.djdmMenuQyhf,
       djdmMenuXxjd: state => state.djdmMenuXxjd,
       djdmMenuHyfl: state => state.djdmMenuHyfl
@@ -173,11 +174,51 @@ export default {
     },
     // 单独点击一个侧目录的子项
     menuItemClickHandler(obj) {
+      console.log("侧边栏obj",obj)
       this.$hub.$emit("menu-item-click", obj);
+    },
+    // 筛选数据
+    shaixuan(arr,queryValue){
+       const Data = []
+      const reg = new RegExp(queryValue);
+               arr.forEach(Element => {
+        const children = Element.children.filter(item => item.name.match(reg));
+        Data.push({
+          name:Element["name"],
+          check: Element["check"],
+          children,
+          innerText: `(${children.length})`,
+        });
+      });
+      console.log("Date",Data)
+      return Data
     },
     // 查询
     query() {
-      this.$hub.$emit("query-handler", this.queryValue);
+      //重点项目页面搜索
+      let tabsMenuData = [];//筛选的数据初始化
+      if(this.activeTabsPane =="xm"){
+          tabsMenuData =this.shaixuan(this.xmMenu,this.queryValue)
+          this.tabsMenuData["xm"] = [...tabsMenuData];
+      }else{
+      //大建大美页面
+      //区域划分页面搜索
+      if(this.activeTabsPane=="qyhf"){
+          tabsMenuData =this.shaixuan(this.djdmMenuQyhf,this.queryValue)
+          this.tabsMenuData["qyhf"] = [...tabsMenuData];
+          console.log("quyu划分",this.tabsMenuData["qyhf"])
+      }
+      // 形象进度搜索
+      if(this.activeTabsPane=="xxjd"){
+          tabsMenuData =this.shaixuan(this.djdmMenuXxjd,this.queryValue)
+          this.tabsMenuData["xxjd"] = [...tabsMenuData];
+      }
+      //行业分类搜索
+      if(this.activeTabsPane=="hyfl"){
+          tabsMenuData =this.shaixuan(this.djdmMenuHyfl,this.queryValue)
+          this.tabsMenuData["hyfl"] = [...tabsMenuData];
+      }
+    }
     }
   }
 };
