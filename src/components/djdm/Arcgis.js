@@ -42,7 +42,8 @@ const doMassFeatureLayer = (
       return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
     })
     .join("");
-    console.log("arcgisview",context)
+
+  console.log("arcgisview", context)
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
@@ -77,19 +78,69 @@ const doMassImageLayer = (context, { url, id }) => {
       const option = { url, id, opacity: 0.8 };
       const img = new MapImageLayer(option);
       context.map.add(img, 1);
-      // console.log("context.legend",context.legend)
-      //           // 添加图例
-      //           context.legend.layerInfos.push({
-      //             layer:id,
-      //             title:"复工强度",
-      //           });
-                
-      // context.view.ui.add(context.legend, "bottom-right");
       resolve(true);
-
     });
   });
 };
+
+//创建图例图层
+
+const doMassLegendLayer = (context, { url, id }) => {
+  context.map.findLayerById(id) &&
+    context.map.remove(context.map.findLayerById(id));
+  return new Promise((resolve, reject) => {
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
+      const option = { url, id,opacity: 0.8 };
+
+      const legendfeature = new FeatureLayer(option);
+      context.map.add(legendfeature, 5);
+      context.legend = new Legend({
+        view: context.view,
+      });
+      console.log("图例图层上下文", context)
+      context.legend.layerInfos.push({
+        layer: legendfeature,
+        title: "复工强度",
+        id: "复工图例",
+      })
+      context.view.ui.add(context.legend, "bottom-right");
+
+      resolve(true)
+    });
+  });
+}
+
+/**亿元以上项目复工强度图例图层
+* @param {*} context
+*/
+export const doXmLegendLayer = context => {
+  doMassLegendLayer(context, { url: xmBuildColorURL + "/1", id: "legendfeatLayer" });
+}
+
+/**市重点项目复工强度复工强度图例图层
+* @param {*} context
+*/
+export const doSzLegendLayer = context => {
+  doMassLegendLayer(context, { url: ssBuildColorURL, id: "legendfeatLayer" });
+}
+/**
+ * 省重点项目复工强度图例图层
+ * @param {*} context
+ */
+export const doProvLegendLayer = context => {
+  doMassLegendLayer(context, { url: sjBuildColorURL, id: "legendfeatLayer" });
+};
+
+/**
+ * 大建大美项目复工强度度图例图层
+ * @param {*} context
+ */
+export const doDjdmLegendLayer = context => {
+  doMassLegendLayer(context, { url: djdmBuildColorURL, id: "legendfeatLayer" });
+};
+
+
+
 
 /**
  * 亿元以上项目复工强度

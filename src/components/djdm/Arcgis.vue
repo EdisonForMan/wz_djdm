@@ -19,7 +19,11 @@ import {
   doProvColorLayer,
   doDjdmColorLayer,
   fetchPoint,
-  doArcgisPopup
+  doArcgisPopup,
+  doXmLegendLayer,
+  doSzLegendLayer,
+  doProvLegendLayer,
+  doDjdmLegendLayer
 } from "./Arcgis.js";
 import djdmFrame from "./components/djdmFrame.vue";
 import { mapState, mapActions } from "vuex";
@@ -38,9 +42,14 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    await doXmColorLayer(this);
+    // await doXmColorLayer(this);
+    await doXmLegendLayer(this)
+    // await doSzLegendLayer()
+    // await doProvLegendLayer()
+    // await doDjdmLegendLayer()
     doPointLayer(this, this.xmfieldAliases);
     this.upadteLegend();
+
   },
   computed: {
     ...mapState({
@@ -104,44 +113,33 @@ export default {
             url: IMAGELAYER
           });
 
-
           that.map.add(layer);
-          that.legend = new Legend({
-            view: that.view,
-          });
-
-          // that.legend.layerInfos.push({
-          //   layer:context.map.findLayerById("colorLayer"),
-          //   title:"复工强度",
-          // });
-
-      that.view.ui.add(that.legend, "bottom-right");
-
-
           that.view.on("click", evt => {
-            fetchPoint(
-              evt.mapPoint,
-              that.$parent.$refs.leftMenu.activeTabsPane,
-              that.view,
-              obj => {
-                this.$hub.$emit("menu-item-click", obj);
-              }
-            );
+            
           });
           that.view.on("mouse-wheel", evt => {
             const layer = that.view.map.layers.items[2];
             if (evt.deltaY < 0) {
               // 放大小于
+              if(that.view.zoom < 10){
+                that.view.zoom++
+              }
+              console.log(that.view.zoom)
               if (that.view.zoom > 10) {
+                that.view.zoom++
                 layer.visible = true;
               }
             } else {
-              if (that.view.zoom <= 10) {
-                layer.visible = false;
+              if(that.view.zoom > 10){
+                that.view.zoom--
               }
 
-              // that.view.map.zoom - 1;
+              if (that.view.zoom <= 10) {
+                that.view.zoom--
+                layer.visible = false;
+              }
             }
+            console.log("zoom",that.view.zoom)
           });
           resolve(true);
         });
@@ -175,6 +173,10 @@ export default {
 };
 </script>
  <style  lang="less">
+.esri-ui .esri-ui-bottom-right .esri-legend__service-label, .esri-ui .esri-ui-bottom-left .esri-legend__service-label{
+  display: block !important;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
