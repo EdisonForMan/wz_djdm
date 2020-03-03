@@ -368,6 +368,41 @@ body {
             color: #fff;
             cursor: pointer;
       }
+
+      .djdmPopFrame::-webkit-scrollbar {
+        border: 1px solid rgba(109, 225, 255, 1);
+        width: 6px;
+      }
+      .djdmPopFrame::-webkit-scrollbar-thumb {
+        background: rgba(109, 225, 255, 1);
+        border-radius: 3px;
+      }
+
+      
+
+.djdmPopFrame{
+        height: 300px;
+        overflow-y: auto;
+        > div {
+          width: 100%;
+          border-bottom: 1px rgba(42,255,250,0.7) solid;
+          box-sizing: border-box;
+          padding: 0 10px;
+          > span {
+            display: inline-block;
+            line-height: 30px;
+            text-align: left;
+            font-size: 18px;
+          }
+          > span:first-child{
+            width: 39.9%;
+            font-weight: 700;;
+          }
+          > span:last-child{
+            width:59.9%;
+          }
+        }
+      }
     }
 
     .esri-popup__header-container--button {

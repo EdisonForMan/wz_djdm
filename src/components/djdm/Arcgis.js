@@ -51,7 +51,7 @@ const doMassFeatureLayer = (
     loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
       const option = { url, id, definitionExpression };
       option.popupTemplate = {
-        content: `<div class="djdmFrame">${_html_}</div>`
+        content: `<div class="djdmPopFrame">${_html_}</div>`
       };
       renderer && (option.renderer = renderer);
       const feature = new FeatureLayer(option);
@@ -267,7 +267,7 @@ export const doArcgisPopup = (
     })
     .join("");
   view.popup.open({
-    content: `<div class="djdmFrame">${_html_}</div>`,
+    content: `<div class="djdmPopFrame">${_html_}</div>`,
     location: geometry
   });
 };
