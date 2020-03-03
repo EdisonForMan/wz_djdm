@@ -201,6 +201,7 @@ export default {
           return { ...attributes };
         })
         .filter(item => item.qy);
+      if (!_data_.length) return;
       if (this.force == "xm") {
         //  顶部
         const chart_t_arr = _data_
@@ -399,17 +400,28 @@ export default {
           let chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
             return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
           });
-          chart_b_option_clone.series[0].data = chart_b_arr
+          chart_b_option_clone.series[0].data = chart_b_arr;
         }
+        let qita ={}
         if (this.selectbackVal == 1) {
           chart_b_arr = this.backToWzList
             .map(({ attributes }) => {
-              return { ...attributes };
+              // console.log("回温人员attributes", attributes);
+              return {
+                OBJECTID: attributes.OBJECTID,
+                djdmrs: parseInt(attributes.djdmrs),
+                djdmryhj: attributes.djdmryhj,
+                zdxmrs: parseInt(attributes.zdxmrs),
+                zdxmryhj: attributes.zdxmryhj
+              };
             })
             .filter(item => item.djdmryhj);
           console.log("回温人员", chart_b_arr);
-          // djdmrs
-          chart_b_arr = chart_b_arr.sort(this.$util.compare("djdmrs"));
+          // djdmrs  
+          //djdmryhj
+
+          chart_b_arr = chart_b_arr.sort(this.$util.compare("djdmrs")).reverse();
+          // chart_b_arr.push(qita)
           chart_b_option_clone.xAxis.data = chart_b_arr.map(
             item => item.djdmryhj
           );
@@ -457,6 +469,10 @@ export default {
 };
 </script>
 <style>
+.el-menu {
+  background: none !important;
+}
+
 .right-div {
   width: 100%;
   height: 100%;

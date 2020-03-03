@@ -47,11 +47,8 @@ export default {
     clean() {
       const context = this.$parent.$refs.macroArcgis;
       const id = "colorLayer";
-      const legid = "legendfeatLayer";
       context.map.findLayerById(id) &&
         context.map.remove(context.map.findLayerById(id));
-      context.map.findLayerById(legid) &&
-        context.map.remove(context.map.findLayerById(legid));
     },
     doSwitch(val) {
       this.forceColor = val;
