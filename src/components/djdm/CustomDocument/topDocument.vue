@@ -36,7 +36,7 @@ export default {
 <style scoped>
 .topDocument {
   position: absolute;
-  top: 90px;
+  top: 82px;
   left: 50%;
   z-index: 1001;
   transform: translateX(-50%);

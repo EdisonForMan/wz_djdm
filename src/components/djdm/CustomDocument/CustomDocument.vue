@@ -6,9 +6,18 @@
       </el-input>
       <el-button type="primary" @click.stop="query">查询</el-button>
     </div>
+    <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
+      <el-tab-pane label="复工复产" name="fgfc" />
+      <el-tab-pane label="行政区划" name="xzqh" />
+    </el-tabs>
     <div class="custom-document-content">
       <el-menu active-text-color="#000" text-color="#000" class="my-menu">
-        <el-submenu v-for="(value, index) of tabsMenuData" :key="index" :index="index + ''">
+        <el-submenu
+          v-for="(value, index) of tabsMenuData"
+          v-show="value.tab == tabActive"
+          :key="index"
+          :index="index + ''"
+        >
           <template slot="title">
             <el-checkbox
               v-model="value.check"
@@ -23,7 +32,7 @@
             :index="index + '-' + ind"
             v-for="(item, ind) of value.children"
             :key="ind"
-            @click="menuItemClickHandler(item,value)"
+            @click.stop="menuItemClickHandler(item,value)"
             class="children-menu-item"
           >
             <el-checkbox
@@ -46,6 +55,7 @@ export default {
   name: "custom-document",
   data() {
     return {
+      tabActive: "fgfc",
       queryValue: undefined,
       tabsMenuData: [],
       hideVisible: false
@@ -68,6 +78,7 @@ export default {
     hideSide() {
       this.hideVisible = !this.hideVisible;
     },
+    tabsPaneClickHandler(val) {},
     changeCheckboxHandler(parentIndex, childrenIndex) {
       const currentMenu = this.tabsMenuData;
       const parentCheck = currentMenu[parentIndex].check;
@@ -93,7 +104,8 @@ export default {
           children,
           innerText: `(${children.length})`,
           name: Element["name"],
-          fieldAliases: Element["fieldAliases"]
+          fieldAliases: Element["fieldAliases"],
+          tab: Element["tab"]
         });
       });
       this.tabsMenuData = [...tabsMenuData];
@@ -112,7 +124,6 @@ export default {
   background-size: 100% 100%;
   cursor: pointer;
 }
-
 .custom-document {
   top: 120px !important;
   width: 320px;
@@ -178,32 +189,23 @@ export default {
   box-sizing: border-box;
 }
 
-.my-tabs {
-  padding-top: 58px;
-}
-.my-tabs /deep/ .el-tabs__header {
-  border-color: #21c8ff;
-  border-width: 2px;
-}
-.my-tabs /deep/ .el-tabs__nav {
-  border: none !important;
-  top: -1px;
+.my-tabs /deep/ .el-tabs__active-bar {
+  height: 4px;
 }
 .my-tabs /deep/ .el-tabs__item {
-  padding: 1px 9px !important;
-  border: none !important;
-  border-radius: 5px 5px 0 0;
-  height: 20px;
-  line-height: 20px;
-  background-color: #2667a8;
-  font-size: 13px;
-  color: #7fb5f8;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0 10px !important;
+  color: rgba(255, 255, 255, 0.8);
 }
-.my-tabs /deep/ .el-tabs__item.is-active {
-  background-color: #21c8ff;
-  color: #fff;
+.my-tabs /deep/ .is-active {
+  color: #409eff;
+  font-weight: 700;
 }
-
+.my-tabs /deep/ .el-tabs__nav-wrap::after {
+  height: 1px;
+}
 .my-menu /deep/ .my-checkbox {
   margin-right: 8px;
   top: -1px;
@@ -235,7 +237,7 @@ export default {
   margin-bottom: 16px;
 }
 .my-menu /deep/ .el-submenu__title {
-  padding: 0 14px!important;
+  padding: 0 14px !important;
   font-size: 18px;
   color: #fff !important;
   font-weight: 500;

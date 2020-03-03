@@ -29,7 +29,7 @@ export default new Vuex.Store({
         innerText: undefined,
         check: true,
         children: [],
-        tab: 1
+        tab: "fgfc"
       },
       {
         id: "fwLayer",
@@ -37,7 +37,7 @@ export default new Vuex.Store({
         innerText: undefined,
         check: false,
         children: [],
-        tab: 1
+        tab: "fgfc"
       },
       {
         id: "fjLayer",
@@ -45,7 +45,7 @@ export default new Vuex.Store({
         innerText: undefined,
         check: false,
         children: [],
-        tab: 1
+        tab: "fgfc"
       },
       {
         id: "streetLayer",
@@ -53,7 +53,7 @@ export default new Vuex.Store({
         innerText: undefined,
         check: false,
         children: [],
-        tab: 2
+        tab: "xzqh"
       },
       {
         id: "sqLayer",
@@ -61,7 +61,7 @@ export default new Vuex.Store({
         innerText: undefined,
         check: false,
         children: [],
-        tab: 2
+        tab: "xzqh"
       }
     ]
   },
