@@ -36,23 +36,19 @@ const doMassFeatureLayer = (
   context,
   { url, id, definitionExpression = "1=1", renderer, fieldAliases }
 ) => {
-  let content=''
+  let content = "";
   const _html_ = Object.keys(fieldAliases)
     .filter(item => !BANNED_PARAMS.includes(item))
     .map(key => {
       // return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
-      if(key=NAME){
-        content+=  `<div class="name">{{${fieldAliases[NAME]} || ${NAME}}}</div>`
-      }else{
-        content+=`<ul><li><span>${fieldAliases[key]}</span><span>{${key}}</span></li></ul>`
+      if (key == "NAME") {
+        content += `<div class="name">{${
+          fieldAliases["NAME"]
+        } || ${"NAME"}}</div>`;
+      } else {
+        content += `<ul><li><span>${fieldAliases[key]}</span><span>{${key}}</span></li></ul>`;
       }
-      return content
-      // <ul>
-      //   <li>
-      //     <span>投资类型</span>
-      //     <span>{{ attributes.FUNDTYPE || attributes.投资类型 }}</span>
-      //   </li>
-      // </ul>
+      return content;
     })
     .join("");
 
@@ -61,28 +57,29 @@ const doMassFeatureLayer = (
     context.map.remove(context.map.findLayerById(id));
 
   return new Promise((resolve, reject) => {
-    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer,Legend]) => {
-      const option = { url, id, definitionExpression };
-      option.popupTemplate = {
-        content: `<div class="djdmPopFrame"><div class="basic"><div>${title_name}${_html_}</div></div></div>`
-      };
-      renderer && (option.renderer = renderer);
-      const feature = new FeatureLayer(option);
-      context.map.add(feature, 4);
-      if (context.view.zoom == 10) {
-        context.map.findLayerById("PointLayer").visible = false;
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(
+      ([FeatureLayer, Legend]) => {
+        const option = { url, id, definitionExpression };
+        option.popupTemplate = {
+          content: `<div class="djdmPopFrame"><div class="basic"><div>${content}${_html_}</div></div></div>`
+        };
+        renderer && (option.renderer = renderer);
+        const feature = new FeatureLayer(option);
+        context.map.add(feature, 4);
+        if (context.view.zoom == 10) {
+          context.map.findLayerById("PointLayer").visible = false;
+        }
+        // context.legend = new Legend({
+        //   view: context.view,
+        // });
+        context.legend.layerInfos.push({
+          layer: feature,
+          title: "复工/未复工",
+          id: "复工点"
+        });
+        //context.view.ui.add(context.legend, "bottom-right");
       }
-      // context.legend = new Legend({
-      //   view: context.view,
-      // });
-      context.legend.layerInfos.push({
-        layer: feature,
-        title: "复工/未复工",
-        id: "复工点",
-      })
-      //context.view.ui.add(context.legend, "bottom-right");
-
-    });
+    );
   });
 };
 
@@ -110,21 +107,22 @@ const doMassLegendLayer = (context, { url, id }) => {
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
   return new Promise((resolve, reject) => {
-    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
-      const option = { url, id, opacity: 0, labelsVisible: true };
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(
+      ([FeatureLayer, Legend]) => {
+        const option = { url, id, opacity: 0, labelsVisible: true };
 
-      const legendfeature = new FeatureLayer(option);
-      context.map.add(legendfeature, 5);
-      // context.legend = new Legend({
-      //   view: context.view,
-      // });
-      // console.log("图例图层上下文", context)
-      context.legend.layerInfos.push({
-        layer: legendfeature,
-        title: "复工强度",
-        id: "复工图例",
-      })
-      // context.view.ui.add(context.legend, "bottom-right");
+        const legendfeature = new FeatureLayer(option);
+        context.map.add(legendfeature, 5);
+        // context.legend = new Legend({
+        //   view: context.view,
+        // });
+        // console.log("图例图层上下文", context)
+        context.legend.layerInfos.push({
+          layer: legendfeature,
+          title: "复工强度",
+          id: "复工图例"
+        });
+        // context.view.ui.add(context.legend, "bottom-right");
 
         resolve(true);
       }
@@ -137,7 +135,7 @@ const doMassLegendLayer = (context, { url, id }) => {
  */
 export const doXmLegendLayer = context => {
   doMassLegendLayer(context, {
-    url: xmBuildColorURL + '/1',
+    url: xmBuildColorURL + "/1",
     id: "legendfeatLayer"
   });
 };
@@ -220,10 +218,10 @@ export const doPointLayer = (context, fieldAliases) => {
   const renderer = {
     type: "unique-value",
     field: config[2],
-    valueExpression: `When($feature['${config[2]}'] == '${config[3]}', 'done' , 'other')`,
+    valueExpression: `When($feature['${config[2]}'] == '${config[3]}', '已复工' , '未复工')`,
     uniqueValueInfos: [
       {
-        value: "done",
+        value: "已复工",
         symbol: {
           type: "picture-marker",
           url: `${SERVER}/icon/yes.png`,
@@ -232,7 +230,7 @@ export const doPointLayer = (context, fieldAliases) => {
         }
       },
       {
-        value: "other",
+        value: "未复工",
         symbol: {
           type: "picture-marker",
           url: `${SERVER}/icon/no.png`,
