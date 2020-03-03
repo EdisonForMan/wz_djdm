@@ -1,10 +1,8 @@
 <template>
   <div class="Map">
-    <div :id="id"
-         class="arcgisMap"></div>
+    <div :id="id" class="arcgisMap"></div>
     <transition name="fade">
-      <djdmFrame ref="djdm"
-                 v-show="doFrame" />
+      <djdmFrame ref="djdm" v-show="doFrame" />
     </transition>
   </div>
 </template>
@@ -43,13 +41,12 @@ export default {
     this.eventRegister();
     /** default xm */
     // await doXmColorLayer(this);
-    await doXmLegendLayer(this)
+    await doXmLegendLayer(this);
     // await doSzLegendLayer()
     // await doProvLegendLayer()
     // await doDjdmLegendLayer()
     doPointLayer(this, this.xmfieldAliases);
     this.upadteLegend();
-
   },
   computed: {
     ...mapState({
@@ -114,32 +111,30 @@ export default {
           });
 
           that.map.add(layer);
-          that.view.on("click", evt => {
-            
-          });
+          that.view.on("click", evt => {});
           that.view.on("mouse-wheel", evt => {
             const layer = that.view.map.layers.items[2];
             if (evt.deltaY < 0) {
               // 放大小于
-              if(that.view.zoom < 10){
-                that.view.zoom++
+              if (that.view.zoom < 10) {
+                that.view.zoom++;
               }
-              console.log(that.view.zoom)
+              console.log(that.view.zoom);
               if (that.view.zoom > 10) {
-                that.view.zoom++
+                that.view.zoom++;
                 layer.visible = true;
               }
             } else {
-              if(that.view.zoom > 10){
-                that.view.zoom--
+              if (that.view.zoom > 10) {
+                that.view.zoom--;
               }
 
               if (that.view.zoom <= 10) {
-                that.view.zoom--
+                that.view.zoom--;
                 layer.visible = false;
               }
             }
-            console.log("zoom",that.view.zoom)
+            console.log("zoom", that.view.zoom);
           });
           resolve(true);
         });
@@ -173,7 +168,8 @@ export default {
 };
 </script>
  <style  lang="less">
-.esri-ui .esri-ui-bottom-right .esri-legend__service-label, .esri-ui .esri-ui-bottom-left .esri-legend__service-label{
+.esri-ui .esri-ui-bottom-right .esri-legend__service-label,
+.esri-ui .esri-ui-bottom-left .esri-legend__service-label {
   display: block !important;
 }
 
