@@ -3,15 +3,19 @@
     <div class="gqx">
       <div class="right-div-title">
         <span class="right-div-title-inner">{{force=="xm"?"各县市区":options[selectVal].label}}</span>
-        <el-select size="mini"
-                   popper-class="rightSelect"
-                   v-model="selectVal"
-                   placeholder="请选择"
-                   v-if="force == 'xm'?false:true">
-          <el-option v-for="item in options"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"></el-option>
+        <el-select
+          size="mini"
+          popper-class="rightSelect"
+          v-model="selectVal"
+          placeholder="请选择"
+          v-if="force == 'xm'?false:true"
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
       <div id="gqx-chart"></div>
@@ -19,31 +23,41 @@
     <div class="yjfw">
       <div class="right-div-title">
         <span class="right-div-title-inner">{{force=="xm"?"省市重点建设项目":fgoptions[selectfgVal].label}}</span>
-        <el-select size="mini"
-                   popper-class="rightSelect"
-                   v-model="selectfgVal"
-                   placeholder="请选择"
-                   v-if="force == 'xm'?false:true">
-          <el-option v-for="item in fgoptions"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"></el-option>
+        <el-select
+          size="mini"
+          popper-class="rightSelect"
+          v-model="selectfgVal"
+          placeholder="请选择"
+          v-if="force == 'xm'?false:true"
+        >
+          <el-option
+            v-for="item in fgoptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
       <div id="yjfw-chart" />
     </div>
     <div class="wlfg">
       <div class="right-div-title">
-        <span class="right-div-title-inner">{{force=="xm"?"亿元以上建设项目":backwzoptions[selectbackVal].label}}</span>
-        <el-select size="mini"
-                   popper-class="rightSelect"
-                   v-model="selectbackVal"
-                   placeholder="请选择"
-                   v-if="force == 'xm'?false:true">
-          <el-option v-for="item in backwzoptions"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"></el-option>
+        <span
+          class="right-div-title-inner"
+        >{{force=="xm"?"亿元以上建设项目":backwzoptions[selectbackVal].label}}</span>
+        <el-select
+          size="mini"
+          popper-class="rightSelect"
+          v-model="selectbackVal"
+          placeholder="请选择"
+          v-if="force == 'xm'?false:true"
+        >
+          <el-option
+            v-for="item in backwzoptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
       <div id="wlfg-chart" />
@@ -130,7 +144,7 @@ export default {
       this.doChartData();
     },
     backToWzList(n, o) {
-      this.doChartExtra();
+      this.doChartData();
     },
     //总复工项目监听切换
     selectVal(n, o) {
@@ -169,18 +183,18 @@ export default {
       this.chart_m = this.$echarts.init(document.getElementById("yjfw-chart"));
       this.chart_b = this.$echarts.init(document.getElementById("wlfg-chart"));
     },
-    doChartExtra() {
-      if (this.force == "xm") return;
-      const _data_ = this.backToWzList
-        .map(({ attributes }) => {
-          return { ...attributes };
-        })
-        .filter(item => item.djdmryhj);
-      const chart_b_option_clone = this.$util.clone(chart_m_option);
-      chart_b_option_clone.xAxis.data = _data_.map(item => item.djdmryhj);
-      chart_b_option_clone.series[0].data = _data_.map(item => item.djdmrs);
-      this.doChartOption({ b: chart_b_option_clone });
-    },
+    // doChartExtra() {
+    //   if (this.force == "xm") return;
+    //   const _data_ = this.backToWzList
+    //     .map(({ attributes }) => {
+    //       return { ...attributes };
+    //     })
+    //     .filter(item => item.djdmryhj);
+    //   const chart_b_option_clone = this.$util.clone(chart_m_option);
+    //   chart_b_option_clone.xAxis.data = _data_.map(item => item.djdmryhj);
+    //   chart_b_option_clone.series[0].data = _data_.map(item => item.djdmrs);
+    //   this.doChartOption({ b: chart_b_option_clone });
+    // },
     doChartData() {
       const _data_ = this.buildDataList
         .map(({ attributes }) => {
@@ -385,7 +399,7 @@ export default {
           let chart_b_arr = _data_.map(({ wlrkfgqx, qy }) => {
             return { name: qy, value: wlrkfgqx ? parseInt(wlrkfgqx) : 0 };
           });
-          chart_b_option_clone.series[0].data = chart_b_arr;
+          chart_b_option_clone.series[0].data = chart_b_arr
         }
         if (this.selectbackVal == 1) {
           chart_b_arr = this.backToWzList
@@ -393,6 +407,9 @@ export default {
               return { ...attributes };
             })
             .filter(item => item.djdmryhj);
+          console.log("回温人员", chart_b_arr);
+          // djdmrs
+          chart_b_arr = chart_b_arr.sort(this.$util.compare("djdmrs"));
           chart_b_option_clone.xAxis.data = chart_b_arr.map(
             item => item.djdmryhj
           );

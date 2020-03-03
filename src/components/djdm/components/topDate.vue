@@ -68,8 +68,8 @@ export default {
         const topData = [
           { t: "项目总数", v: 0, v1: 0, c: "#FF835F" },
           { t: "已复工项目数", v: 0, c: "#54FFA6" },
-          { t: "总复工人数", v: 0, c: "#BD70FF" },
-          { t: "已复工人数", v: 0, c: "#FF4D7A" }
+          { t: "总复工人数", v: 0, c: "#FF835F" },
+          { t: "已复工人数", v: 0, c: "#54FFA6" }
         ];
         this.buildDataList
           // .filter(item => item.attributes.qy)

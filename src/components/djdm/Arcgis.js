@@ -90,7 +90,7 @@ const doMassLegendLayer = (context, { url, id }) => {
     context.map.remove(context.map.findLayerById(id));
   return new Promise((resolve, reject) => {
     loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
-      const option = { url, id,opacity: 0.8 };
+      const option = { url, id,opacity: 0.8, labelsVisible: true };
 
       const legendfeature = new FeatureLayer(option);
       context.map.add(legendfeature, 5);

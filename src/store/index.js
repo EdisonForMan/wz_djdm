@@ -98,7 +98,7 @@ export default new Vuex.Store({
      */
     async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
-      console.log("fetchXmBuildSiteList", data);
+      // console.log("fetchXmBuildSiteList", data);
       const buildS = {};
       data.features.map(({ attributes, geometry }) => {
         !buildS[attributes["XMSZD"]] &&
@@ -114,7 +114,7 @@ export default new Vuex.Store({
         });
         buildS[attributes["XMSZD"]].count += 1;
       });
-      console.log("buildS,", buildS);
+      // console.log("buildS,", buildS);
       const menu = Object.keys(buildS).map(key => {
         const { name, count, arr } = buildS[key];
         return {
@@ -130,11 +130,11 @@ export default new Vuex.Store({
           })
         };
       });
-      console.log("updateXmBuildSiteList", {
-        list: data.features,
-        menu,
-        fieldAliases: data.fieldAliases
-      });
+      // console.log("updateXmBuildSiteList", {
+      //   list: data.features,
+      //   menu,
+      //   fieldAliases: data.fieldAliases
+      // });
       commit("updateXmBuildSiteList", {
         list: data.features,
         menu,
@@ -151,7 +151,7 @@ export default new Vuex.Store({
       const qyhfObj = {};
       const xxjdObj = {};
       const hyflObj = {};
-      console.log("在vuex111区域", data);
+      // console.log("在vuex111区域", data);
 
       data.features.map(({ attributes, geometry }) => {
         //  qyhf
@@ -258,7 +258,7 @@ export default new Vuex.Store({
           })
         };
       });
-      console.log("vuex中qyhf,hyfl", qyhf, hyfl);
+      // console.log("vuex中qyhf,hyfl", qyhf, hyfl);
       qyhf = qyhf.sort(util.compare("id"));
       hyfl = hyfl.sort(util.compare("orig_fid"));
       commit("updateDjdmBuildSiteList", {

@@ -40,8 +40,8 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    // await doXmColorLayer(this);
-    await doXmLegendLayer(this);
+    await doXmColorLayer(this);
+    // await doXmLegendLayer(this);
     // await doSzLegendLayer()
     // await doProvLegendLayer()
     // await doDjdmLegendLayer()

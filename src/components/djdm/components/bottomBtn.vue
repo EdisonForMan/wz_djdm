@@ -5,15 +5,10 @@
         五色图
         <div>
           <ul class="subList">
-            <li @click="doSwitch(1)"
-                :class="{active:forceColor == 1}">亿元以上项目复工强度</li>
-            <li @click="doSwitch(2)"
-                :class="{active:forceColor == 2}">省重点项目复工强度</li>
-            <li @click="doSwitch(0)"
-                :class="{active:forceColor == 0}">市重点项目复工强度</li>
-            <li @click="doSwitch(3)"
-                :class="{active:forceColor == 3}">大建大美项目复工强度</li>
-
+            <li @click="doSwitch(1)" :class="{active:forceColor == 1}">亿元以上项目复工强度</li>
+            <li @click="doSwitch(2)" :class="{active:forceColor == 2}">省重点项目复工强度</li>
+            <li @click="doSwitch(0)" :class="{active:forceColor == 0}">市重点项目复工强度</li>
+            <li @click="doSwitch(3)" :class="{active:forceColor == 3}">大建大美项目复工强度</li>
           </ul>
         </div>
       </li>
@@ -52,8 +47,11 @@ export default {
     clean() {
       const context = this.$parent.$refs.macroArcgis;
       const id = "colorLayer";
+      const legid = "legendfeatLayer";
       context.map.findLayerById(id) &&
         context.map.remove(context.map.findLayerById(id));
+      context.map.findLayerById(legid) &&
+        context.map.remove(context.map.findLayerById(legid));
     },
     doSwitch(val) {
       this.forceColor = val;
