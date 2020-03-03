@@ -56,7 +56,7 @@ const doMassFeatureLayer = (
     })
     .join("");
 
-  console.log("arcgisview", context)
+  console.log("arcgisview", context);
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
@@ -85,7 +85,6 @@ const doMassFeatureLayer = (
     });
   });
 };
-
 
 /**
  * FeatureLayer
@@ -127,24 +126,28 @@ const doMassLegendLayer = (context, { url, id }) => {
       })
       // context.view.ui.add(context.legend, "bottom-right");
 
-      resolve(true)
-    });
+        resolve(true);
+      }
+    );
   });
-}
+};
 
 /**亿元以上项目复工强度图例图层
-* @param {*} context
-*/
+ * @param {*} context
+ */
 export const doXmLegendLayer = context => {
-  doMassLegendLayer(context, { url: xmBuildColorURL + "/1", id: "legendfeatLayer" });
-}
+  doMassLegendLayer(context, {
+    url: xmBuildColorURL + '/1',
+    id: "legendfeatLayer"
+  });
+};
 
 /**市重点项目复工强度复工强度图例图层
-* @param {*} context
-*/
+ * @param {*} context
+ */
 export const doSzLegendLayer = context => {
   doMassLegendLayer(context, { url: ssBuildColorURL, id: "legendfeatLayer" });
-}
+};
 /**
  * 省重点项目复工强度图例图层
  * @param {*} context
@@ -160,9 +163,6 @@ export const doProvLegendLayer = context => {
 export const doDjdmLegendLayer = context => {
   doMassLegendLayer(context, { url: djdmBuildColorURL, id: "legendfeatLayer" });
 };
-
-
-
 
 /**
  * 亿元以上项目复工强度

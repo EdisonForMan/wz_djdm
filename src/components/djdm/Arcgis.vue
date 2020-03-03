@@ -116,10 +116,9 @@ export default {
           that.map.add(layer);
           that.view.ui.add(that.legend, "bottom-right");
           that.view.on("click", evt => {});
-          that.view.on("mouse-wheel", evt => {
-                        // console.log("zoom", that.view.zoom);
-            that.map.findLayerById("PointLayer").visible =
-              that.view.zoom + (evt.deltaY < 0 ? 1 : -1) < 11 ? false : true;
+          that.view.on("mouse-wheel", ({ deltaY }) => {
+            that.map.findLayerById("PointLayer").visible =
+              that.view.zoom + (deltaY < 0 ? 1 : -1) < 11 ? false : true;
           });
           resolve(true);
         });
@@ -176,13 +175,10 @@ export default {
     width: 100%;
     height: 100%;
   }
-  .esri-ui .esri-ui-bottom-right {
-    right: 500px !important;
-    bottom: 50px !important;
-  }
 }
 
 .Map .esri-ui .esri-ui-bottom-right {
-  right: 500px !important;
+  right: 400px !important;
+  bottom: 50px !important;
 }
 </style>
