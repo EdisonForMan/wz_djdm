@@ -43,7 +43,7 @@ const doMassFeatureLayer = (
     })
     .join("");
 
-  console.log("arcgisview", context)
+  console.log("arcgisview", context);
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
@@ -59,11 +59,9 @@ const doMassFeatureLayer = (
       if (context.view.zoom == 10) {
         context.map.findLayerById("PointLayer").visible = false;
       }
-
     });
   });
 };
-
 
 /**
  * FeatureLayer
@@ -75,7 +73,12 @@ const doMassImageLayer = (context, { url, id }) => {
     context.map.remove(context.map.findLayerById(id));
   return new Promise((resolve, reject) => {
     loadModules(["esri/layers/MapImageLayer"]).then(([MapImageLayer]) => {
-      const option = { url, id, opacity: 0.8 };
+      const option = {
+        url,
+        id,
+        opacity: 0.8
+        // sublayers: [{ id: 1 }, { id: 0 }]
+      };
       const img = new MapImageLayer(option);
       context.map.add(img, 1);
       resolve(true);
@@ -89,40 +92,45 @@ const doMassLegendLayer = (context, { url, id }) => {
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
   return new Promise((resolve, reject) => {
-    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
-      const option = { url, id,opacity: 0.8, labelsVisible: true };
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(
+      ([FeatureLayer, Legend]) => {
+        const option = { url, id, opacity: 0.8, labelsVisible: true };
 
-      const legendfeature = new FeatureLayer(option);
-      context.map.add(legendfeature, 5);
-      context.legend = new Legend({
-        view: context.view,
-      });
-      console.log("图例图层上下文", context)
-      context.legend.layerInfos.push({
-        layer: legendfeature,
-        title: "复工强度",
-        id: "复工图例",
-      })
-      context.view.ui.add(context.legend, "bottom-right");
+        const legendfeature = new FeatureLayer(option);
+        context.map.add(legendfeature, 5);
+        context.legend = new Legend({
+          view: context.view
+        });
+        console.log("图例图层上下文", context);
+        context.legend.layerInfos.push({
+          layer: legendfeature,
+          title: "复工强度",
+          id: "复工图例"
+        });
+        context.view.ui.add(context.legend, "bottom-right");
 
-      resolve(true)
-    });
+        resolve(true);
+      }
+    );
   });
-}
+};
 
 /**亿元以上项目复工强度图例图层
-* @param {*} context
-*/
+ * @param {*} context
+ */
 export const doXmLegendLayer = context => {
-  doMassLegendLayer(context, { url: xmBuildColorURL + "/1", id: "legendfeatLayer" });
-}
+  doMassLegendLayer(context, {
+    url: xmBuildColorURL + '/1',
+    id: "legendfeatLayer"
+  });
+};
 
 /**市重点项目复工强度复工强度图例图层
-* @param {*} context
-*/
+ * @param {*} context
+ */
 export const doSzLegendLayer = context => {
   doMassLegendLayer(context, { url: ssBuildColorURL, id: "legendfeatLayer" });
-}
+};
 /**
  * 省重点项目复工强度图例图层
  * @param {*} context
@@ -138,9 +146,6 @@ export const doProvLegendLayer = context => {
 export const doDjdmLegendLayer = context => {
   doMassLegendLayer(context, { url: djdmBuildColorURL, id: "legendfeatLayer" });
 };
-
-
-
 
 /**
  * 亿元以上项目复工强度

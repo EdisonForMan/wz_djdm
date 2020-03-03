@@ -40,8 +40,8 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    await doXmColorLayer(this);
-    // await doXmLegendLayer(this);
+    // await doXmColorLayer(this);
+    await doXmLegendLayer(this);
     // await doSzLegendLayer()
     // await doProvLegendLayer()
     // await doDjdmLegendLayer()
@@ -112,29 +112,9 @@ export default {
 
           that.map.add(layer);
           that.view.on("click", evt => {});
-          that.view.on("mouse-wheel", evt => {
-            const layer = that.view.map.layers.items[2];
-            if (evt.deltaY < 0) {
-              // 放大小于
-              if (that.view.zoom < 10) {
-                that.view.zoom++;
-              }
-              console.log(that.view.zoom);
-              if (that.view.zoom > 10) {
-                that.view.zoom++;
-                layer.visible = true;
-              }
-            } else {
-              if (that.view.zoom > 10) {
-                that.view.zoom--;
-              }
-
-              if (that.view.zoom <= 10) {
-                that.view.zoom--;
-                layer.visible = false;
-              }
-            }
-            console.log("zoom", that.view.zoom);
+          that.view.on("mouse-wheel", ({ deltaY }) => {
+            that.map.findLayerById("PointLayer").visible =
+              that.view.zoom + (deltaY < 0 ? 1 : -1) < 11 ? false : true;
           });
           resolve(true);
         });
