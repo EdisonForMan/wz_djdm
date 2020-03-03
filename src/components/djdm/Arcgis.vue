@@ -167,13 +167,10 @@ export default {
     width: 100%;
     height: 100%;
   }
-  .esri-ui .esri-ui-bottom-right {
-    right: 500px !important;
-    bottom: 50px !important;
-  }
 }
 
 .Map .esri-ui .esri-ui-bottom-right {
-  right: 500px !important;
+  right: 400px !important;
+  bottom: 50px !important;
 }
 </style>
