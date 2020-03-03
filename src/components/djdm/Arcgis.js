@@ -101,21 +101,6 @@ const doMassFeatureLayer = (
   _html_ += djdmDivTemlate(fieldAliases, ziduan6, "scroll")
   _html_ += djdmDivSpanTemlate(fieldAliases, ziduan7)
 
-// let content=''
-//   const _html_ = Object.keys(fieldAliases)
-//     .filter(item => !BANNED_PARAMS.includes(item))
-//     .map(key => {
-//       // return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
-//       if(key=='NAME'){
-//         content+=  `<div class="name">{{${fieldAliases['NAME']} || ${'NAME'}}}</div>`
-//       }else{
-//         content+=`<ul><li><span>${fieldAliases[key]}</span><span>{${key}}</span></li></ul>`
-//       }
-//       return content
-//     })
-//     .join("");
-//   console.log("原来的_html_",_html_)
-
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
@@ -131,19 +116,10 @@ const doMassFeatureLayer = (
       if (context.view.zoom == 10) {
         context.map.findLayerById("PointLayer").visible = false;
       }
-      // context.legend = new Legend({
-      //   view: context.view,
-      // });
-      context.legend.layerInfos.push({
-        layer: feature,
-        title: "复工/未复工",
-        id: "复工点",
-      })
-      //context.view.ui.add(context.legend, "bottom-right");
-
-    });
   });
+  })
 };
+
 
 /**
  * FeatureLayer
@@ -189,7 +165,7 @@ const doMassLegendLayer = (context, { url, id }) => {
  */
 export const doXmLegendLayer = context => {
   doMassLegendLayer(context, {
-    url: xmBuildColorURL + '/1',
+    url: xmBuildColorURL + "/1",
     id: "legendfeatLayer"
   });
 };
@@ -270,10 +246,10 @@ export const doPointLayer = (context, fieldAliases) => {
   const renderer = {
     type: "unique-value",
     field: config[2],
-    valueExpression: `When($feature['${config[2]}'] == '${config[3]}', 'done' , 'other')`,
+    valueExpression: `When($feature['${config[2]}'] == '${config[3]}', '已复工' , '未复工')`,
     uniqueValueInfos: [
       {
-        value: "done",
+        value: "已复工",
         symbol: {
           type: "picture-marker",
           url: `${SERVER}/icon/yes.png`,
@@ -282,7 +258,7 @@ export const doPointLayer = (context, fieldAliases) => {
         }
       },
       {
-        value: "other",
+        value: "未复工",
         symbol: {
           type: "picture-marker",
           url: `${SERVER}/icon/no.png`,
