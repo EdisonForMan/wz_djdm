@@ -103,12 +103,21 @@ export default {
             id: "vectorLayer",
             url: IMAGELAYER
           });
+
+
           that.map.add(layer);
           that.legend = new Legend({
-            view: that.view
+            view: that.view,
           });
 
-          that.view.ui.add(that.legend, "bottom-right");
+          // that.legend.layerInfos.push({
+          //   layer:context.map.findLayerById("colorLayer"),
+          //   title:"复工强度",
+          // });
+
+      that.view.ui.add(that.legend, "bottom-right");
+
+
           that.view.on("click", evt => {
             fetchPoint(
               evt.mapPoint,

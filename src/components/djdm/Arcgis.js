@@ -42,7 +42,7 @@ const doMassFeatureLayer = (
       return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
     })
     .join("");
-
+    console.log("arcgisview",context)
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
@@ -59,11 +59,11 @@ const doMassFeatureLayer = (
         context.map.findLayerById("PointLayer").visible = false;
       }
 
-      //添加图例
-      // context.legend.layerInfos.push({});
     });
   });
 };
+
+
 /**
  * FeatureLayer
  * @param {*} context
@@ -77,7 +77,16 @@ const doMassImageLayer = (context, { url, id }) => {
       const option = { url, id, opacity: 0.8 };
       const img = new MapImageLayer(option);
       context.map.add(img, 1);
+      // console.log("context.legend",context.legend)
+      //           // 添加图例
+      //           context.legend.layerInfos.push({
+      //             layer:id,
+      //             title:"复工强度",
+      //           });
+                
+      // context.view.ui.add(context.legend, "bottom-right");
       resolve(true);
+
     });
   });
 };

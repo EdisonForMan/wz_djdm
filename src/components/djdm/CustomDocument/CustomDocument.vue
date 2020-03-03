@@ -30,7 +30,7 @@
             <el-checkbox v-model="value.check"
                          class="my-checkbox"
                          @change="changeCheckboxHandler(index)"></el-checkbox>
-            <span>{{ value.name }}</span>
+            <span class="textTitle">{{ value.name }}</span>
             <span v-if="value.innerText">{{ value.innerText }}</span>
           </template>
           <el-menu-item :index="index + '-' + ind"
@@ -215,7 +215,19 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+
+.el-submenu__title .textTitle{
+  width: 130px;
+   display:inline-block;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    overflow: hidden;
+}
+.textTitle:hover{
+    overflow: visible;
+}
+
 .custom-document {
   top: 50px !important;
   width: 296px;
