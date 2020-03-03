@@ -78,7 +78,7 @@ function djdmDivSpanTemlate(fieldAliases, strArr) {
   const htmlStr1 = `<div class="worker">
     <header>复工信息</header>`
   const htmlStr2 = `</div>`
-  return ` ${htmlStr1}<ul>${htmlStr}</ul>${htmlStr2}`      
+  return ` ${htmlStr1}<ul>${htmlStr}</ul>${htmlStr2}`
 }
 
 
@@ -116,7 +116,7 @@ const doMassFeatureLayer = (
       if (context.view.zoom == 10) {
         context.map.findLayerById("PointLayer").visible = false;
       }
-  });
+    });
   })
 };
 
