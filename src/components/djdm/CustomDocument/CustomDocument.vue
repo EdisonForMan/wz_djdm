@@ -1,45 +1,43 @@
 <template>
-  <div class="custom-document animated "
-       :class="[hideVisible?'slideOutLeft':'slideInLeft']">
+  <div class="custom-document animated" :class="[hideVisible?'slideOutLeft':'slideInLeft']">
     <div class="custom-query">
       <el-input v-model="queryValue">
-        <i slot="prefix"
-           class="el-input__icon el-icon-search"></i>
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
-      <el-button type="primary"
-                 @click.stop="query">查询</el-button>
+      <el-button type="primary" @click.stop="query">查询</el-button>
     </div>
     <div class="custom-document-content">
-      <el-menu active-text-color="#000"
-               text-color="#000"
-               class="my-menu">
-        <el-submenu v-for="(value, index) of tabsMenuData"
-                    :key="index"
-                    :index="index + ''">
+      <el-menu active-text-color="#000" text-color="#000" class="my-menu">
+        <el-submenu v-for="(value, index) of tabsMenuData" :key="index" :index="index + ''">
           <template slot="title">
-            <el-checkbox v-model="value.check"
-                         class="my-checkbox"
-                         @click.stop.native="()=>{}"
-                         @change="changeCheckboxHandler(index)"></el-checkbox>
+            <el-checkbox
+              v-model="value.check"
+              class="my-checkbox"
+              @click.stop.native="()=>{}"
+              @change="changeCheckboxHandler(index)"
+            ></el-checkbox>
             <span>{{ value.name }}</span>
             <span v-if="value.innerText">{{ value.innerText }}</span>
           </template>
-          <el-menu-item :index="index + '-' + ind"
-                        v-for="(item, ind) of value.children"
-                        :key="ind"
-                        @click="menuItemClickHandler(item,value)"
-                        class="children-menu-item">
-            <el-checkbox v-model="item.check"
-                         class="my-checkbox"
-                         @change="changeCheckboxHandler(index, ind)"
-                         v-show="false"></el-checkbox>
+          <el-menu-item
+            :index="index + '-' + ind"
+            v-for="(item, ind) of value.children"
+            :key="ind"
+            @click="menuItemClickHandler(item,value)"
+            class="children-menu-item"
+          >
+            <el-checkbox
+              v-model="item.check"
+              class="my-checkbox"
+              @change="changeCheckboxHandler(index, ind)"
+              v-show="false"
+            ></el-checkbox>
             {{ item.name }}
           </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
-    <span class="hide_button"
-          @click="hideSide"></span>
+    <span class="hide_button" @click="hideSide"></span>
   </div>
 </template>
 <script>
@@ -66,16 +64,9 @@ export default {
   created() {
     this.xmMenu.length && (this.tabsMenuData = [...this.xmMenu]);
   },
-  mounted() {
-    this.eventRegister();
-  },
   methods: {
     hideSide() {
       this.hideVisible = !this.hideVisible;
-    },
-    eventRegister() {},
-    goVideo(item) {
-      window.open("http://120.199.110.111:8989/SPJK/spjkwcj/demo1.html");
     },
     changeCheckboxHandler(parentIndex, childrenIndex) {
       const currentMenu = this.tabsMenuData;
@@ -161,28 +152,29 @@ export default {
   line-height: 60px;
 }
 .custom-query /deep/ .el-input {
-  width: 180px;
-  margin-right: 9px;
+  width: 240px;
+  margin-right: 8px;
 }
 .custom-query /deep/ .el-input__inner {
-  height: 24px;
-  line-height: 24px;
+  height: 34px;
+  line-height: 34px;
   border-color: #10cdf9;
   background: rgba(22, 52, 127, 0.5);
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 0;
   color: #fff;
 }
 .custom-query /deep/ .el-input__icon {
-  line-height: 24px;
+  line-height: 34px;
 }
 .custom-query /deep/ .el-button {
-  height: 24px;
-  line-height: 24px;
+  height: 34px;
+  line-height: 34px;
   background: rgba(37, 169, 226, 1);
   width: 50px;
   padding: 0;
   border-radius: 0;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -240,14 +232,15 @@ export default {
   border: none;
 }
 .my-menu /deep/ .el-submenu {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .my-menu /deep/ .el-submenu__title {
-  font-size: 17px;
+  padding: 0 14px!important;
+  font-size: 18px;
   color: #fff !important;
   font-weight: 500;
-  height: 40px;
-  line-height: 40px;
+  height: 46px;
+  line-height: 42px;
   font-family: PingFangSC-Medium, PingFang SC;
   background: rgba(62, 158, 255, 0.66);
 }
@@ -266,6 +259,7 @@ export default {
   border-bottom: 1px solid #3e9eff;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
+  font-size: 16px;
   color: #fff !important;
   position: relative;
 }

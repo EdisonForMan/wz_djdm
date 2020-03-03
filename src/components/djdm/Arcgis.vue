@@ -1,10 +1,7 @@
 <template>
   <div class="Map">
-    <div :id="id"
-         class="arcgisMap"></div>
-    <img :src="tlimg"
-         class="tlimg"
-         v-if="false" />
+    <div :id="id" class="arcgisMap"></div>
+    <img :src="tlimg" class="tlimg" v-if="false" />
   </div>
 </template>
 
@@ -47,13 +44,10 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default layer */
-    doYqStreetLayer(this);
-    doYqXSQLayer(this);
-    // doYqXqLayer(this);
-    // doYqFWLayer(this);
-    // doYqFJLayer(this);
-    doPointLayer(this);
-    this.hideLegend();
+    doYqXSQLayer(this); //  县市区
+    /** default selected layer */
+    doYqStreetLayer(this); //  街镇
+    doPointLayer(this); //  规上工业
   },
   methods: {
     eventRegister() {
@@ -61,7 +55,6 @@ export default {
         if (!id) return;
         const hash = {
           PointLayer: doPointLayer,
-          xsqLayer: doYqXSQLayer,
           sqLayer: doYqXqLayer,
           streetLayer: doYqStreetLayer,
           fwLayer: doYqFWLayer,
@@ -83,6 +76,12 @@ export default {
           ? this.goPointLoaction(geometry)
           : this.goPolygonLocation(geometry);
         doArcgisPopup(this, obj, fieldAliases);
+      });
+      //  图例收缩
+      this.$hub.$on("hide_click", val => {
+        document.querySelector(".esri-ui-bottom-right").style.right = val
+          ? 0
+          : "410px";
       });
     },
     /**
@@ -133,19 +132,6 @@ export default {
       const { x, y } = this.$util.getPolygonCenter(rings);
       this.view.goTo({
         center: [x, y]
-      });
-    },
-    // 弹出隐藏图例
-    hideLegend() {
-      this.$hub.$on("hide_click", val => {
-        let Element = document.querySelector(".esri-ui-bottom-right");
-        console.log(Element);
-        console.log(val);
-        if (val) {
-          Element.style.right = 0;
-        } else {
-          Element.style.right = "410px";
-        }
       });
     }
   }

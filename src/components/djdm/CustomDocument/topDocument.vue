@@ -36,7 +36,7 @@ export default {
 <style scoped>
 .topDocument {
   position: absolute;
-  top: 80px;
+  top: 90px;
   left: 50%;
   z-index: 1001;
   transform: translateX(-50%);
@@ -44,12 +44,12 @@ export default {
 }
 .topDocument-inner {
   float: left;
-  width: 87px;
-  height: 30px;
+  width: 140px;
+  height: 44px;
   background: url(./img/top_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
-  line-height: 30px;
-  font-size: 16px;
+  line-height: 44px;
+  font-size: 18px;
   margin-right: 20px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;

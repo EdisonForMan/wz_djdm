@@ -1,12 +1,18 @@
 <template>
   <div class="topDateDiv">
     <ul>
-      <li v-for="(item,index) in TOP_DATA"
-          :key="index">
+      <li v-for="(item,index) in TOP_DATA" :key="index">
         <p>{{item.t}}</p>
-        <h3 :style="`color:${item.c}`">
-          {{item.v}}
+        <h3 :style="`color:${item.c[0]}`">
+          <i>企业数量</i>
+          {{item.v[0]}}
           <i>家</i>
+        </h3>
+        <br />
+        <h3 :style="`color:${item.c[1]}`">
+          <i>产能恢复率</i>
+          {{(item.v[1]*100/item.v[0]).toFixed(2)}}
+          <i>%</i>
         </h3>
       </li>
     </ul>
@@ -15,7 +21,6 @@
 
 <script>
 import { mapState } from "vuex";
-
 export default {
   data: () => {
     return { TOP_DATA: [] };
@@ -41,44 +46,37 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上工业企业", v: 0, c: "#FF283A" },
-        { t: "规上工业企业复工数", v: 0, c: "#FFC659" },
-        { t: "限上服务业企业", v: 0, c: "#F6E31B" },
-        { t: "限上服务业企业复工数", v: 0, c: "#1EFF95" }
+        { t: "规上工业企业", v: [0, 0], c: ["#FF283A", "#FFC659"] },
+        { t: "限上服务业企业", v: [0, 0], c: ["#F6E31B", "#1EFF95"] }
       ];
       this.xmBuildSiteList.map(({ attributes }) => {
         const { cnfhqk } = attributes;
-        topData[0].v += 1;
-        topData[1].v += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
+        topData[0].v[0] += 1;
+        topData[0].v[1] += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
       });
       this.fwLayer.map(({ attributes }) => {
         const { ydygs } = attributes;
-        topData[2].v += 1;
-        topData[3].v += ydygs && parseInt(ydygs) > 0 ? 1 : 0;
+        topData[1].v[0] += 1;
+        topData[1].v[1] += ydygs && parseInt(ydygs) > 0 ? 1 : 0;
       });
       this.TOP_DATA = topData;
     }
   }
 };
-// width: 170px;
-// margin: auto;
-// display: inline-block;
-// background-color: #1b45a7;
-// border: 1px solid #07e2e8;
-// margin-left: 20px;
-// padding: 8px 5px;
-// color: #07e2e8;
 </script>
 
 <style lang="less" scoped>
 @fontbg: linear-gradient(180deg, #36dcff 0%, #8ceaff 100%);
 .topDateDiv {
   position: absolute;
-  top: 120px;
+  top: 140px;
   width: 100%;
 }
+.topDateDiv ul li:first-child {
+  margin-left: 0px;
+}
 .topDateDiv ul li {
-  width: 170px;
+  width: 230px;
   margin: auto;
   display: inline-block;
   background-color: #1b45a7;
@@ -92,7 +90,7 @@ export default {
     color: #fff;
   }
   p {
-    font-size: 16px;
+    font-size: 18px;
     background: @fontbg;
     -webkit-background-clip: text;
     // display: inline-block;
@@ -104,11 +102,11 @@ export default {
     font-weight: bold;
   }
   h3 {
-    font-size: 20px;
+    font-size: 22px;
     display: inline;
     i {
       font-style: normal;
-      font-size: 16px;
+      font-size: 18px;
       color: #36dcff;
       font-weight: bold;
     }

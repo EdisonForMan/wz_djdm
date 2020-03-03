@@ -103,7 +103,6 @@ export default {
             position: "right",
             color: "#fff",
             formatter: function (param) {
-                console.log(param)
                 return param.value;
             }
         },
