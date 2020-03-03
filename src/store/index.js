@@ -151,7 +151,6 @@ export default new Vuex.Store({
       const qyhfObj = {};
       const xxjdObj = {};
       const hyflObj = {};
-      // console.log("在vuex111区域", data);
 
       data.features.map(({ attributes, geometry }) => {
         //  qyhf
@@ -258,7 +257,6 @@ export default new Vuex.Store({
           })
         };
       });
-      // console.log("vuex中qyhf,hyfl", qyhf, hyfl);
       qyhf = qyhf.sort(util.compare("id"));
       hyfl = hyfl.sort(util.compare("orig_fid"));
       commit("updateDjdmBuildSiteList", {

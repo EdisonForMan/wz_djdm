@@ -166,7 +166,7 @@ export default {
     },
     // 单独点击一个侧目录的子项
     menuItemClickHandler(obj) {
-      console.log("侧边栏obj", obj);
+      // console.log("侧边栏obj", obj);
       this.$hub.$emit("menu-item-click", obj);
     },
     // 筛选数据
@@ -182,7 +182,7 @@ export default {
           innerText: `(${children.length})`
         });
       });
-      console.log("Date", Data);
+      // console.log("Date", Data);
       return Data;
     },
     // 查询
@@ -198,7 +198,7 @@ export default {
         if (this.activeTabsPane == "qyhf") {
           tabsMenuData = this.shaixuan(this.djdmMenuQyhf, this.queryValue);
           this.tabsMenuData["qyhf"] = [...tabsMenuData];
-          console.log("quyu划分", this.tabsMenuData["qyhf"]);
+          // console.log("quyu划分", this.tabsMenuData["qyhf"]);
         }
         // 形象进度搜索
         if (this.activeTabsPane == "xxjd") {
@@ -216,16 +216,15 @@ export default {
 };
 </script>
 <style>
-
-.el-submenu__title .textTitle{
+.el-submenu__title .textTitle {
   width: 130px;
-   display:inline-block;
-    text-overflow: ellipsis; 
-    white-space: nowrap;
-    overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
-.textTitle:hover{
-    overflow: visible;
+.textTitle:hover {
+  overflow: visible;
 }
 
 .custom-document {

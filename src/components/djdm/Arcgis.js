@@ -30,58 +30,102 @@ const BANNED_PARAMS = [
 
 // 选取字段
 // div
-const ziduan1 = ["NAME"]
+const ziduan1 = ["NAME"];
 // ul
-const ziduan2 = ["FUNDTYPE", "CONSTYPE", "CONSTYPE2", "STATE", "XMSZD"]
+const ziduan2 = ["FUNDTYPE", "CONSTYPE", "CONSTYPE2", "STATE", "XMSZD"];
 // ul
-const ziduan3 = ["XZJD", "CONSYEARB2", "CONSYEARE2", "TOTALAMOUNT", "PREVAMOUNT"]
+const ziduan3 = [
+  "XZJD",
+  "CONSYEARB2",
+  "CONSYEARE2",
+  "TOTALAMOUNT",
+  "PREVAMOUNT"
+];
 // ul
-const ziduan4 = ["NEXTAMOUNT", "YEARSUM", "YEARREMAIN", "ZR_DEPT"]
+const ziduan4 = ["NEXTAMOUNT", "YEARSUM", "YEARREMAIN", "ZR_DEPT"];
 // ul
-const ziduan5 = ["SS_DEPT", "ZHB_DEPT"]
+const ziduan5 = ["SS_DEPT", "ZHB_DEPT"];
 // div
-const ziduan6 = ["CONTENTGM"]
+const ziduan6 = ["CONTENTGM"];
 // div header ul
-const ziduan7 = ["FGZRS", "YFGRS"]
+const ziduan7 = ["FGZRS", "YFGRS"];
 
 /*
 模板
 */
-function djdmUlDemplate(fieldAliases, strArr) {
-  let htmlStr = Object.keys(fieldAliases)
-    .filter(item => strArr.includes(item))
-    .map(key => {
-      return `<li><span>${fieldAliases[key]}</span><span>{${key}}</span></li>`
-    }).join("");
-  return `<ul>${htmlStr}</ul>`
+function djdmUlDemplate(fieldAliases, strArr, attributes) {
+  if (!attributes) {
+    let htmlStr = Object.keys(fieldAliases)
+      .filter(item => strArr.includes(item))
+      .map(key => {
+        return `<li><span>${fieldAliases[key]}</span><span>{${key}}</span></li>`;
+      })
+      .join("");
+    return `<ul>${htmlStr}</ul>`;
+  } else {
+    let htmlStr = Object.keys(fieldAliases)
+      .filter(item => strArr.includes(item))
+      .map(key => {
+        return `<li><span>${fieldAliases[key]}</span><span>{${attributes[key]}}</span></li>`;
+      })
+      .join("");
+    return `<ul>${htmlStr}</ul>`;
+  }
 }
 
-function djdmDivTemlate(fieldAliases, strArr, className) {
-  let htmlStr = Object.keys(fieldAliases)
-    .filter(item => strArr.includes(item))
-    .map(key => {
-      return `<div class="${className}">{${key}} || ${fieldAliases[key]}</div> `
-    }).join("");
-  return htmlStr
+function djdmDivTemlate(fieldAliases, strArr, className, attributes) {
+  if (!attributes) {
+    let htmlStr = Object.keys(fieldAliases)
+      .filter(item => strArr.includes(item))
+      .map(key => {
+        return `<div class="${className}">{${key}} || ${fieldAliases[key]}</div> `;
+      })
+      .join("");
+    return htmlStr;
+  } else {
+    let htmlStr = Object.keys(fieldAliases)
+      .filter(item => strArr.includes(item))
+      .map(key => {
+        return `<div class="${className}">{${attributes[key]}} || ${fieldAliases[key]}</div> `;
+      })
+      .join("");
+    return htmlStr;
+  }
 }
 
-function djdmDivSpanTemlate(fieldAliases, strArr) {
-  let htmlStr = Object.keys(fieldAliases)
-    .filter(item => strArr.includes(item))
-    .map(key => {
-      return `  
+function djdmDivSpanTemlate(fieldAliases, strArr, attributes) {
+  if (!attributes) {
+    let htmlStr = Object.keys(fieldAliases)
+      .filter(item => strArr.includes(item))
+      .map(key => {
+        return `  
         <li>
         ${fieldAliases[key]}:
           <span>{${key}} || ${fieldAliases[key]}</span> 人
-        </li>`
-    }).join("");
-  const htmlStr1 = `<div class="worker">
-    <header>复工信息</header>`
-  const htmlStr2 = `</div>`
-  return ` ${htmlStr1}<ul>${htmlStr}</ul>${htmlStr2}`
+        </li>`;
+      })
+      .join("");
+    const htmlStr1 = `<div class="worker">
+    <header>复工信息</header>`;
+    const htmlStr2 = `</div>`;
+    return ` ${htmlStr1}<ul>${htmlStr}</ul>${htmlStr2}`;
+  } else {
+    let htmlStr = Object.keys(fieldAliases)
+      .filter(item => strArr.includes(item))
+      .map(key => {
+        return `  
+        <li>
+        ${fieldAliases[key]}:
+          <span>{${attributes[key]}} || ${fieldAliases[key]}</span> 人
+        </li>`;
+      })
+      .join("");
+    const htmlStr1 = `<div class="worker">
+    <header>复工信息</header>`;
+    const htmlStr2 = `</div>`;
+    return ` ${htmlStr1}<ul>${htmlStr}</ul>${htmlStr2}`;
+  }
 }
-
-
 
 /**
  * FeatureLayer
@@ -92,34 +136,41 @@ const doMassFeatureLayer = (
   context,
   { url, id, definitionExpression = "1=1", renderer, fieldAliases }
 ) => {
-  let _html_ = ''
-  _html_ += djdmDivTemlate(fieldAliases, ziduan1, "name")
-  _html_ += djdmUlDemplate(fieldAliases, ziduan2)
-  _html_ += djdmUlDemplate(fieldAliases, ziduan3)
-  _html_ += djdmUlDemplate(fieldAliases, ziduan4)
-  _html_ += djdmUlDemplate(fieldAliases, ziduan5)
-  _html_ += djdmDivTemlate(fieldAliases, ziduan6, "scroll")
-  _html_ += djdmDivSpanTemlate(fieldAliases, ziduan7)
+  // console.log("fieldAliases", fieldAliases);
+  let _html_ = "";
+  _html_ += djdmDivTemlate(fieldAliases, ziduan1, "name", null);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan2, null);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan3, null);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan4, null);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan5, null);
+  _html_ += djdmDivTemlate(fieldAliases, ziduan6, "scroll", null);
+  _html_ += djdmDivSpanTemlate(fieldAliases, ziduan7, null);
 
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
   return new Promise((resolve, reject) => {
-    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
-      const option = { url, id, definitionExpression };
-      option.popupTemplate = {
-        content: `<div class="djdmPopFrame"><div class="basic"><div>${_html_}</div></div></div>`
-      };
-      renderer && (option.renderer = renderer);
-      const feature = new FeatureLayer(option);
-      context.map.add(feature, 4);
-      if (context.view.zoom == 10) {
-        context.map.findLayerById("PointLayer").visible = false;
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(
+      ([FeatureLayer, Legend]) => {
+        const option = { url, id, definitionExpression };
+        option.popupTemplate = {
+          content: `<div class="djdmPopFrame"><div class="basic"><div>${_html_}</div></div></div>`
+        };
+        renderer && (option.renderer = renderer);
+        const feature = new FeatureLayer(option);
+        context.map.add(feature, 4);
+        context.legend.layerInfos.push({
+          layer: feature,
+          title: "复工/未复工",
+          id: "复工点"
+        });
+        if (context.view.zoom == 10) {
+          context.map.findLayerById("PointLayer").visible = false;
+        }
       }
-    });
-  })
+    );
+  });
 };
-
 
 /**
  * FeatureLayer
@@ -145,17 +196,18 @@ const doMassLegendLayer = (context, { url, id }) => {
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
   return new Promise((resolve, reject) => {
-    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
-      const option = { url, id, opacity: 0, labelsVisible: true };
-      const legendfeature = new FeatureLayer(option);
-      context.map.add(legendfeature, 5);
-      context.legend.layerInfos.push({
-        layer: legendfeature,
-        title: "复工强度",
-        id: "复工图例",
-      })
-      resolve(true);
-    }
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(
+      ([FeatureLayer, Legend]) => {
+        const option = { url, id, opacity: 0, labelsVisible: true };
+        const legendfeature = new FeatureLayer(option);
+        context.map.add(legendfeature, 5);
+        context.legend.layerInfos.push({
+          layer: legendfeature,
+          title: "复工强度",
+          id: "复工图例"
+        });
+        resolve(true);
+      }
     );
   });
 };
@@ -308,14 +360,17 @@ export const doArcgisPopup = (
   { attributes, geometry },
   fieldAliases
 ) => {
-  const _html_ = Object.keys(fieldAliases)
-    .filter(item => !BANNED_PARAMS.includes(item))
-    .map(key => {
-      return `<div><span>${fieldAliases[key]}:</span><span>${attributes[key]}</span></div>`;
-    })
-    .join("");
+  let _html_ = "";
+  _html_ += djdmDivTemlate(fieldAliases, ziduan1, "name", attributes);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan2, attributes);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan3, attributes);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan4, attributes);
+  _html_ += djdmUlDemplate(fieldAliases, ziduan5, attributes);
+  _html_ += djdmDivTemlate(fieldAliases, ziduan6, "scroll", attributes);
+  _html_ += djdmDivSpanTemlate(fieldAliases, ziduan7, attributes);
+
   view.popup.open({
-    content: `<div class="djdmPopFrame">${_html_}</div>`,
+    content: `<div class="djdmPopFrame"><div class="basic"><div>${_html_}</div></div></div>`,
     location: geometry
   });
 };

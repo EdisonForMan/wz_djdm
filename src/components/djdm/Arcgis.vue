@@ -1,8 +1,10 @@
 <template>
   <div class="Map">
-    <div :id="id" class="arcgisMap"></div>
+    <div :id="id"
+         class="arcgisMap"></div>
     <transition name="fade">
-      <djdmFrame ref="djdm" v-show="doFrame" />
+      <djdmFrame ref="djdm"
+                 v-show="doFrame" />
     </transition>
   </div>
 </template>
@@ -42,11 +44,7 @@ export default {
     /** default xm */
     await doXmColorLayer(this);
     await doXmLegendLayer(this);
-    // await doSzLegendLayer()
-    // await doProvLegendLayer()
-    // await doDjdmLegendLayer()
-    doPointLayer(this, this.xmfieldAliases);
-    this.upadteLegend();
+    doPointLayer(this, this.djdmfieldAliases);
   },
   computed: {
     ...mapState({
@@ -69,10 +67,7 @@ export default {
       //  点击工地
       this.$hub.$on("menu-item-click", ({ attributes, geometry }) => {
         this.goloaction(geometry);
-        console.log("点击工地", geometry);
-        console.log("点击工地this", this);
-
-        doArcgisPopup(this, { attributes, geometry }, this.xmfieldAliases);
+        doArcgisPopup(this, { attributes, geometry }, this.djdmfieldAliases);
         // this.doFrame = true;
       });
     },
@@ -109,9 +104,9 @@ export default {
             id: "vectorLayer",
             url: IMAGELAYER
           });
-              that.legend = new Legend({
-        view: that.view,
-      });
+          that.legend = new Legend({
+            view: that.view
+          });
 
           that.map.add(layer);
           that.view.ui.add(that.legend, "bottom-right");
@@ -129,7 +124,7 @@ export default {
     },
     switchColorLayer(val) {
       // val ? doXmColorLayer(this) : doSzColorLayer(this);
-      console.log("val", val);
+      // console.log("val", val);
       if (val == 0) {
         doSzColorLayer(this);
       }
@@ -142,17 +137,12 @@ export default {
       if (val == 3) {
         doDjdmColorLayer(this);
       }
-    },
-    //修改图例
-    upadteLegend() {
-      let legend_row = document.querySelectorAll(".esri-legend__layer-row")[0];
-      console.log(legend_row);
     }
   }
 };
 </script>
  <style  lang="less">
-.esri-legend__symbol>div{
+.esri-legend__symbol > div {
   opacity: 1 !important;
 }
 

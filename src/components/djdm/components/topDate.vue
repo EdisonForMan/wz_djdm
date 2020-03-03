@@ -42,7 +42,7 @@ export default {
   methods: {
     eventRegister() {
       this.$hub.$on("topDocumentClick", val => {
-        console.log("topDate", val);
+        // console.log("topDate", val);
         this.force = val ? "djdm" : "xm";
         this.$nextTick(() => {
           this.doTopData();
