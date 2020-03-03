@@ -27,6 +27,62 @@ const BANNED_PARAMS = [
   "OBJECTID_1",
   "code_id_1"
 ];
+
+// 选取字段
+// div
+const ziduan1 = ["NAME"]
+// ul
+const ziduan2 = ["FUNDTYPE", "CONSTYPE", "CONSTYPE2", "STATE", "XMSZD"]
+// ul
+const ziduan3 = ["XZJD", "CONSYEARB2", "CONSYEARE2", "TOTALAMOUNT", "PREVAMOUNT"]
+// ul
+const ziduan4 = ["NEXTAMOUNT", "YEARSUM", "YEARREMAIN", "ZR_DEPT"]
+// ul
+const ziduan5 = ["SS_DEPT", "ZHB_DEPT"]
+// div
+const ziduan6 = ["CONTENTGM"]
+// div header ul
+const ziduan7 = ["FGZRS", "YFGRS"]
+
+/*
+模板
+*/
+function djdmUlDemplate(fieldAliases, strArr) {
+  let htmlStr = Object.keys(fieldAliases)
+    .filter(item => strArr.includes(item))
+    .map(key => {
+      return `<li><span>${fieldAliases[key]}</span><span>{${key}}</span></li>`
+    }).join("");
+  return `<ul>${htmlStr}</ul>`
+}
+
+function djdmDivTemlate(fieldAliases, strArr, className) {
+  let htmlStr = Object.keys(fieldAliases)
+    .filter(item => strArr.includes(item))
+    .map(key => {
+      return `<div class="${className}">{${key}} || ${fieldAliases[key]}</div> `
+    }).join("");
+  return htmlStr
+}
+
+function djdmDivSpanTemlate(fieldAliases, strArr) {
+  let htmlStr = Object.keys(fieldAliases)
+    .filter(item => strArr.includes(item))
+    .map(key => {
+      return `  
+        <li>
+        ${fieldAliases[key]}:
+          <span>{${key}} || ${fieldAliases[key]}</span> 人
+        </li>`
+    }).join("");
+  const htmlStr1 = `<div class="worker">
+    <header>复工信息</header>`
+  const htmlStr2 = `</div>`
+  return ` ${htmlStr1}<ul>${htmlStr}</ul>${htmlStr2}`      
+}
+
+
+
 /**
  * FeatureLayer
  * @param {*} context
@@ -36,35 +92,38 @@ const doMassFeatureLayer = (
   context,
   { url, id, definitionExpression = "1=1", renderer, fieldAliases }
 ) => {
-  let content=''
-  const _html_ = Object.keys(fieldAliases)
-    .filter(item => !BANNED_PARAMS.includes(item))
-    .map(key => {
-      // return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
-      if(key=NAME){
-        content+=  `<div class="name">{{${fieldAliases[NAME]} || ${NAME}}}</div>`
-      }else{
-        content+=`<ul><li><span>${fieldAliases[key]}</span><span>{${key}}</span></li></ul>`
-      }
-      return content
-      // <ul>
-      //   <li>
-      //     <span>投资类型</span>
-      //     <span>{{ attributes.FUNDTYPE || attributes.投资类型 }}</span>
-      //   </li>
-      // </ul>
-    })
-    .join("");
+  let _html_ = ''
+  _html_ += djdmDivTemlate(fieldAliases, ziduan1, "name")
+  _html_ += djdmUlDemplate(fieldAliases, ziduan2)
+  _html_ += djdmUlDemplate(fieldAliases, ziduan3)
+  _html_ += djdmUlDemplate(fieldAliases, ziduan4)
+  _html_ += djdmUlDemplate(fieldAliases, ziduan5)
+  _html_ += djdmDivTemlate(fieldAliases, ziduan6, "scroll")
+  _html_ += djdmDivSpanTemlate(fieldAliases, ziduan7)
 
-  console.log("arcgisview", context);
+// let content=''
+//   const _html_ = Object.keys(fieldAliases)
+//     .filter(item => !BANNED_PARAMS.includes(item))
+//     .map(key => {
+//       // return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
+//       if(key=='NAME'){
+//         content+=  `<div class="name">{{${fieldAliases['NAME']} || ${'NAME'}}}</div>`
+//       }else{
+//         content+=`<ul><li><span>${fieldAliases[key]}</span><span>{${key}}</span></li></ul>`
+//       }
+//       return content
+//     })
+//     .join("");
+//   console.log("原来的_html_",_html_)
+
   context.map.findLayerById(id) &&
     context.map.remove(context.map.findLayerById(id));
 
   return new Promise((resolve, reject) => {
-    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer,Legend]) => {
+    loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
       const option = { url, id, definitionExpression };
       option.popupTemplate = {
-        content: `<div class="djdmPopFrame"><div class="basic"><div>${title_name}${_html_}</div></div></div>`
+        content: `<div class="djdmPopFrame"><div class="basic"><div>${_html_}</div></div></div>`
       };
       renderer && (option.renderer = renderer);
       const feature = new FeatureLayer(option);
@@ -112,22 +171,15 @@ const doMassLegendLayer = (context, { url, id }) => {
   return new Promise((resolve, reject) => {
     loadModules(["esri/layers/FeatureLayer", "esri/widgets/Legend"]).then(([FeatureLayer, Legend]) => {
       const option = { url, id, opacity: 0, labelsVisible: true };
-
       const legendfeature = new FeatureLayer(option);
       context.map.add(legendfeature, 5);
-      // context.legend = new Legend({
-      //   view: context.view,
-      // });
-      // console.log("图例图层上下文", context)
       context.legend.layerInfos.push({
         layer: legendfeature,
         title: "复工强度",
         id: "复工图例",
       })
-      // context.view.ui.add(context.legend, "bottom-right");
-
-        resolve(true);
-      }
+      resolve(true);
+    }
     );
   });
 };
@@ -200,8 +252,6 @@ export const doDjdmColorLayer = context => {
  * @param {*} context
  */
 export const doPointLayer = (context, fieldAliases) => {
-  console.log("在Arcgis 中fieldAliases", fieldAliases);
-
   const activeTabsPane = context.$parent.$refs.leftMenu.activeTabsPane;
   const menu = context.$parent.$refs.leftMenu.tabsMenuData[activeTabsPane];
   const config = _URIS_[activeTabsPane];

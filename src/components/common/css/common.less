@@ -10,12 +10,6 @@
 .cover (@size : cover) {
   background-size: @size;
 }
-.box() {
-  box-sizing: border-box;
-}
-.cover (@size : cover) {
-  background-size: @size;
-}
 
 * {
   padding: 0;
@@ -389,14 +383,14 @@ body {
       }
 
       // .djdmPopFrame
-      .djdmFrame {
+      .djdmPopFrame {
         /** ui规定高宽  */
         width: 605px;
         background: @frameBg;
         .cover();
-        position: fixed;
-        top: 50%;
-        left: 50%;
+        // position: fixed;
+        // top:50%;
+        // left: 50%;
         z-index: 999;
         transform: translate(-50%, -50%);
         .box();
