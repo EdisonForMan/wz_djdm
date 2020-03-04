@@ -8930,7 +8930,7 @@ html[dir="rtl"] .esri-navigation-toggle__button:before {
     position        : relative;
     z-index         : 1;
     width           : 340px;
-    max-height      : 600px !important;
+    max-height      : 490px !important;
     background-color: #fff;
     display         : flex;
     flex-flow       : column nowrap
