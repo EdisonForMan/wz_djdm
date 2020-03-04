@@ -55,21 +55,25 @@ const ziduan7 = ["FGZRS", "YFGRS"];
 */
 function djdmUlDemplate(fieldAliases, strArr, attributes) {
   if (!attributes) {
-    let htmlStr = Object.keys(fieldAliases)
-      .filter(item => strArr.includes(item))
-      .map(key => {
-        return `<li><span>${fieldAliases[key]}</span><span>{${key}}</span></li>`;
-      })
-      .join("");
+    let hhh =Object.keys(fieldAliases)
+    let kkk=strArr.filter(item => hhh.includes(item))
+    console.log("kkk",kkk)
+    let htmlStr=kkk.map(key => {
+      return `<li><span>${fieldAliases[key]}</span><span>{${key}}</span></li>`;
+    }).join("");
+
     return `<ul>${htmlStr}</ul>`;
   } else {
-    let htmlStr = Object.keys(fieldAliases)
-      .filter(item => strArr.includes(item))
-      .map(key => {
-        return `<li><span>${fieldAliases[key]}</span><span>{${attributes[key]}}</span></li>`;
-      })
-      .join("");
+
+    let hhh =Object.keys(fieldAliases)
+    let kkk=strArr.filter(item => hhh.includes(item))
+    console.log("kkk",kkk)
+    let htmlStr=kkk.map(key => {
+      return `<li><span>${fieldAliases[key]}</span><span>{${attributes[key]}}</span></li>`;
+    }).join("");
+
     return `<ul>${htmlStr}</ul>`;
+
   }
 }
 
@@ -78,7 +82,7 @@ function djdmDivTemlate(fieldAliases, strArr, className, attributes) {
     let htmlStr = Object.keys(fieldAliases)
       .filter(item => strArr.includes(item))
       .map(key => {
-        return `<div class="${className}">{${key}} || ${fieldAliases[key]}</div> `;
+        return `<div class="${className}">{${key}} </div> `;
       })
       .join("");
     return htmlStr;
@@ -86,7 +90,7 @@ function djdmDivTemlate(fieldAliases, strArr, className, attributes) {
     let htmlStr = Object.keys(fieldAliases)
       .filter(item => strArr.includes(item))
       .map(key => {
-        return `<div class="${className}">{${attributes[key]}} || ${fieldAliases[key]}</div> `;
+        return `<div class="${className}">{${attributes[key]}}</div> `;
       })
       .join("");
     return htmlStr;
@@ -101,7 +105,7 @@ function djdmDivSpanTemlate(fieldAliases, strArr, attributes) {
         return `  
         <li>
         ${fieldAliases[key]}:
-          <span>{${key}} || ${fieldAliases[key]}</span> 人
+          <span>{${key}}人</span>
         </li>`;
       })
       .join("");
@@ -116,7 +120,7 @@ function djdmDivSpanTemlate(fieldAliases, strArr, attributes) {
         return `  
         <li>
         ${fieldAliases[key]}:
-          <span>{${attributes[key]}} || ${fieldAliases[key]}</span> 人
+          <span>{${attributes[key]}}人</span>
         </li>`;
       })
       .join("");

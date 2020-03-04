@@ -528,6 +528,7 @@ export default {
 .right-div-title .el-select .el-input input {
   color: #7bb7df !important;
   background: #01195a !important;
+  width: 200px !important;
 }
 
 .gqx .right-div-title {
