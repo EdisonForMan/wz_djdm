@@ -3,13 +3,13 @@
     <ul>
       <li v-for="(item,index) in TOP_DATA"
           :key="index">
-        <p>{{item.t}}</p>
+        <h3>{{item.t}}</h3>
         <div v-if="index==0">
           <h3 :style="`color:${item.c}`">已建成{{item.v}}</h3>
           <h3 :style="`color:${item.c}`">未建成{{item.v1}}</h3>
         </div>
         <div v-else>
-          <h3 :style="`color:${item.c};  line-height:29px`">{{item.v}}</h3>
+          <h3 :style="`color:${item.c};  line-height:30px`">{{item.v}}</h3>
           <h3 :style="`color:${item.c};`">&ensp;</h3>
         </div>
 
@@ -112,7 +112,7 @@ export default {
   }
   p {
     font-size: 20px;
-    font-weight: bold;
+    // font-weight: bold;
     background: linear-gradient(
       180deg,
       rgba(54, 220, 255, 1) 0%,
