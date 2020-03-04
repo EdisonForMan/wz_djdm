@@ -8923,14 +8923,14 @@ html[dir="rtl"] .esri-navigation-toggle__button:before {
 .esri-popup--aligned-bottom-right {
     animation: popup-intro-animation-up 200ms ease-in-out
 }
-
+/*pop高度*/
 .esri-popup__main-container {
     outline         : none;
     pointer-events  : auto;
     position        : relative;
     z-index         : 1;
     width           : 340px;
-    max-height      : 340px;
+    max-height      : 600px !important;
     background-color: #fff;
     display         : flex;
     flex-flow       : column nowrap

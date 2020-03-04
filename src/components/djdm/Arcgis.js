@@ -67,7 +67,7 @@ function djdmUlDemplate(fieldAliases, strArr, attributes) {
     let hhh =Object.keys(fieldAliases)
     let kkk=strArr.filter(item => hhh.includes(item))
     let htmlStr=kkk.map(key => {
-      return `<li><span>${fieldAliases[key]}</span><span>{${attributes[key]}}</span></li>`;
+      return `<li><span>${fieldAliases[key]}</span><span>${attributes[key]}</span></li>`;
     }).join("");
 
     return `<ul>${htmlStr}</ul>`;
@@ -88,7 +88,7 @@ function djdmDivTemlate(fieldAliases, strArr, className, attributes) {
     let htmlStr = Object.keys(fieldAliases)
       .filter(item => strArr.includes(item))
       .map(key => {
-        return `<div class="${className}">{${attributes[key]}}</div> `;
+        return `<div class="${className}">${attributes[key]}</div> `;
       })
       .join("");
     return htmlStr;
@@ -118,7 +118,7 @@ function djdmDivSpanTemlate(fieldAliases, strArr, attributes) {
         return `  
         <li>
         ${fieldAliases[key]}:
-          <span>{${attributes[key]}}人</span>
+          <span>${attributes[key]}人</span>
         </li>`;
       })
       .join("");
