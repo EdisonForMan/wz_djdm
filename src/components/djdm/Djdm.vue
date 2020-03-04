@@ -35,7 +35,7 @@ import topDate from "./components/topDate";
 import xzDate from "./components/xz";
 import CustomDocument from "./CustomDocument/CustomDocument.vue";
 import topDocument from "./CustomDocument/topDocument.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "Djdm",
   data() {
@@ -64,13 +64,16 @@ export default {
   /**
    * fetch data && store data pool
    */
+  async created() {
+    !this.xmBuildSiteList.length && (await this.fetchXmBuildSiteList());
+    !this.fwLayer.length && (await this.fetchFwList());
+    !this.xsqList.length && (await this.fetchXsqList());
+    !this.streetList.length && (await this.fetchStreetList());
+    !this.sqList.length && (await this.fetchSqList());
+    !this.fjList.length && (await this.fetchFjList());
+    this.updateDataDone();
+  },
   mounted() {
-    !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
-    !this.fwLayer.length && this.fetchFwList();
-    !this.xsqList.length && this.fetchXsqList();
-    !this.streetList.length && this.fetchStreetList();
-    !this.sqList.length && this.fetchSqList();
-    !this.fjList.length && this.fetchFjList();
     this.eventRegister();
   },
   methods: {
@@ -82,6 +85,7 @@ export default {
       "fetchFwList",
       "fetchFjList"
     ]),
+    ...mapMutations(["updateDataDone"]),
     eventRegister() {
       this.$hub.$on("topDocumentClick", val => {
         this.shallActive = val;

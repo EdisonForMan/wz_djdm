@@ -32,7 +32,8 @@ export default {
   props: ["id"],
   computed: {
     ...mapState({
-      xmMenu: state => state.xmMenu
+      xmMenu: state => state.xmMenu,
+      dataDone: state => state.dataDone
     }),
     xmFieldAliases() {
       return this.xmMenu.map(({ id, fieldAliases }) => {
@@ -43,13 +44,22 @@ export default {
   async mounted() {
     await this.createMap();
     this.eventRegister();
-    /** default layer */
-    doYqXSQLayer(this); //  县市区
-    /** default selected layer */
-    doYqStreetLayer(this); //  街镇
-    doPointLayer(this); //  规上工业
+    this.dataDone && this.defaultLayers();
+  },
+  watch: {
+    dataDone(n) {
+      n && this.defaultLayers();
+    }
   },
   methods: {
+    /** once */
+    defaultLayers() {
+      /** default layer */
+      doYqXSQLayer(this); //  县市区
+      /** default selected layer */
+      doYqStreetLayer(this); //  街镇
+      doPointLayer(this); //  规上工业
+    },
     eventRegister() {
       this.$hub.$on("document-checkbox", ({ check, id }) => {
         if (!id) return;

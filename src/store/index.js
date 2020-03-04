@@ -21,6 +21,8 @@ export default new Vuex.Store({
     streetList: [], // 街道数据
     sqList: [], // 村社数据
     fjList: [], // 房建数据
+    /** 数据hub下标 */
+    dataDone: false,
     /** 菜单数组 */
     xmMenu: [
       {
@@ -89,6 +91,10 @@ export default new Vuex.Store({
     updateXsqList(state, { list = [], menu }) {
       state.xsqList = list;
       menu;
+    },
+    updateDataDone(state) {
+      console.log("[done]", "data fetch");
+      state.dataDone = true;
     }
   },
   actions: {
