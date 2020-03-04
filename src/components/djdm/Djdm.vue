@@ -29,10 +29,8 @@
  */
 import yqImg from "./components/yqImg";
 import commonArcgis from "./Arcgis.vue";
-import bottomBtn from "./components/bottomBtn";
 import rightDiv from "./rightDiv/rightDiv.vue";
 import topDate from "./components/topDate";
-import xzDate from "./components/xz";
 import CustomDocument from "./CustomDocument/CustomDocument.vue";
 import topDocument from "./CustomDocument/topDocument.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
@@ -47,9 +45,7 @@ export default {
     CustomDocument,
     commonArcgis,
     rightDiv, // 右侧图表
-    bottomBtn, //底部按钮
     topDate, //顶部数据
-    xzDate //详情须知
   },
   computed: {
     ...mapState({
