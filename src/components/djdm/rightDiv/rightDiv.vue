@@ -524,7 +524,7 @@ export default {
 }
 .right-div-title-inner {
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   font-family: PingFangSC-Medium, PingFang SC;
   position: relative;
   z-index: 2;
@@ -537,7 +537,7 @@ export default {
 .right-div-title .el-select .el-input input {
   color: #7bb7df !important;
   background: #01195a !important;
-  width: 200px !important;
+  width: 150px !important;
 }
 
 .gqx .right-div-title {

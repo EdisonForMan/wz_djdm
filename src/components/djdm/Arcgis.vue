@@ -176,7 +176,7 @@ export default {
 }
 
 .Map .esri-ui .esri-ui-bottom-right {
-  right: 400px !important;
+  right: 420px !important;
   bottom: 50px !important;
 }
 </style>
