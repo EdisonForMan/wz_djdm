@@ -1,10 +1,8 @@
 <template>
   <div class="Map">
-    <div :id="id"
-         class="arcgisMap"></div>
+    <div :id="id" class="arcgisMap"></div>
     <transition name="fade">
-      <djdmFrame ref="djdm"
-                 v-show="doFrame" />
+      <djdmFrame ref="djdm" v-show="doFrame" />
     </transition>
   </div>
 </template>
@@ -32,7 +30,8 @@ export default {
   name: "DjdmArcgis",
   data() {
     return {
-      doFrame: false
+      doFrame: false,
+      field: {}
     };
   },
   components: { djdmFrame },
@@ -42,15 +41,24 @@ export default {
     await this.createMap();
     this.eventRegister();
     /** default xm */
-    await doXmColorLayer(this);
-    await doXmLegendLayer(this);
-    doPointLayer(this, this.djdmfieldAliases);
+    // if (this.djdmfieldAliases) {
+      await doXmColorLayer(this);
+      await doXmLegendLayer(this);
+      doPointLayer(this, this.djdmfieldAliases);
+    // }
   },
   computed: {
     ...mapState({
       xmfieldAliases: state => state.xmfieldAliases,
       djdmfieldAliases: state => state.djdmfieldAliases
     })
+  },
+  watch: {
+    async djdmfieldAliases(n, o) {
+      await doXmColorLayer(this);
+      await doXmLegendLayer(this);
+      doPointLayer(this, this.djdmfieldAliases);
+    }
   },
   methods: {
     eventRegister() {

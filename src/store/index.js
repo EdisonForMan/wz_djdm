@@ -147,6 +147,7 @@ export default new Vuex.Store({
      * @param {*} option
      */
     async fetchDjdmBuildSiteList({ state, commit }) {
+      
       const { data } = await fetchArcgisServer({ url: djdmBuildSiteURL });
       const qyhfObj = {};
       const xxjdObj = {};

@@ -61,9 +61,9 @@ export default {
   /**
    * fetch data && store data pool
    */
-  mounted() {
-    !this.xmBuildSiteList.length && this.fetchXmBuildSiteList();
-    !this.djdmBuildSiteList.length && this.fetchDjdmBuildSiteList();
+ async mounted() {
+    !this.xmBuildSiteList.length && await this.fetchXmBuildSiteList();
+    !this.djdmBuildSiteList.length && await this.fetchDjdmBuildSiteList();
     !this.buildDataList.length && this.fetchBuildDataList();
     !this.backToWzList.length && this.fetchBackToWzList();
   },

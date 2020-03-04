@@ -140,6 +140,7 @@ const doMassFeatureLayer = (
   let _html_ = "";
   _html_ += djdmDivTemlate(fieldAliases, ziduan1, "name", null);
   _html_ += djdmUlDemplate(fieldAliases, ziduan2, null);
+  console.log("字段2",_html_)
   _html_ += djdmUlDemplate(fieldAliases, ziduan3, null);
   _html_ += djdmUlDemplate(fieldAliases, ziduan4, null);
   _html_ += djdmUlDemplate(fieldAliases, ziduan5, null);
@@ -320,6 +321,7 @@ export const doPointLayer = (context, fieldAliases) => {
       }
     ]
   };
+  console.log("fieldAliases",fieldAliases)
   doMassFeatureLayer(context, {
     url: config[0],
     id: "PointLayer",
