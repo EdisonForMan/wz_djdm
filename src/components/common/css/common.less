@@ -353,7 +353,7 @@ body {
 
     .esri-popup__main-container {
       width: 710px;
-      height: 600px;
+      // height: 600px;
       box-sizing: border-box;
       padding: 10px;
       background-repeat: no-repeat;
@@ -385,7 +385,7 @@ body {
       .djdmPopFrame {
         /** ui规定高宽  */
         width: 710px;
-        height: 600px;
+        // height: 600px;
         // background: @frameBg;
         .cover();
         // position: fixed;
@@ -449,22 +449,24 @@ body {
             clear: both;
             overflow: hidden;
             // overflow: auto;
-            padding: 10px 0;
+            height: 78px !important;
+            padding: 10px  !important;
             border-bottom: 1px #979797 solid;
             > li:last-child {
               border-right: 0px !important;
             }
             > li {
               list-style: none;
-              width: 20%;
+              width: 20% !important;
               display: inline-block;
+              margin: 0 !important;
               float: left;
               border-right: 1px #979797 solid;
               .box();
-              padding: 0px 12px;
+              padding: 0px 12px !important;
               span {
                 display: block;
-                line-height: 22px;
+                line-height: 22px !important;
                 font-size: 14px;
                 font-weight: 400;
                 text-align: left;
@@ -478,10 +480,14 @@ body {
               }
             }
           }
+
+          // ul:nth-child(4){
+          //   height: 80px !important;
+          // }
           /** 额外条目 */
           .nobreakul {
             li {
-              line-height: 22px;
+              line-height: 22px !important;
               span {
                 display: inline-block;
                 vertical-align: middle;
@@ -489,31 +495,32 @@ body {
               }
             }
             li:first-child {
-              width: 59.9%;
+              width: 59.9% !important;
             }
             li:last-child {
-              width: 39.9%;
+              width: 39.9% !important;
             }
           }
           /** 滚动框 */
           .scroll {
             border: 1px solid rgba(109, 225, 255, 1);
             .box();
-            padding: 4px;
-            height: 70px;
+            margin-top: 20px;
+            padding: 4px !important;
+            height: 70px !important;
             // height: 100px;
             overflow-y: auto;
             word-break: break-all;
             text-align: left;
             font-size: 14px;
-            margin-bottom:10px;
+            margin-bottom:10px !important;
             span {
               display: block;
             }
           }
           .scroll::-webkit-scrollbar {
             border: 1px solid rgba(109, 225, 255, 1);
-            width: 6px;
+            width: 6px !important;
           }
           .scroll::-webkit-scrollbar-thumb {
             background: rgba(109, 225, 255, 1);
@@ -524,17 +531,17 @@ body {
         .worker {
           > ul {
             // margin: 10px -14px;
-            height: 92px;
-            line-height: 30px;
+            height: 92px !important;
+            line-height: 30px !important;
             font-size: 14px;
             overflow: auto !important;
             li {
               .box();
-              padding: 0 10px;
+              padding: 0 10px !important;
               text-align: left;
               list-style: none;
               display: inline-block;
-              width: 49.8%;
+              width: 49.8% !important;
               background-color: #364f87;
               span {
                 font-size: 14px;

@@ -150,6 +150,12 @@ export default {
 };
 </script>
  <style  lang="less">
+.Map .esri-feature ul{
+margin-bottom: 0 !important;
+// padding: 10px 0 !important;
+// height: 64px !important;
+}
+
 .esri-legend__symbol > div {
   opacity: 1 !important;
 }
