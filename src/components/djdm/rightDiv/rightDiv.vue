@@ -2,7 +2,7 @@
   <div class="right-div animated" :class="[hideVisible?'slideOutRight':'slideInRight']">
     <div class="gqx">
       <div class="right-div-title">
-        <span class="right-div-title-inner">街道/乐清市复工情况</span>
+        <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
       </div>
       <el-select size="small" v-model="selectVal" placeholder="请选择">
         <el-option
@@ -47,12 +47,12 @@ export default {
         {
           value: 3,
           label: "服务业复工情况",
-          color: "#EE3B3B"
+          color: "#FF7F50"
         },
         {
           value: 4,
           label: "服务业到岗率",
-          color: "#EE3B3B"
+          color: "#FF7F50"
         }
       ],
       selectVal: 0,

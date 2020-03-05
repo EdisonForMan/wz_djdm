@@ -5,13 +5,13 @@
         <p>{{item.t}}</p>
         <h3 :style="`color:${item.c[0]}`">
           <i>企业数量</i>
-          {{item.v[0]}}
+          {{dataDone ? item.v[0] : "-"}}
           <i>家</i>
         </h3>
         <br />
         <h3 :style="`color:${item.c[1]}`">
           <i>产能恢复率</i>
-          {{(item.v[1]*100/item.v[0]).toFixed(2)}}
+          {{dataDone ? (item.v[1]*100/item.v[0]).toFixed(2) : "-"}}
           <i>%</i>
         </h3>
       </li>
@@ -28,12 +28,18 @@ export default {
   computed: {
     ...mapState({
       xmBuildSiteList: state => state.xmBuildSiteList,
-      fwLayer: state => state.fwLayer
+      fwLayer: state => state.fwLayer,
+      dataDone: state => state.dataDone
     })
   },
   mounted() {
     this.eventRegister();
     this.doTopData();
+  },
+  watch: {
+    dataDone(n) {
+      n && this.doTopData();
+    }
   },
   methods: {
     eventRegister() {

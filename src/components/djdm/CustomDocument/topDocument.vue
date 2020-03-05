@@ -2,19 +2,14 @@
   <div class="topDocument">
     <div
       class="topDocument-inner"
-      :class="[active == 0 ? 'current-active' : '']"
-      @click="topDocumentClick(0)"
-    >疫情防控</div>
-    <!-- <div
-      class="topDocument-inner"
-      :class="[active == 1 ? 'current-active' : '']"
-      @click="topDocumentClick(1)"
-    >复工风险图</div> -->
-    <div
-      class="topDocument-inner"
       :class="[active == 2 ? 'current-active' : '']"
       @click="topDocumentClick(2)"
     >企业复工复产</div>
+    <div
+      class="topDocument-inner"
+      :class="[active == 0 ? 'current-active' : '']"
+      @click="topDocumentClick(0)"
+    >疫情防控</div>
   </div>
 </template>
 <script>
@@ -22,7 +17,7 @@ export default {
   name: "topDocument",
   data() {
     return {
-      active: 0
+      active: 2
     };
   },
   methods: {
@@ -56,8 +51,8 @@ export default {
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
 }
-.topDocument-inner:last-child{
-  margin-right: 0px!important;
+.topDocument-inner:last-child {
+  margin-right: 0px !important;
 }
 .current-active {
   color: #ffd068;
