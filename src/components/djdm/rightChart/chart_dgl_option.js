@@ -1,9 +1,9 @@
-/** 温州市二产产能恢复率 */
-export const chart_ywz_option = {
+/** 温州市员工到岗率 */
+export const chart_dgl_option = {
   color: ["#6EB2FF", "red"],
   legend: {
     top: "20px",
-    data: ["二产产能恢复率", "全市平均"],
+    data: ["员工到岗率"],
     textStyle: { color: "#fff", fontSize: 16 },
     inactiveColor: "#000"
   },
@@ -17,11 +17,16 @@ export const chart_ywz_option = {
     left: "3%",
     right: "30px",
     bottom: "50px",
-    top: "70px",
+    top: "60px",
     containLabel: true
   },
   xAxis: {
     type: "value",
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    },
     axisLabel: {
       formatter: "{value} %",
       color: "#fff",
@@ -35,25 +40,25 @@ export const chart_ywz_option = {
       fontSize: 16
     },
     data: [
-      "鹿城",
       "瓯海",
-      "永嘉",
-      "乐清",
-      "瑞安",
-      "龙湾",
+      "龙岗",
       "经开区",
       "瓯江口",
-      "文成",
-      "洞头",
-      "泰顺",
+      "瑞安",
+      "龙湾",
+      "永嘉",
+      "乐清",
       "苍南",
-      "龙港",
-      "平阳"
+      "鹿城",
+      "泰顺",
+      "平阳",
+      "洞头",
+      "文成"
     ]
   },
   series: [
     {
-      name: "二产产能恢复率",
+      name: "员工到岗率",
       type: "bar",
       smooth: true,
       label: {
@@ -70,38 +75,21 @@ export const chart_ywz_option = {
       },
       barWidth: 16,
       data: [
-        23.8,
-        46.5,
-        47.5,
-        48.3,
-        52.1,
-        55.7,
-        55.9,
-        58.8,
-        60.8,
-        61,
-        75.4,
+        75.8,
+        76.5,
+        76.6,
+        77.1,
+        77.3,
+        77.5,
+        79.1,
         79.2,
-        79.9,
-        81.3
+        80.1,
+        81.6,
+        83,
+        84.3,
+        91.3,
+        95.2
       ]
-    },
-    {
-      name: "全市平均",
-      // 支持 'average', 'min', 'max'
-      type: "line",
-      data: [57.81],
-      markLine: {
-        label: {
-          fontSize: 16,
-          fontWeight: "bold",
-          formatter: "{c} %"
-        },
-        lineStyle: {
-          width: 2
-        },
-        data: [{ type: "average", name: "平均值" }]
-      }
     }
   ]
 };

@@ -16,6 +16,8 @@
 <script>
 import { SERIES, chart_y_option, chart1 } from "./chart_y_option";
 import { chart_ywz_option } from "./chart_ywz_option";
+import { chart_dgl_option } from "./chart_dgl_option";
+
 export default {
   data() {
     return {
@@ -29,12 +31,12 @@ export default {
           value: 1,
           label: "温州市二产产能恢复率",
           color: "#4876FF"
+        },
+        {
+          value: 2,
+          label: "温州各地员工到岗率图",
+          color: "#4876FF"
         }
-        // {
-        //   value: 2,
-        //   label: "温州各地员工到岗率图",
-        //   color: "#4876FF"
-        // }
       ],
       selectVal: 0
     };
@@ -73,6 +75,9 @@ export default {
       }
       if (this.selectVal == 1) {
         chart_y_option_clone = this.$util.clone(chart_ywz_option);
+      }
+      if (this.selectVal == 2) {
+        chart_y_option_clone = this.$util.clone(chart_dgl_option);
       }
       this.doChartOption({
         t: chart_y_option_clone

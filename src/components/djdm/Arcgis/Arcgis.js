@@ -5,30 +5,9 @@ import {
   yqSQURL,
   yqFWURL,
   yqFJURL
-} from "./config/index";
+} from "../config/index";
 import { loadModules } from "esri-loader";
-//  筛选排除的字段
-const BANNED_PARAMS = [
-  "OBJECTID",
-  "OBJECTID_1",
-  "Shape",
-  "Shape_Area",
-  "SHAPE_Area",
-  "Shape.STArea()",
-  "Shape_Leng",
-  "SHAPE_Length",
-  "Shape.STLength()",
-  "Shape_Length",
-  "x",
-  "y",
-  "type",
-  "dz1",
-  "zyy",
-  "wt",
-  "bz",
-  "复工率颜色",
-  "gxsj" // 更新时间暂时隐藏
-];
+import { BANNED_PARAMS, BANNED_PARAMS_COMPANY } from "./banned";
 /**
  * FeatureLayer
  * @param {*} context
@@ -39,7 +18,10 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
     item => item.id == id
   )[0];
   const _html_ = Object.keys(fieldAliases)
-    .filter(item => !BANNED_PARAMS.includes(item))
+    .filter(
+      item =>
+        !BANNED_PARAMS.includes(item) && !BANNED_PARAMS_COMPANY.includes(item)
+    )
     .map(key => {
       return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
     })
@@ -154,7 +136,10 @@ export const doArcgisPopup = (
   fieldAliases
 ) => {
   const _html_ = Object.keys(fieldAliases)
-    .filter(item => !BANNED_PARAMS.includes(item))
+    .filter(
+      item =>
+        !BANNED_PARAMS.includes(item) && !BANNED_PARAMS_COMPANY.includes(item)
+    )
     .map(key => {
       return `<div><span>${fieldAliases[key]}</span><span>${attributes[key]}</span></div>`;
     })

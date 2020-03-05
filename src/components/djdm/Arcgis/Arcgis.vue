@@ -1,7 +1,6 @@
 <template>
   <div class="Map">
     <div :id="id" class="arcgisMap"></div>
-    <img :src="tlimg" class="tlimg" v-if="false" />
   </div>
 </template>
 
@@ -26,7 +25,6 @@ export default {
   data() {
     return {
       doFrame: false,
-      tlimg: require("./img/tl.png")
     };
   },
   props: ["id"],
@@ -161,11 +159,6 @@ export default {
   .arcgisMap {
     width: 100%;
     height: 100%;
-  }
-  .tlimg {
-    position: absolute;
-    bottom: 20px;
-    right: 420px;
   }
 }
 </style>

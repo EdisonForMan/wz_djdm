@@ -9,6 +9,7 @@ import {
   yqFWURL,
   yqFJURL
 } from "@/components/djdm/config/index";
+import { TOP_CS, TOP_CS_CNT } from "@/components/djdm/config/enums";
 import $util from "@/components/common/util";
 Vue.use(Vuex);
 import { fetchArcgisServer } from "@/api/beans/space";
@@ -112,7 +113,14 @@ export default new Vuex.Store({
         arr: []
       };
       data.features.map(({ attributes, geometry }) => {
-        buildS.arr.push({ name: attributes["qymc"], geometry, attributes });
+        buildS.arr.push({
+          name: attributes["qymc"],
+          geometry,
+          attributes: {
+            ...attributes,
+            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`
+          }
+        });
         buildS.count += 1;
       });
       const { id, name, count, arr } = buildS;
@@ -228,8 +236,7 @@ export default new Vuex.Store({
             gxsj: $util.timestampToTime(attributes.gxsj)
           },
           // 总人数(排序用)
-          cnt:
-            $util.toParseInt(attributes.ldrk_all)
+          cnt: $util.toParseInt(attributes.ldrk_all)
         });
         buildS.count += 1;
       });
@@ -273,6 +280,28 @@ export default new Vuex.Store({
         });
         buildS.count += 1;
       });
+      const _arr_ = buildS.arr.sort($util.compare("red_cnt")).reverse();
+      const top_arr = _arr_
+        .filter(({ name }) => TOP_CS.includes(name))
+        .map(i => {
+          return {
+            name: `${i.attributes.街道}${i.name} （重点村社）`,
+            key: true,
+            geometry: i.geometry,
+            attributes: i.attributes,
+            type: "polygon"
+          };
+        });
+      const rest_arr = _arr_
+        .filter(({ name }) => !TOP_CS.includes(name))
+        .map(i => {
+          return {
+            name: `${i.attributes.街道}${i.name} （红码人数:${i.red_cnt}）`,
+            geometry: i.geometry,
+            attributes: i.attributes,
+            type: "polygon"
+          };
+        });
       const { id, name, count, arr } = buildS;
       const menu = {
         id,
@@ -280,17 +309,7 @@ export default new Vuex.Store({
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
         check: false,
-        children: arr
-          .sort($util.compare("red_cnt"))
-          .reverse()
-          .map(i => {
-            return {
-              name: `${i.attributes.街道}${i.name} （红码人数:${i.red_cnt}）`,
-              geometry: i.geometry,
-              attributes: i.attributes,
-              type: "polygon"
-            };
-          })
+        children: [...top_arr, ...rest_arr]
       };
       commit("updateSqList", { list: data.features, menu });
     },

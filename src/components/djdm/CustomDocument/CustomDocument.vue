@@ -33,6 +33,7 @@
             v-for="(item, ind) of value.children"
             :key="ind"
             @click="menuItemClickHandler(item,value)"
+            :class="[item.key?'key_sc':'']"
             class="children-menu-item"
           >
             <el-checkbox
@@ -242,6 +243,9 @@ export default {
 .my-menu /deep/ .el-submenu {
   margin-bottom: 16px;
 }
+.my-menu /deep/ .el-menu-item.is-active {
+  background-color: rgba(19, 88, 183, 1);
+}
 .my-menu /deep/ .el-submenu__title {
   padding: 0 14px !important;
   font-size: 18px;
@@ -270,6 +274,9 @@ export default {
   font-size: 16px;
   color: #fff !important;
   position: relative;
+}
+.key_sc {
+  background: rgba(220, 20, 60, 0.2);
 }
 .children-menu-item:hover {
   background: rgba(19, 88, 183, 0.84);

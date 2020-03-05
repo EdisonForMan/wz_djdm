@@ -4,7 +4,7 @@ export const chart_y_option = {
   legend: {
     top: "20px",
     data: [],
-    textStyle: { color: "#fff" },
+    textStyle: { color: "#fff", fontSize: 16 },
     inactiveColor: "#000"
   },
   tooltip: {
@@ -15,9 +15,10 @@ export const chart_y_option = {
     }
   },
   grid: {
+    top: "100px",
     left: "3%",
     right: "4%",
-    bottom: "3%",
+    bottom: "50px",
     containLabel: true
   },
   xAxis: {
@@ -34,10 +35,15 @@ export const chart_y_option = {
   yAxis: {
     type: "value",
     axisLine: {
+      show: false
+    },
+    splitLine: {
       lineStyle: {
-        color: "#fff"
+        type: "dashed"
       }
     },
+    min: 24,
+    max: 80,
     axisLabel: {
       formatter: "{value} %",
       color: "#fff",
@@ -78,5 +84,5 @@ export const chart1 = {
   ],
   全省产能恢复率: [53.2, 55.2, 58.0, 62.5, 68, 71.3, 76.8, 74, 75.9],
   全市产能恢复率: [38.4, 42.8, 45.8, 48.7, 56.6, 60, 69.8, 67.5, 67],
-  与省差距: [14.9, 12.4, 12.2, 13.9, 11.4, 11.4, 6.9, 6.5, 8.9]
+  乐清市产能恢复率: [32.1, 38.9, 43.1, 43.5, 50.1, 58.5, 62.2, 62.3, 64]
 };

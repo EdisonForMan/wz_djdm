@@ -28,7 +28,7 @@
  * 2.点击列表<rightChart>,地图<commonArcgis>定位并显示内容
  */
 import yqImg from "./components/yqImg";
-import commonArcgis from "./Arcgis.vue";
+import commonArcgis from "./Arcgis/Arcgis.vue";
 import rightChart from "./rightChart/rightChart.vue";
 import topDate from "./components/topDate";
 import CustomDocument from "./CustomDocument/CustomDocument.vue";

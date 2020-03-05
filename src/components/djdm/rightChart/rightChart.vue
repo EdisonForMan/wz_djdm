@@ -2,8 +2,8 @@
   <div class="right-div animated" :class="[hideVisible?'slideOutRight':'slideInRight']">
     <div class="gqx">
       <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
+        <el-tab-pane label="县域分析" name="yq" />
         <el-tab-pane label="街镇分析" name="jd" />
-        <el-tab-pane label="全市分析" name="yq" />
       </el-tabs>
       <jdChart v-if="tabActive == 'jd'" />
       <yqChart v-if="tabActive == 'yq'" />
@@ -19,7 +19,7 @@ import yqChart from "./yqChart";
 export default {
   data() {
     return {
-      tabActive: "jd",
+      tabActive: "yq",
       hideVisible: false
     };
   },
@@ -63,24 +63,27 @@ export default {
 .el-select {
   margin-top: 10px;
 }
-.my-tabs /deep/ .el-tabs__active-bar {
+.my-tabs .el-tabs__active-bar {
   height: 4px;
 } /**.el-tabs__active-bar */
-.my-tabs /deep/ .el-tabs__item {
+.my-tabs .el-tabs__item {
   font-size: 18px;
   text-align: center;
   cursor: pointer;
   padding: 0 10px !important;
   color: rgba(255, 255, 255, 0.8);
 }
-.my-tabs /deep/ .is-active {
+.my-tabs .el-input__inner {
+  font-size: 16px;
+}
+.my-tabs .is-active {
   color: #409eff;
   font-weight: 700;
 }
-.my-tabs /deep/ .el-tabs__nav-wrap::after {
+.my-tabs .el-tabs__nav-wrap::after {
   height: 1px;
 }
-.my-tabs /deep/ .el-tabs__item.is-disabled {
+.my-tabs .el-tabs__item.is-disabled {
   cursor: not-allowed !important;
 }
 </style>
