@@ -75,7 +75,7 @@ export default {
    * @param {*} propertyName
    */
   compare(propertyName) {
-    return function (object1, object2) {
+    return function(object1, object2) {
       var value1 = object1[propertyName];
       var value2 = object2[propertyName];
       if (value2 < value1) {
@@ -106,11 +106,11 @@ export default {
     return isJson ? JSON.parse(localVal) : localVal;
   },
   /**
-   * 
-   * @param {*} val 
-   * @param {*} isJson 
+   *
+   * @param {*} val
+   * @param {*} isJson
    */
-  removeStorage(key, ) {
+  removeStorage(key) {
     window.localStorage.removeItem(key);
   },
   getPolygonCenter(rings) {
@@ -120,24 +120,34 @@ export default {
       x_ += item[0];
       y_ += item[1];
     });
-    return { x: x_ / rings[0].length, y: y_ / rings[0].length }
+    return { x: x_ / rings[0].length, y: y_ / rings[0].length };
   },
   /**
    * 时间戳转时间
-   * @param {*} timestamp 
+   * @param {*} timestamp
    */
   timestampToTime(timestamp) {
     var date = new Date(timestamp);
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    var D = date.getDate() + ' ';
-    var h = date.getHours() + ':';
-    var m = date.getMinutes() + ':';
+    var Y = date.getFullYear() + "-";
+    var M =
+      (date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1) + "-";
+    var D = date.getDate() + " ";
+    var h = date.getHours() + ":";
+    var m = date.getMinutes() + ":";
     var s = date.getSeconds();
     return Y + M + D;
+  },
+  /**
+   * 转数字
+   * @param {*} val
+   */
+  toParseInt(val) {
+    const num = parseInt(val);
+    return val ? (num ? num : 0) : 0;
   }
 };
-
 
 function deepClone(data) {
   if (!data || !(data instanceof Object) || typeof data == "function") {

@@ -43,7 +43,7 @@ export default new Vuex.Store({
       },
       {
         id: "fjLayer",
-        name: "乐清市房建项目",
+        name: "房建项目",
         innerText: undefined,
         check: false,
         children: [],
@@ -51,7 +51,7 @@ export default new Vuex.Store({
       },
       {
         id: "streetLayer",
-        name: "乡镇街道功能区",
+        name: "乡镇、街道、功能区",
         innerText: undefined,
         check: false,
         children: [],
@@ -59,7 +59,7 @@ export default new Vuex.Store({
       },
       {
         id: "sqLayer",
-        name: "村社网络",
+        name: "村、社区",
         innerText: undefined,
         check: false,
         children: [],
@@ -215,7 +215,7 @@ export default new Vuex.Store({
       const { data } = await fetchArcgisServer({ url: yqStreetURL });
       const buildS = {
         id: "streetLayer",
-        name: "乡镇街道功能区",
+        name: "乡镇、街道、功能区",
         count: 0,
         arr: []
       };
@@ -226,7 +226,18 @@ export default new Vuex.Store({
           attributes: {
             ...attributes,
             gxsj: $util.timestampToTime(attributes.gxsj)
-          }
+          },
+          // 总人数(排序用)
+          cnt:
+            $util.toParseInt(attributes.ysq_snfg_green_cnt) +
+            $util.toParseInt(attributes.ysq_snfg_red_cnt) +
+            $util.toParseInt(attributes.ysq_snfg_yellow_cnt) +
+            $util.toParseInt(attributes.ysq_swfg_green_cnt) +
+            $util.toParseInt(attributes.ysq_swfg_red_cnt) +
+            $util.toParseInt(attributes.ysq_swfg_yellow_cnt) +
+            $util.toParseInt(attributes.ysq_ygqs_green_cnt) +
+            $util.toParseInt(attributes.ysq_ygqs_red_cnt) +
+            $util.toParseInt(attributes.ysq_ygqs_yellow_cnt)
         });
         buildS.count += 1;
       });
@@ -237,14 +248,17 @@ export default new Vuex.Store({
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
         check: true,
-        children: arr.map(i => {
-          return {
-            name: i.name,
-            geometry: i.geometry,
-            attributes: i.attributes,
-            type: "polygon"
-          };
-        })
+        children: arr
+          .sort($util.compare("cnt"))
+          .reverse()
+          .map(i => {
+            return {
+              name: `${i.name} （人数:${i.cnt}）`,
+              geometry: i.geometry,
+              attributes: i.attributes,
+              type: "polygon"
+            };
+          })
       };
       commit("updateStreetList", { list: data.features, menu });
     },
@@ -255,9 +269,16 @@ export default new Vuex.Store({
      */
     async fetchSqList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqSQURL });
-      const buildS = { id: "sqLayer", name: "村社网络", count: 0, arr: [] };
+      const buildS = { id: "sqLayer", name: "村、社区", count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
-        buildS.arr.push({ name: attributes["村社区"], geometry, attributes });
+        buildS.arr.push({
+          name: attributes["村社区"],
+          geometry,
+          attributes, // 总人数(排序用)
+          red_cnt:
+            $util.toParseInt(attributes.CZRK_R) +
+            $util.toParseInt(attributes.LDRK_R)
+        });
         buildS.count += 1;
       });
       const { id, name, count, arr } = buildS;
@@ -267,14 +288,17 @@ export default new Vuex.Store({
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
         check: false,
-        children: arr.map(i => {
-          return {
-            name: i.name,
-            geometry: i.geometry,
-            attributes: i.attributes,
-            type: "polygon"
-          };
-        })
+        children: arr
+          .sort($util.compare("red_cnt"))
+          .reverse()
+          .map(i => {
+            return {
+              name: `${i.attributes.街道}${i.name} （红码人数:${i.red_cnt}）`,
+              geometry: i.geometry,
+              attributes: i.attributes,
+              type: "polygon"
+            };
+          })
       };
       commit("updateSqList", { list: data.features, menu });
     },
@@ -287,7 +311,7 @@ export default new Vuex.Store({
       const { data } = await fetchArcgisServer({ url: yqFJURL });
       const buildS = {
         id: "fjLayer",
-        name: "乐清市房建项目",
+        name: "房建项目",
         count: 0,
         arr: []
       };

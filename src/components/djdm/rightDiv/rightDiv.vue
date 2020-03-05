@@ -2,7 +2,7 @@
   <div class="right-div animated" :class="[hideVisible?'slideOutRight':'slideInRight']">
     <div class="gqx">
       <div class="right-div-title">
-        <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
+        <span class="right-div-title-inner">街道/乐清市复工情况</span>
       </div>
       <el-select size="small" v-model="selectVal" placeholder="请选择">
         <el-option
@@ -10,6 +10,7 @@
           :key="item.value"
           :label="item.label"
           :value="item.value"
+          :style="{color:item.color}"
         ></el-option>
       </el-select>
       <div id="gqx-chart"></div>
@@ -30,23 +31,28 @@ export default {
       options: [
         {
           value: 0,
-          label: "功能区工业复工情况"
+          label: "工业复工情况",
+          color: "#4876FF"
         },
         {
           value: 1,
-          label: "工业到岗率分析"
+          label: "工业到岗率",
+          color: "#4876FF"
         },
         {
           value: 2,
-          label: "工业新到岗员工分析"
+          label: "工业新到岗人数",
+          color: "#4876FF"
         },
         {
           value: 3,
-          label: "功能区服务业复工情况"
+          label: "服务业复工情况",
+          color: "#EE3B3B"
         },
         {
           value: 4,
-          label: "服务业到岗率分析"
+          label: "服务业到岗率",
+          color: "#EE3B3B"
         }
       ],
       selectVal: 0,

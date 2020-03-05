@@ -7,8 +7,8 @@
       <el-button type="primary" @click.stop="query">查询</el-button>
     </div>
     <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
-      <el-tab-pane label="复工复产" name="fgfc" />
-      <el-tab-pane label="行政区划" name="xzqh" />
+      <el-tab-pane label="企业复工复产" name="fgfc" />
+      <el-tab-pane label="区域经济" name="xzqh" />
     </el-tabs>
     <div class="custom-document-content">
       <el-menu active-text-color="#000" text-color="#000" class="my-menu">
@@ -32,7 +32,7 @@
             :index="index + '-' + ind"
             v-for="(item, ind) of value.children"
             :key="ind"
-            @click.stop="menuItemClickHandler(item,value)"
+            @click="menuItemClickHandler(item,value)"
             class="children-menu-item"
           >
             <el-checkbox
@@ -63,7 +63,8 @@ export default {
   },
   computed: {
     ...mapState({
-      xmMenu: state => state.xmMenu
+      xmMenu: state => state.xmMenu,
+      dataDone: state => state.dataDone
     })
   },
   watch: {
@@ -73,6 +74,12 @@ export default {
   },
   created() {
     this.xmMenu.length && (this.tabsMenuData = [...this.xmMenu]);
+  },
+  watch: {
+    dataDone(n) {
+      console.log("[watch]", n);
+      n && (this.tabsMenuData = [...this.xmMenu]);
+    }
   },
   methods: {
     hideSide() {

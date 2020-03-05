@@ -4,7 +4,7 @@
       class="topDocument-inner"
       :class="[active == 0 ? 'current-active' : '']"
       @click="topDocumentClick(0)"
-    >疫情风险图</div>
+    >疫情防控</div>
     <!-- <div
       class="topDocument-inner"
       :class="[active == 1 ? 'current-active' : '']"
@@ -14,7 +14,7 @@
       class="topDocument-inner"
       :class="[active == 2 ? 'current-active' : '']"
       @click="topDocumentClick(2)"
-    >企业复工图</div>
+    >企业复工复产</div>
   </div>
 </template>
 <script>

@@ -37,7 +37,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "Djdm",
   data() {
-    return { shallActive: 0 };
+    return { shallActive: 2 };
   },
   components: {
     yqImg,
@@ -45,7 +45,7 @@ export default {
     CustomDocument,
     commonArcgis,
     rightDiv, // 右侧图表
-    topDate, //顶部数据
+    topDate //顶部数据
   },
   computed: {
     ...mapState({
