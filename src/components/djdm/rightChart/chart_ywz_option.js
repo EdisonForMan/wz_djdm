@@ -1,4 +1,4 @@
-/** 纵向折线图 */
+/** 温州市二产产能恢复率 */
 export const chart_ywz_option = {
   color: ["#6EB2FF", "red"],
   legend: {

@@ -1,4 +1,4 @@
-/** 纵向折线图 */
+/** 乐清市产能恢复率 */
 export const chart_y_option = {
   color: ["#FF8C48", "#6EB2FF", "#FFE01D"],
   legend: {
@@ -22,7 +22,7 @@ export const chart_y_option = {
   },
   xAxis: {
     axisLabel: {
-      interval: index => true
+      interval: i => true
     },
     axisLine: {
       lineStyle: {

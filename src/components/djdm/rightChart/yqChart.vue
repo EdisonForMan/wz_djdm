@@ -29,7 +29,7 @@ export default {
           value: 1,
           label: "温州市二产产能恢复率",
           color: "#4876FF"
-        },
+        }
         // {
         //   value: 2,
         //   label: "温州各地员工到岗率图",
@@ -74,12 +74,6 @@ export default {
       if (this.selectVal == 1) {
         chart_y_option_clone = this.$util.clone(chart_ywz_option);
       }
-      if (this.selectVal == 3) {
-        _obj_ = {
-          a: { ydyg: 0, ydygs: 0 }
-        };
-      }
-
       this.doChartOption({
         t: chart_y_option_clone
       });
