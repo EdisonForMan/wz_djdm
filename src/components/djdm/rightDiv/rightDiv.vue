@@ -1,9 +1,10 @@
 <template>
   <div class="right-div animated" :class="[hideVisible?'slideOutRight':'slideInRight']">
     <div class="gqx">
-      <div class="right-div-title">
-        <span class="right-div-title-inner">各乡镇街道功能区复工情况</span>
-      </div>
+      <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
+        <el-tab-pane label="乡镇街道功能区复工情况" name="jd" />
+        <el-tab-pane label="乐清市功能区复工情况" name="yq" disabled />
+      </el-tabs>
       <el-select size="small" v-model="selectVal" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -28,6 +29,7 @@ import chart_pie_option from "./chart_pie_option";
 export default {
   data() {
     return {
+      tabActive: "jd",
       options: [
         {
           value: 0,
@@ -74,18 +76,17 @@ export default {
     }
   },
   mounted() {
-    this.eventRegister();
     this.chartRegister();
     if (this.xmBuildSiteList.length) {
       this.doChartData();
     }
   },
   methods: {
+    tabsPaneClickHandler(val) {},
     hideSide() {
       this.hideVisible = !this.hideVisible;
       this.$hub.$emit("hide_click", this.hideVisible);
     },
-    eventRegister() {},
     chartRegister() {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
     },
@@ -194,7 +195,7 @@ export default {
         ])
       };
       const json = this.$util.clone(
-        this.selectVal % 2 !== 0 ? chart_m_option : chart_t_option
+        this.selectVal % 2 ? chart_m_option : chart_t_option
       );
       json.series[0].itemStyle = t_itemStyle_0;
       json.series[1].itemStyle = t_itemStyle_1;
@@ -221,91 +222,47 @@ export default {
   height: 100%;
   background: url(../img/rightDiv_bg.png) 0 0 no-repeat;
   background-size: 100% 100%;
-  padding: 20px 10px 20px 20px;
+  padding: 30px 16px 20px 26px;
   box-sizing: border-box;
 }
 .gqx {
   height: 100%;
 }
-.yjfw {
-  height: 30%;
-}
-.wlfg {
-  height: 30%;
-}
-.gqx,
-.yjfw {
+.gqx {
   border-bottom: 1px solid #86c9e1;
 }
-.gqx,
-.yjfw,
-.wlfg {
+.gqx {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.right-div-title {
-  width: 100%;
-  text-align: left;
-  padding: 15px 0;
-}
-.right-div-title::before {
-  content: "";
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50% 50%;
-  margin-right: 8px;
-}
-.right-div-title-inner {
-  font-weight: 500;
-  font-size: 20px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  position: relative;
-  z-index: 2;
-}
-.gqx .right-div-title {
-  padding-top: 20px;
-  padding-bottom: 0;
-}
-.right-div-title-inner::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-}
-.gqx .right-div-title::before {
-  background-color: #e8943a;
-}
-.yjfw .right-div-title::before {
-  background-color: #2ed887;
-}
-.wlfg .right-div-title::before {
-  background-color: #31b2f6;
-}
-.gqx .right-div-title-inner::before {
-  background: rgba(255, 185, 91, 0.3);
-  filter: blur(9px);
-}
-.yjfw .right-div-title-inner::before {
-  background: rgba(46, 216, 135, 0.3);
-  filter: blur(9px);
-}
-.wlfg .right-div-title-inner::before {
-  background: rgba(49, 178, 246, 0.3);
-  filter: blur(9px);
-}
-#gqx-chart,
-#yjfw-chart,
-#wlfg-chart {
+#gqx-chart {
   flex-grow: 1;
   min-height: 0;
   width: 100%;
+  flex: 1;
 }
 .el-select {
   margin-top: 10px;
+}
+.my-tabs /deep/ .el-tabs__active-bar {
+  height: 4px;
+} /**.el-tabs__active-bar */
+.my-tabs /deep/ .el-tabs__item {
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0 10px !important;
+  color: rgba(255, 255, 255, 0.8);
+}
+.my-tabs /deep/ .is-active {
+  color: #409eff;
+  font-weight: 700;
+}
+.my-tabs /deep/ .el-tabs__nav-wrap::after {
+  height: 1px;
+}
+.my-tabs /deep/ .el-tabs__item.is-disabled {
+  cursor: not-allowed !important;
 }
 </style>

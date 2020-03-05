@@ -7,7 +7,7 @@ export default {
             fontSize: 12,
             fontWeight: "normal"
         },
-        bottom: "3%",
+        bottom: "6%",
         right: "7%"
     },
     tooltip: {
@@ -17,15 +17,15 @@ export default {
         }
     },
     grid: {
-        top: "2%",
-        left: "2%",
-        right: "20%",
-        bottom: "10%",
+        top: "20px",
+        left: "20px",
+        right: "20px",
+        bottom: "60px",
         containLabel: true
     },
     legend: {
         show: true,
-        bottom: "3%",
+        bottom: "6%",
         left: "2%",
         textStyle: {
             color: "#fff"
@@ -91,7 +91,7 @@ export default {
         label: {
             show: false,
         },
-        barWidth: 18,
+        barWidth: 16,
         data: []
     },
     {
@@ -106,7 +106,7 @@ export default {
                 return param.value;
             }
         },
-        barWidth: 18,
+        barWidth: 16,
         data: []
     }
     ]
