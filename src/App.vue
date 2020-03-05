@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header :class="`app_header `" v-if="showHeader">
-      <div class="app_icon" style>乐清市疫情防控企业复工复产大数据平台</div>
+      <div class="app_icon" style>乐清市疫情防控和企业复工复产大数据平台</div>
       <!-- <div class="app_toptab_position app_toptab_normal">
         <ul class="app_toptab">
           <li

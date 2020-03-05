@@ -3,7 +3,7 @@
     <div class="gqx">
       <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
         <el-tab-pane label="县域分析" name="yq" />
-        <el-tab-pane label="街镇分析" name="jd" />
+        <el-tab-pane label="镇街分析" name="jd" />
       </el-tabs>
       <jdChart v-if="tabActive == 'jd'" />
       <yqChart v-if="tabActive == 'yq'" />
@@ -60,9 +60,6 @@ export default {
     flex-direction: column;
   }
 }
-.el-select {
-  margin-top: 10px;
-}
 .my-tabs .el-tabs__active-bar {
   height: 4px;
 } /**.el-tabs__active-bar */
@@ -85,5 +82,16 @@ export default {
 }
 .my-tabs .el-tabs__item.is-disabled {
   cursor: not-allowed !important;
+}
+.el-select {
+  margin-top: 10px;
+}
+.el-select .el-input__inner {
+  font-size: 16px;
+  height: 36px;
+  line-height: 36px;
+}
+.el-select-dropdown__item {
+  font-size: 16px!important;
 }
 </style>

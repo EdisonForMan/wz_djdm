@@ -2,13 +2,10 @@
   <div class="topDateDiv">
     <ul>
       <li v-for="(item,index) in TOP_DATA" :key="index">
-        <p>{{item.t}}</p>
-        <h3 :style="`color:${item.c[0]}`">
-          <i>企业数量</i>
-          {{dataDone ? item.v[0] : "-"}}
-          <i>家</i>
-        </h3>
-        <br />
+        <p>
+          {{item.t}}
+          <i :style="`color:${item.c[0]}`">{{dataDone ? item.v[0] : "-"}}</i>家
+        </p>
         <h3 :style="`color:${item.c[1]}`">
           <i>产能恢复率</i>
           {{item.v[1]}}
@@ -90,7 +87,7 @@ export default {
   color: #07e2e8;
   i {
     font-style: normal;
-    font-size: 12px;
+    font-size: 16px;
     color: #fff;
   }
   p {
@@ -100,10 +97,12 @@ export default {
     // display: inline-block;
     padding-bottom: 8px;
     border-bottom: 1px solid #07e2e8;
-    -webkit-text-fill-color: transparent;
     font-family: PingFangSC-Medium, PingFang SC;
     margin-bottom: 7px;
     font-weight: bold;
+    i{
+      font-size: 18px;
+    }
   }
   h3 {
     font-size: 22px;

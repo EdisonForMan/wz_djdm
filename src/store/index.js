@@ -236,9 +236,11 @@ export default new Vuex.Store({
             gxsj: $util.timestampToTime(attributes.gxsj)
           },
           // 总人数(排序用)
-          cnt: $util.toParseInt(attributes.ldrk_all)
+          cnt: $util.toParseInt(attributes.ldrk_all),
+          red_cnt: $util.toParseInt(attributes.ldrk_red),
+          yellow_cnt: $util.toParseInt(attributes.ldrk_yellow)
         });
-        buildS.count += 1;
+        buildS.count += $util.toParseInt(attributes.ldrk_all);
       });
       const { id, name, count, arr } = buildS;
       const menu = {
@@ -252,7 +254,7 @@ export default new Vuex.Store({
           .reverse()
           .map(i => {
             return {
-              name: `${i.name} （人数:${i.cnt}）`,
+              name: `${i.name} ${(i.cnt/10000).toFixed(2)}万人/红码${i.red_cnt}/黄码${i.yellow_cnt}`,
               geometry: i.geometry,
               attributes: i.attributes,
               type: "polygon"

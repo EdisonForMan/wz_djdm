@@ -4,7 +4,7 @@ export default {
   title: [
     {
       text: "市内外员工分析",
-      top: "30px",
+      top: "60px",
       left: "center",
       textStyle: {
         color: "#ccc"
@@ -17,7 +17,17 @@ export default {
       textStyle: {
         color: "#ccc"
       }
-    }
+    },
+    {
+      text: "时间:2020-03-02",
+      textStyle: {
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "bold"
+      },
+      top: "20px",
+      left: "14px"
+    },
   ],
   tooltip: {},
   series: [

@@ -8,7 +8,7 @@
     </div>
     <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
       <el-tab-pane label="企业复工复产" name="fgfc" />
-      <el-tab-pane label="区域经济" name="xzqh" />
+      <el-tab-pane label="疫情防控" name="xzqh" />
     </el-tabs>
     <div class="custom-document-content">
       <el-menu active-text-color="#000" text-color="#000" class="my-menu">

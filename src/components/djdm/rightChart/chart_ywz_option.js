@@ -1,6 +1,16 @@
 /** 温州市二产产能恢复率 */
 export const chart_ywz_option = {
   color: ["#6EB2FF", "red"],
+  title: {
+    text: "时间:2020-03-02",
+    textStyle: {
+      color: "#fff",
+      fontSize: 16,
+      fontWeight: "bold"
+    },
+    top: "60px",
+    left: "20px"
+  },
   legend: {
     top: "20px",
     data: ["二产产能恢复率", "全市平均"],
@@ -17,7 +27,7 @@ export const chart_ywz_option = {
     left: "3%",
     right: "30px",
     bottom: "50px",
-    top: "70px",
+    top: "100px",
     containLabel: true
   },
   xAxis: {

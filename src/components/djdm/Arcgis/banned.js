@@ -6,10 +6,12 @@ export const BANNED_PARAMS = [
   "Shape_Area",
   "SHAPE_Area",
   "Shape.STArea()",
+  "Shape_STArea__",
   "Shape_Leng",
   "SHAPE_Length",
   "Shape.STLength()",
   "Shape_Length",
+  "Shape_STLength__",
   "x",
   "y",
   "type",
@@ -23,6 +25,7 @@ export const BANNED_PARAMS = [
 ];
 //  工业企业暂时去除
 export const BANNED_PARAMS_COMPANY = [
+  "szcs",
   "zj",
   "tyshxydm",
   "lxr",

@@ -34,7 +34,7 @@ export default {
         },
         {
           value: 2,
-          label: "温州各地员工到岗率图",
+          label: "温州市员工到岗率",
           color: "#4876FF"
         }
       ],

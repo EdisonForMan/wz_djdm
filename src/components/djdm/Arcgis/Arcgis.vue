@@ -1,6 +1,7 @@
 <template>
   <div class="Map">
     <div :id="id" class="arcgisMap"></div>
+    <!-- <div class="tl_switch" @click="doTlSwitch">{{doTl ? '关闭':'开启'}}图例</div> -->
   </div>
 </template>
 
@@ -25,6 +26,7 @@ export default {
   data() {
     return {
       doFrame: false,
+      doTl: true
     };
   },
   props: ["id"],
@@ -90,6 +92,9 @@ export default {
         document.querySelector(".esri-ui-bottom-right").style.right = val
           ? 0
           : "410px";
+        // document.querySelector(".tl_switch").style.right = val
+        //   ? "20px"
+        //   : "430px";
       });
     },
     /**
@@ -134,12 +139,12 @@ export default {
       });
     },
     goPointLoaction({ x, y }) {
-      this.view.goTo({ center: [x, y] });
+      this.view.goTo({ center: [x, y + 0.05] });
     },
     goPolygonLocation({ rings }) {
       const { x, y } = this.$util.getPolygonCenter(rings);
       this.view.goTo({
-        center: [x, y]
+        center: [x, y + 0.05]
       });
     }
   }
@@ -159,6 +164,23 @@ export default {
   .arcgisMap {
     width: 100%;
     height: 100%;
+  }
+  .tl_switch {
+    height: 24px;
+    line-height: 24px;
+    font-size: 14px;
+    width: 100px;
+    position: fixed;
+    bottom: 353px;
+    right: 430px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    transition: all 1s;
+    z-index: 11;
+  }
+  .tl_switch:hover {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 </style>

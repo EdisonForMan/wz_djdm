@@ -7870,7 +7870,7 @@ html[dir="rtl"] .esri-layer-list .esri-layer-list__item-error-message [class^="e
 }
 
 .esri-legend__service {
-    padding: 12px 15px;
+    padding: 4px 0px!important;
     word-wrap: break-word;
     border-bottom: 1px solid rgba(110, 110, 110, 0.3)
 }
@@ -7914,7 +7914,8 @@ html[dir="rtl"] .esri-layer-list .esri-layer-list__item-error-message [class^="e
 .esri-legend__layer-cell {
     min-width: 100px;
     word-break: break-word;
-    padding: 4px 0;
+    padding-top: 0px;
+    padding-bottom: 0px;;
     vertical-align: middle
 }
 

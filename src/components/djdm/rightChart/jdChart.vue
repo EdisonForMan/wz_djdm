@@ -24,17 +24,17 @@ export default {
       options: [
         {
           value: 0,
-          label: "工业复工情况",
+          label: "工业复工率",
           color: "#4876FF"
         },
         {
           value: 1,
-          label: "工业到岗率",
+          label: "工业产能恢复率",
           color: "#4876FF"
         },
         {
           value: 2,
-          label: "工业新到岗人数",
+          label: "工业员工到岗率",
           color: "#4876FF"
         },
         {
