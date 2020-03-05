@@ -221,7 +221,7 @@ export default new Vuex.Store({
       };
       data.features.map(({ attributes, geometry }) => {
         buildS.arr.push({
-          name: attributes["jd"],
+          name: attributes["ssjd"],
           geometry,
           attributes: {
             ...attributes,
@@ -229,15 +229,7 @@ export default new Vuex.Store({
           },
           // 总人数(排序用)
           cnt:
-            $util.toParseInt(attributes.ysq_snfg_green_cnt) +
-            $util.toParseInt(attributes.ysq_snfg_red_cnt) +
-            $util.toParseInt(attributes.ysq_snfg_yellow_cnt) +
-            $util.toParseInt(attributes.ysq_swfg_green_cnt) +
-            $util.toParseInt(attributes.ysq_swfg_red_cnt) +
-            $util.toParseInt(attributes.ysq_swfg_yellow_cnt) +
-            $util.toParseInt(attributes.ysq_ygqs_green_cnt) +
-            $util.toParseInt(attributes.ysq_ygqs_red_cnt) +
-            $util.toParseInt(attributes.ysq_ygqs_yellow_cnt)
+            $util.toParseInt(attributes.ldrk_all)
         });
         buildS.count += 1;
       });

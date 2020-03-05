@@ -4,8 +4,8 @@
       <commonArcgis id="macroArcgis" ref="macroArcgis" />
     </div>
     <div class="Com_container" style="z-index: 10;" v-if="shallActive == 2">
-      <div id="fy-rightDiv">
-        <rightDiv />
+      <div id="fy-rightChart">
+        <rightChart />
       </div>
     </div>
     <topDocument />
@@ -22,14 +22,14 @@
 <script>
 /**
  * 为避免传值紊乱,建议用ref直接传值或调用触发更新
- * [例] this.$parent.ref.macroArcgis.goLocation(item) 可以直接在<RightDiv>跨模块调用(从列表模块到父模块,再到地图模块)
+ * [例] this.$parent.ref.macroArcgis.goLocation(item) 可以直接在<rightChart>跨模块调用(从列表模块到父模块,再到地图模块)
  * 使用场景:
  * 1.点击勾选左侧,右侧列表Object[]的替换
- * 2.点击列表<RightDiv>,地图<commonArcgis>定位并显示内容
+ * 2.点击列表<rightChart>,地图<commonArcgis>定位并显示内容
  */
 import yqImg from "./components/yqImg";
 import commonArcgis from "./Arcgis.vue";
-import rightDiv from "./rightDiv/rightDiv.vue";
+import rightChart from "./rightChart/rightChart.vue";
 import topDate from "./components/topDate";
 import CustomDocument from "./CustomDocument/CustomDocument.vue";
 import topDocument from "./CustomDocument/topDocument.vue";
@@ -44,7 +44,7 @@ export default {
     topDocument,
     CustomDocument,
     commonArcgis,
-    rightDiv, // 右侧图表
+    rightChart, // 右侧图表
     topDate //顶部数据
   },
   computed: {

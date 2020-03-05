@@ -1,27 +1,19 @@
 <template>
-  <div class="right-div animated" :class="[hideVisible?'slideOutRight':'slideInRight']">
-    <div class="gqx">
-      <el-tabs v-model="tabActive" class="my-tabs" @tab-click="tabsPaneClickHandler">
-        <el-tab-pane label="乡镇街道功能区复工情况" name="jd" />
-        <el-tab-pane label="乐清市功能区复工情况" name="yq" disabled />
-      </el-tabs>
-      <el-select size="small" v-model="selectVal" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :style="{color:item.color}"
-        ></el-option>
-      </el-select>
-      <div id="gqx-chart"></div>
-    </div>
-    <span class="hide_button" @click="hideSide"></span>
+  <div class="jdChart">
+    <el-select size="small" v-model="selectVal" placeholder="请选择">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :style="{color:item.color}"
+      ></el-option>
+    </el-select>
+    <div id="gqx-chart"></div>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 import { mapState } from "vuex";
 import chart_t_option from "./chart_t_option";
 import chart_m_option from "./chart_m_option";
@@ -29,7 +21,6 @@ import chart_pie_option from "./chart_pie_option";
 export default {
   data() {
     return {
-      tabActive: "jd",
       options: [
         {
           value: 0,
@@ -57,8 +48,7 @@ export default {
           color: "#FF7F50"
         }
       ],
-      selectVal: 0,
-      hideVisible: false
+      selectVal: 0
     };
   },
   computed: {
@@ -82,11 +72,6 @@ export default {
     }
   },
   methods: {
-    tabsPaneClickHandler(val) {},
-    hideSide() {
-      this.hideVisible = !this.hideVisible;
-      this.$hub.$emit("hide_click", this.hideVisible);
-    },
     chartRegister() {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
     },
@@ -204,65 +189,17 @@ export default {
   }
 };
 </script>
-<style scoped>
-.hide_button {
-  transform: rotateY(180deg);
-  position: absolute;
-  top: 40%;
-  right: 98%;
-  height: 126px;
-  width: 27px;
-  background: url("../img/hide_button.png") no-repeat;
-  background-size: 100% 100%;
-  cursor: pointer;
-}
 
-.right-div {
-  width: 100%;
-  height: 100%;
-  background: url(../img/rightDiv_bg.png) 0 0 no-repeat;
-  background-size: 100% 100%;
-  padding: 30px 16px 20px 26px;
-  box-sizing: border-box;
-}
-.gqx {
-  height: 100%;
-}
-.gqx {
-  border-bottom: 1px solid #86c9e1;
-}
-.gqx {
-  width: 100%;
+<style lang="less" scoped>
+.jdChart {
+  flex: 1;
   display: flex;
   flex-direction: column;
-}
-#gqx-chart {
-  flex-grow: 1;
-  min-height: 0;
-  width: 100%;
-  flex: 1;
-}
-.el-select {
-  margin-top: 10px;
-}
-.my-tabs /deep/ .el-tabs__active-bar {
-  height: 4px;
-} /**.el-tabs__active-bar */
-.my-tabs /deep/ .el-tabs__item {
-  font-size: 18px;
-  text-align: center;
-  cursor: pointer;
-  padding: 0 10px !important;
-  color: rgba(255, 255, 255, 0.8);
-}
-.my-tabs /deep/ .is-active {
-  color: #409eff;
-  font-weight: 700;
-}
-.my-tabs /deep/ .el-tabs__nav-wrap::after {
-  height: 1px;
-}
-.my-tabs /deep/ .el-tabs__item.is-disabled {
-  cursor: not-allowed !important;
+  #gqx-chart {
+    flex-grow: 1;
+    min-height: 0;
+    width: 100%;
+    flex: 1;
+  }
 }
 </style>

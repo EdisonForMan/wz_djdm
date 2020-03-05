@@ -11,7 +11,7 @@
         <br />
         <h3 :style="`color:${item.c[1]}`">
           <i>产能恢复率</i>
-          {{dataDone ? (item.v[1]*100/item.v[0]).toFixed(2) : "-"}}
+          {{item.v[1]}}
           <i>%</i>
         </h3>
       </li>
@@ -52,18 +52,16 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上工业企业", v: [0, 0], c: ["#FF283A", "#FFC659"] },
-        { t: "限上服务业企业", v: [0, 0], c: ["#F6E31B", "#1EFF95"] }
+        { t: "规上工业企业", v: [0, 56.14], c: ["#FF283A", "#FFC659"] },
+        { t: "限上服务业企业", v: [0, 70.62], c: ["#F6E31B", "#1EFF95"] }
       ];
       this.xmBuildSiteList.map(({ attributes }) => {
         const { cnfhqk } = attributes;
         topData[0].v[0] += 1;
-        topData[0].v[1] += cnfhqk && parseInt(cnfhqk) > 0 ? 1 : 0;
       });
       this.fwLayer.map(({ attributes }) => {
         const { ydygs } = attributes;
         topData[1].v[0] += 1;
-        topData[1].v[1] += ydygs && parseInt(ydygs) > 0 ? 1 : 0;
       });
       this.TOP_DATA = topData;
     }

@@ -77,7 +77,6 @@ export default {
   },
   watch: {
     dataDone(n) {
-      console.log("[watch]", n);
       n && (this.tabsMenuData = [...this.xmMenu]);
     }
   },
