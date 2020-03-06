@@ -62,20 +62,21 @@ export default {
 }
 .my-tabs .el-tabs__active-bar {
   height: 4px;
+  background-color: #eeaa19;
 } /**.el-tabs__active-bar */
 .my-tabs .el-tabs__item {
   font-size: 18px;
   text-align: center;
   cursor: pointer;
+  font-weight: 700;
   padding: 0 10px !important;
-  color: rgba(255, 255, 255, 0.8);
+  color: #409eff;
 }
 .my-tabs .el-input__inner {
   font-size: 16px;
 }
 .my-tabs .is-active {
-  color: #409eff;
-  font-weight: 700;
+  color: #eeaa19 !important;
 }
 .my-tabs .el-tabs__nav-wrap::after {
   height: 1px;
@@ -92,6 +93,6 @@ export default {
   line-height: 36px;
 }
 .el-select-dropdown__item {
-  font-size: 16px!important;
+  font-size: 16px !important;
 }
 </style>

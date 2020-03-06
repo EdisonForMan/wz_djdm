@@ -6,8 +6,6 @@ export const TOP_CS = [
   "坎头村",
   "西塘村",
   "田垟村",
-  "峃前村",
-  "彭桥村"
 ];
 /** 重点疫情村社 确诊人数 */
-export const TOP_CS_CNT = [9, 7, 6, 6, 5, 5, 4, 4, 4];
+export const TOP_CS_CNT = [9, 7, 6, 6, 5, 5];

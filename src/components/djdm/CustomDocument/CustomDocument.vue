@@ -201,17 +201,18 @@ export default {
 
 .my-tabs /deep/ .el-tabs__active-bar {
   height: 4px;
+  background-color: #eeaa19;
 }
 .my-tabs /deep/ .el-tabs__item {
   font-size: 18px;
   text-align: center;
   cursor: pointer;
+  font-weight: 700;
   padding: 0 10px !important;
-  color: rgba(255, 255, 255, 0.8);
+  color: #409eff;
 }
 .my-tabs /deep/ .is-active {
-  color: #409eff;
-  font-weight: 700;
+  color: #eeaa19;
 }
 .my-tabs /deep/ .el-tabs__nav-wrap::after {
   height: 1px;
@@ -255,6 +256,16 @@ export default {
   font-size: 14px;
   top: -14px;
   left: 85px;
+}
+.my-menu /deep/ .red_title {
+  color: red!important;
+  font-size: 14px!important;
+  font-style: normal;
+}
+.my-menu /deep/ .yellow_title {
+  color: yellow!important;
+  font-size: 14px!important;
+  font-style: normal;
 }
 .my-menu /deep/ .noCheck .el-submenu__title {
   background: unset;

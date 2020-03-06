@@ -135,7 +135,7 @@ export default new Vuex.Store({
         innerText: ` (${count})`,
         children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
-            name: `${i.name}(${i.attributes.ydyg}人)`,
+            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl}%)`,
             geometry: i.geometry,
             attributes: i.attributes,
             type: "point"
@@ -173,7 +173,7 @@ export default new Vuex.Store({
         innerText: ` (${count})`,
         children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
-            name: `${i.name}(${i.attributes.ydyg}人)`,
+            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl}%)`,
             geometry: i.geometry,
             attributes: i.attributes,
             type: "point"
@@ -241,7 +241,7 @@ export default new Vuex.Store({
       const { count, red_cnt, yellow_cnt, arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
-        innerText: ` (${count}人)`,
+        innerText: ` (流动人口)`,
         children: arr
           .sort($util.compare("cnt"))
           .reverse()
@@ -258,7 +258,7 @@ export default new Vuex.Store({
       };
       const extraMenu = {
         innerText: `(${count}/${red_cnt}/${yellow_cnt})`,
-        innerTitle: `流动人口&ensp;/&ensp;红码&emsp;/&ensp;黄码`
+        innerTitle: `流动人口&ensp;/&ensp;<i class="red_title">红码</i>&emsp;/&ensp;<i class="yellow_title">黄码</i>`
       };
       commit("updateStreetList", { list: data.features, menu, extraMenu });
     },

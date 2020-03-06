@@ -1,21 +1,18 @@
 <template>
   <div class="Com_content Djdm">
-    <div class="Com_map" v-if="shallActive == 2">
+    <div class="Com_map">
       <commonArcgis id="macroArcgis" ref="macroArcgis" />
     </div>
-    <div class="Com_container" style="z-index: 10;" v-if="shallActive == 2">
+    <div class="Com_container" style="z-index: 10;">
       <div id="fy-rightChart">
         <rightChart />
       </div>
     </div>
-    <topDocument />
     <CustomDocument
-      v-if="shallActive == 2"
       ref="leftMenu"
       style="position: absolute;left: 10px;top: 20px;bottom: 20px;z-index: 100;"
     />
-    <topDate v-if="shallActive == 2" />
-    <yqImg v-if="shallActive == 0" />
+    <topDate />
   </div>
 </template>
 
@@ -27,21 +24,14 @@
  * 1.点击勾选左侧,右侧列表Object[]的替换
  * 2.点击列表<rightChart>,地图<commonArcgis>定位并显示内容
  */
-import yqImg from "./components/yqImg";
 import commonArcgis from "./Arcgis/Arcgis.vue";
 import rightChart from "./rightChart/rightChart.vue";
 import topDate from "./components/topDate";
 import CustomDocument from "./CustomDocument/CustomDocument.vue";
-import topDocument from "./CustomDocument/topDocument.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "Djdm",
-  data() {
-    return { shallActive: 2 };
-  },
   components: {
-    yqImg,
-    topDocument,
     CustomDocument,
     commonArcgis,
     rightChart, // 右侧图表

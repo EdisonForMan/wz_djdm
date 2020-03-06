@@ -70,7 +70,7 @@ export default {
 @fontbg: linear-gradient(180deg, #36dcff 0%, #8ceaff 100%);
 .topDateDiv {
   position: absolute;
-  top: 140px;
+  top: 90px;
   width: 100%;
 }
 .topDateDiv ul li:first-child {

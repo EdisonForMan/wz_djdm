@@ -17,11 +17,17 @@
 import { SERIES, chart_y_option, chart1 } from "./chart_y_option";
 import { chart_ywz_option } from "./chart_ywz_option";
 import { chart_dgl_option } from "./chart_dgl_option";
+import { chart_fgl_option } from "./chart_fgl_option";
 
 export default {
   data() {
     return {
       options: [
+        {
+          value: 3,
+          label: "复工率",
+          color: "#4876FF"
+        },
         {
           value: 0,
           label: "产能恢复率",
@@ -38,7 +44,7 @@ export default {
           color: "#4876FF"
         }
       ],
-      selectVal: 0
+      selectVal: 3
     };
   },
   watch: {
@@ -78,6 +84,9 @@ export default {
       }
       if (this.selectVal == 2) {
         chart_y_option_clone = this.$util.clone(chart_dgl_option);
+      }
+      if (this.selectVal == 3){
+        chart_y_option_clone = this.$util.clone(chart_fgl_option);
       }
       this.doChartOption({
         t: chart_y_option_clone
