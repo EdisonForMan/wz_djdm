@@ -132,19 +132,19 @@ export default {
           });
           that.map.add(layer);
           //  图例添加
-          that.legend = new Legend({ view: that.view });
+          that.legend = new Legend({ view: that.view, style: "classic" });
           that.view.ui.add(that.legend, "bottom-right");
           resolve(true);
         });
       });
     },
     goPointLoaction({ x, y }) {
-      this.view.goTo({ center: [x, y + 0.05] });
+      this.view.goTo({ center: [x, y + 0.08] });
     },
     goPolygonLocation({ rings }) {
       const { x, y } = this.$util.getPolygonCenter(rings);
       this.view.goTo({
-        center: [x, y + 0.05]
+        center: [x, y + 0.08]
       });
     }
   }

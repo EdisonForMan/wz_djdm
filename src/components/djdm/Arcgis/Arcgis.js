@@ -23,8 +23,8 @@ const doMassFeatureLayer = (context, { url, id }, shallTop = true) => {
         !BANNED_PARAMS.includes(item) && !BANNED_PARAMS_COMPANY.includes(item)
     )
     .map(key => {
-      console.log(key)
-      return `<div><span>${fieldAliases[key]}</span><span>{${key}}</span></div>`;
+      return `<div><span>${fieldAliases[key]}</span><span>{${key ||
+        ""}}</span></div>`;
     })
     .join("");
   return new Promise((resolve, reject) => {
@@ -142,7 +142,8 @@ export const doArcgisPopup = (
         !BANNED_PARAMS.includes(item) && !BANNED_PARAMS_COMPANY.includes(item)
     )
     .map(key => {
-      return `<div><span>${fieldAliases[key]}</span><span>${attributes[key]}</span></div>`;
+      return `<div><span>${fieldAliases[key]}</span><span>${attributes[key] ||
+        ""}</span></div>`;
     })
     .join("");
   view.popup.open({
@@ -154,12 +155,12 @@ export const doArcgisPopup = (
 
 /**
  * 坐标偏移
- * @param {*} param0 
- * @param {*} param1 
+ * @param {*} param0
+ * @param {*} param1
  */
 export const doLocation = (geometry, [ax = 0, ay = 0]) => {
-  return { ...geometry, x: x + ax, y: y + ay }
-}
+  return { ...geometry, x: x + ax, y: y + ay };
+};
 
 /**
  * removeLayer

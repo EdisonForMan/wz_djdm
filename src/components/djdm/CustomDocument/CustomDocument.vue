@@ -15,11 +15,13 @@
         <el-submenu
           v-for="(value, index) of tabsMenuData"
           v-show="value.tab == tabActive"
+          :class="[!value.id?'noCheck':'']"
           :key="index"
           :index="index + ''"
         >
           <template slot="title">
             <el-checkbox
+              v-if="value.children.length"
               v-model="value.check"
               class="my-checkbox"
               @click.stop.native="()=>{}"
@@ -242,6 +244,15 @@ export default {
 }
 .my-menu /deep/ .el-submenu {
   margin-bottom: 16px;
+}
+.my-menu /deep/ .noCheck{
+  margin-bottom: 6px;
+}
+.my-menu /deep/ .noCheck .el-submenu__title{
+  background:unset;
+}
+.my-menu /deep/ .noCheck .el-submenu__title .el-submenu__icon-arrow{
+  display: none;
 }
 .my-menu /deep/ .el-menu-item.is-active {
   background-color: rgba(19, 88, 183, 1);

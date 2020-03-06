@@ -100,7 +100,7 @@ export default {
     font-family: PingFangSC-Medium, PingFang SC;
     margin-bottom: 7px;
     font-weight: bold;
-    i{
+    i {
       font-size: 18px;
     }
   }

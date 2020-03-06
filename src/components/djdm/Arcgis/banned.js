@@ -26,9 +26,9 @@ export const BANNED_PARAMS = [
 //  工业企业暂时去除
 export const BANNED_PARAMS_COMPANY = [
   "szcs",
-  "zj",
   "tyshxydm",
   "lxr",
+  "lxdh",
   "lxdh1",
   "ydygs",
   "cnfhqk",

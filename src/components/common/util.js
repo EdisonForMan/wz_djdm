@@ -145,7 +145,7 @@ export default {
    */
   toParseInt(val) {
     const num = parseInt(val);
-    return val ? (num ? num : 0) : 0;
+    return val ? (num && !isNaN(num) ? num : 0) : 0;
   }
 };
 

@@ -1,40 +1,40 @@
 * {
   padding: 0;
-  margin: 0;
+  margin : 0;
 }
 
 
 html,
 body {
-  height: 100%;
-  overflow: hidden;
+  height   : 100%;
+  overflow : hidden;
   font-size: 16px;
 
   #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    font-family            : "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing : antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #fff;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    text-align             : center;
+    color                  : #fff;
+    height                 : 100%;
+    display                : flex;
+    flex-direction         : column;
+    overflow               : hidden;
   }
 }
 
 
 
 .app_header {
-  height: 84px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0 0 10px;
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
-  background-image: url("../image/headbg.png");
-  background-size: 100% 100%;
+  height             : 84px;
+  -webkit-box-sizing : border-box;
+  box-sizing         : border-box;
+  padding            : 0 0 10px;
+  position           : absolute;
+  width              : 100%;
+  z-index            : 1000;
+  background-image   : url("../image/headbg.png");
+  background-size    : 100% 100%;
   // background-image: linear-gradient(rgba(22,80,195,1), rgba(0,0,0,0));
 
 
@@ -45,16 +45,16 @@ body {
 
   .app_toptab_outside {
     // background-image: url("../image/bg_outside.png");
-    background-size: 100% 100%;
+    background-size    : 100% 100%;
   }
 
   .app_toptab_normal {
     // background-image: url("../image/headDefault1.png");
-    background-size: 100% 100%;
+    background-size    : 100% 100%;
   }
 
   .app_toptab_position {
-    width: 100%;
+    width      : 100%;
     padding-top: 8px;
 
     >div {
@@ -62,99 +62,99 @@ body {
     }
 
     .line {
-      position: relative;
-      top: 11px;
-      height: 2px;
-      width: 500px;
-      margin: auto;
+      position         : relative;
+      top              : 11px;
+      height           : 2px;
+      width            : 500px;
+      margin           : auto;
       // background    : linear-gradient(-90deg, rgba(21, 249, 253, 0) 10%, rgb(255, 255, 255) 50%, rgba(21, 249, 253, 0) 90%);
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-size  : 100% 100%;
 
       .circle {
-        position: absolute;
-        margin-left: 7px;
-        top: -4px;
-        transition: all 0.8s;
-        width: 10px;
-        height: 10px;
-        background: linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
+        position     : absolute;
+        margin-left  : 7px;
+        top          : -4px;
+        transition   : all 0.8s;
+        width        : 10px;
+        height       : 10px;
+        background   : linear-gradient(180deg, rgba(144, 255, 234, 1) 0%, rgba(80, 227, 194, 1) 100%);
         border-radius: 50%;
       }
 
       .spot {
-        position: absolute;
-        top: -10px;
-        transition: all 0.8s;
-        width: 24px;
-        height: 24px;
-        animation: spotChange 2s ease;
+        position                         : absolute;
+        top                              : -10px;
+        transition                       : all 0.8s;
+        width                            : 24px;
+        height                           : 24px;
+        animation                        : spotChange 2s ease;
         -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
+        -moz-animation-iteration-count   : infinite;
+        animation-iteration-count        : infinite;
 
         div {
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          border-width: 1.5px;
-          border-color: #F5931F;
+          position     : absolute;
+          width        : 8px;
+          height       : 8px;
+          border-width : 1.5px;
+          border-color : #F5931F;
           border-radius: 25%;
         }
 
         .top-left {
           border-style: none solid solid none;
-          left: 0;
+          left        : 0;
         }
 
         .top-right {
           border-style: none none solid solid;
-          right: 0;
+          right       : 0;
         }
 
         .bottom-left {
           border-style: solid solid none none;
-          left: 0;
-          bottom: 0;
+          left        : 0;
+          bottom      : 0;
         }
 
         .bottom-right {
           border-style: solid none none solid;
-          right: 0;
-          bottom: 0;
+          right       : 0;
+          bottom      : 0;
         }
       }
 
       .lightspot {
-        position: absolute;
-        top: -22px;
-        left: 50px;
-        transition: all 0.8s;
-        animation: spotMove 6s linear;
+        position                         : absolute;
+        top                              : -22px;
+        left                             : 50px;
+        transition                       : all 0.8s;
+        animation                        : spotMove 6s linear;
         -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
+        -moz-animation-iteration-count   : infinite;
+        animation-iteration-count        : infinite;
       }
     }
 
     .app_toptab {
       list-style: none;
-      position: relative;
+      position  : relative;
 
       li {
-        line-height: 40px;
-        display: inline-block;
-        text-align: center;
-        font-size: 28px;
-        font-weight: bolder;
-        // color: #FFC649;
+        line-height     : 40px;
+        display         : inline-block;
+        text-align      : center;
+        font-size       : 28px;
+        font-weight     : bolder;
+        // color        : #FFC649;
         background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#514ef3), to(#d2d5ff));
         /*必需加前缀 -webkit- 才支持这个text值 */
         -webkit-background-clip: text;
         /*text-fill-color会覆盖color所定义的字体颜色： */
         -webkit-text-fill-color: transparent;
-        // text-shadow: 0px 2px 0px rgba(114, 66, 4, 0.6);
-        cursor: pointer;
+        // text-shadow         : 0px 2px 0px rgba(114, 66, 4, 0.6);
+        cursor                 : pointer;
 
         a {
           text-decoration: none;
@@ -162,17 +162,17 @@ body {
       }
 
       li:after {
-        content: "";
-        display: inline-block;
+        content         : "";
+        display         : inline-block;
         background-image: url("../image/bgP.png");
-        height: 24px;
-        width: 24px;
-        margin: 0 10px;
+        height          : 24px;
+        width           : 24px;
+        margin          : 0 10px;
       }
 
       li:last-child:after {
-        visibility: hidden;
-        width: 0;
+        visibility : hidden;
+        width      : 0;
         margin-left: 0;
       }
 
@@ -184,50 +184,49 @@ body {
 
     .app_toptab:before,
     .app_toptab:after {
-      content: "";
-      display: inline-block;
-      height: 12px;
-      width: 150px;
-      position: relative;
-      top: -4px;
+      content          : "";
+      display          : inline-block;
+      height           : 12px;
+      width            : 150px;
+      position         : relative;
+      top              : -4px;
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-size  : 100% 100%;
     }
 
     .app_toptab:before {
       background-image: url("../image/line2.png");
-      margin-right: 30px;
+      margin-right    : 30px;
     }
 
     .app_toptab:after {
       background-image: url("../image/line.png");
-      margin-left: 30px;
+      margin-left     : 30px;
     }
 
 
   }
 
   .app_icon {
-    font-size: 38px;
-    font-weight: bolder;
+    font-size     : 38px;
+    font-weight   : bolder;
     letter-spacing: 4px;
-    background-image: -webkit-gradient(
-      linear,
-      0 0,
-      0 bottom,
-      from(#C9E3FF),
-      to(#BEF6FF)
-    );
+    background-image: -webkit-gradient(linear,
+        0 0,
+        0 bottom,
+        from(#C9E3FF),
+        to(#BEF6FF));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-     margin-top: 5px;;
+    margin-top             : 5px;
+    ;
 
     i {
       vertical-align: top;
-      line-height: 40px;
-      display: inline-block;
-      font-size: 24px;
-      font-style: normal;
+      line-height   : 40px;
+      display       : inline-block;
+      font-size     : 24px;
+      font-style    : normal;
     }
 
     img {
@@ -237,24 +236,24 @@ body {
 
   .app_icon2 {
     position: fixed;
-    right: 25px;
-    top: 19px;
-    display: flex;
+    right   : 25px;
+    top     : 19px;
+    display : flex;
 
     img {
       height: 24px;
-      width: 150px;
+      width : 150px;
     }
 
     .chooseButton {
-      cursor: pointer;
-      width: 23px;
-      height: 24px;
+      cursor     : pointer;
+      width      : 23px;
+      height     : 24px;
       line-height: 28px;
       margin-left: 20px;
 
       img {
-        width: 100%;
+        width : 100%;
         height: 100%;
       }
     }
@@ -284,7 +283,7 @@ body {
 
   .esri-ui-bottom-right,
   .esri-ui-bottom-left {
-    right: 410px;
+    right     : 410px;
     transition: all 1s;
 
     .esri-legend__service {
@@ -296,25 +295,25 @@ body {
     }
 
     .esri-legend {
-      overflow: hidden;
-      overflow-y: auto;
-      color: #fff;
+      overflow        : hidden;
+      overflow-y      : auto;
+      color           : #fff;
       background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 4px;
-      max-height: 340px !important;
+      border-radius   : 4px;
+      max-height      : 340px !important;
     }
 
     .esri-legend::-webkit-scrollbar {
-      display: block;
-      width: 6px;
+      display         : block;
+      width           : 6px;
       background-color: rgb(146, 146, 146);
-      border-radius: 3px;
+      border-radius   : 3px;
     }
 
     .esri-legend::-webkit-scrollbar-thumb {
-      width: 6px;
+      width           : 6px;
       background-color: rgb(68, 68, 68);
-      border-radius: 3px;
+      border-radius   : 3px;
     }
 
     .esri-widget__heading {
@@ -344,64 +343,79 @@ body {
 
   //  popup
   .esri-popup {
-    color: #000;
+    color  : #000;
     z-index: 10;
 
     .esri-popup__main-container {
-      width: 467px;
-      box-sizing: border-box;
-      padding: 10px;
+      width            : 467px;
+      box-sizing       : border-box;
+      padding          : 10px;
       background-repeat: no-repeat;
-      background-size: 100% 100%;
-      overflow: hidden;
+      background-size  : 100% 100%;
+      overflow         : hidden;
       background-repeat: repeat;
-      color: #2AFFFA;
-      background-image: url("../image/yqpop.png");
+      color            : #2AFFFA;
+      background-image : url("../image/yqpop.png");
+
       .bottomBtn {
-            position: absolute;
-            height: 30px;
-            line-height: 30px;
-            padding: 0 10px;
-            font-size: 16px;
-            bottom: 0px;
-            left: 50%;
-            -webkit-transform: translate(-50%, 0);
-            transform: translate(-50%, 0);
-            background-color: rgba(0,0,0,0.5);
-            border-radius: 10px;
-            border: 1px #fff solid;
-            color: #fff;
-            cursor: pointer;
+        position         : absolute;
+        height           : 30px;
+        line-height      : 30px;
+        padding          : 0 10px;
+        font-size        : 16px;
+        bottom           : 0px;
+        left             : 50%;
+        -webkit-transform: translate(-50%, 0);
+        transform        : translate(-50%, 0);
+        background-color : rgba(0, 0, 0, 0.5);
+        border-radius    : 10px;
+        border           : 1px #fff solid;
+        color            : #fff;
+        cursor           : pointer;
       }
+
       .yqPopFrame::-webkit-scrollbar {
         border: 1px solid rgba(109, 225, 255, 1);
-        width: 6px;
+        width : 6px;
       }
+
       .yqPopFrame::-webkit-scrollbar-thumb {
-        background: rgba(109, 225, 255, 1);
+        background   : rgba(109, 225, 255, 1);
         border-radius: 3px;
       }
-      .yqPopFrame{
-        height: 300px;
-        overflow-y: auto;
-        > div {
-          width: 100%;
-          border-bottom: 1px rgba(42,255,250,0.7) solid;
-          box-sizing: border-box;
-          padding: 0 10px;
-          > span {
-            display: inline-block;
-            line-height: 30px;
-            text-align: left;
-            font-size: 18px;
+
+      .yqPopFrame {
+        margin-bottom: 16px;
+        height       : 300px;
+        overflow-y   : auto;
+
+        >div {
+          width        : 100%;
+          border-bottom: 1px rgba(42, 255, 250, 0.7) solid;
+          box-sizing   : border-box;
+          padding      : 0 10px;
+
+          >span {
+            display       : inline-block;
+            vertical-align: text-top;
+            line-height   : 30px;
+            text-align    : left;
+            font-size     : 18px;
           }
-          > span:first-child{
-            width: 35%;
-            font-weight: 700;;
+
+          >span:first-child {
+            width      : 35%;
+            font-weight: 700;
+            ;
           }
-          > span:last-child{
-            width:64.9%;
+
+          >span:last-child {
+            width: 64.9%;
           }
+        }
+
+        >div:last-child {
+          border-bottom: 0px;
         }
       }
     }
@@ -412,7 +426,7 @@ body {
 
     .esri-popup__header-title:hover {
       background-color: rgba(25, 43, 78, 0.8);
-      font-size: 18px;
+      font-size       : 18px;
     }
 
     .esri-popup__content::-webkit-scrollbar {
@@ -440,9 +454,9 @@ body {
     }
 
     .esri-popup__header-title {
-      text-align: center;
-      font-size:20px;
-      color:rgba(130,255,252,1);
+      text-align : center;
+      font-size  : 20px;
+      color      : rgba(130, 255, 252, 1);
       line-height: 30px;
     }
 
@@ -450,47 +464,47 @@ body {
       width: 100%;
 
       >div {
-        width: 100%;
-        text-align: left;
-        font-size: 16px;
+        width      : 100%;
+        text-align : left;
+        font-size  : 16px;
         line-height: 22px;
 
         >img {
-          width: 100%;
+          width     : 100%;
           max-height: 200px;
         }
       }
 
       .poptemplate_title {
         font-size: 19px;
-        color: #13E3FF;
-        height: 52px;
+        color    : #13E3FF;
+        height   : 52px;
       }
 
       .poptemplate_frame_img {
         >img {
-          width: 180px;
-          float: left;
-          margin-right: 10px;
+          width        : 180px;
+          float        : left;
+          margin-right : 10px;
           margin-bottom: 5px;
         }
       }
 
       ul {
-        width: 100%;
-        height: 100%;
-        list-style: none;
-        display: flex;
+        width         : 100%;
+        height        : 100%;
+        list-style    : none;
+        display       : flex;
         flex-direction: column;
 
         li {
-          flex: 1;
-          color: #fff;
-          font-size: 17px;
+          flex       : 1;
+          color      : #fff;
+          font-size  : 17px;
           line-height: 27px;
 
           span {
-            color: #2AFFFA;
+            color       : #2AFFFA;
             margin-right: 5px;
           }
         }

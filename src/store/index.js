@@ -51,8 +51,14 @@ export default new Vuex.Store({
         tab: "fgfc"
       },
       {
+        name: "乐清市",
+        innerText: undefined,
+        children: [],
+        tab: "xzqh"
+      },
+      {
         id: "streetLayer",
-        name: "乡镇、街道、功能区",
+        name: "乡镇街道",
         innerText: undefined,
         check: false,
         children: [],
@@ -81,13 +87,14 @@ export default new Vuex.Store({
       state.fjList = list;
       state.xmMenu[2] = { ...state.xmMenu[2], ...menu };
     },
-    updateStreetList(state, { list = [], menu }) {
+    updateStreetList(state, { list = [], menu, extraMenu }) {
       state.streetList = list;
-      state.xmMenu[3] = { ...state.xmMenu[3], ...menu };
+      state.xmMenu[3] = { ...state.xmMenu[3], ...extraMenu };
+      state.xmMenu[4] = { ...state.xmMenu[4], ...menu };
     },
     updateSqList(state, { list = [], menu }) {
       state.sqList = list;
-      state.xmMenu[4] = { ...state.xmMenu[4], ...menu };
+      state.xmMenu[5] = { ...state.xmMenu[5], ...menu };
     },
     updateXsqList(state, { list = [], menu }) {
       state.xsqList = list;
@@ -107,8 +114,6 @@ export default new Vuex.Store({
     async fetchXmBuildSiteList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: xmBuildSiteURL });
       const buildS = {
-        id: "PointLayer",
-        name: "规上工业复工复产",
         count: 0,
         arr: []
       };
@@ -125,11 +130,8 @@ export default new Vuex.Store({
       });
       const { id, name, count, arr } = buildS;
       const menu = {
-        id,
-        name,
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
-        check: true,
         children: arr.map(i => {
           return {
             name: i.name,
@@ -149,8 +151,6 @@ export default new Vuex.Store({
     async fetchFwList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqFWURL });
       const buildS = {
-        id: "fwLayer",
-        name: "限上服务业复工复产",
         count: 0,
         arr: []
       };
@@ -167,11 +167,8 @@ export default new Vuex.Store({
       });
       const { id, name, count, arr } = buildS;
       const menu = {
-        id,
-        name,
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
-        check: false,
         children: arr.map(i => {
           return {
             name: i.name,
@@ -191,18 +188,13 @@ export default new Vuex.Store({
     async fetchXsqList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqXSQURL });
       const buildS = {
-        id: "xsqLayer",
-        name: "县市区网格",
         count: 0,
         arr: []
       };
       const { id, name, count, arr } = buildS;
       const menu = {
-        id,
-        name,
         fieldAliases: data.fieldAliases,
         innerText: "",
-        check: true,
         children: arr.map(i => {
           return {
             name: i.name,
@@ -222,9 +214,9 @@ export default new Vuex.Store({
     async fetchStreetList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqStreetURL });
       const buildS = {
-        id: "streetLayer",
-        name: "乡镇、街道、功能区",
         count: 0,
+        red_cnt: 0,
+        yellow_cnt: 0,
         arr: []
       };
       data.features.map(({ attributes, geometry }) => {
@@ -241,27 +233,31 @@ export default new Vuex.Store({
           yellow_cnt: $util.toParseInt(attributes.ldrk_yellow)
         });
         buildS.count += $util.toParseInt(attributes.ldrk_all);
+        buildS.red_cnt += $util.toParseInt(attributes.ldrk_red);
+        buildS.yellow_cnt += $util.toParseInt(attributes.ldrk_yellow);
       });
-      const { id, name, count, arr } = buildS;
+      const { id, name, count, red_cnt, yellow_cnt, arr } = buildS;
       const menu = {
-        id,
-        name,
         fieldAliases: data.fieldAliases,
-        innerText: ` (${count})`,
-        check: true,
+        innerText: ` (${count}人)`,
         children: arr
           .sort($util.compare("cnt"))
           .reverse()
           .map(i => {
             return {
-              name: `${i.name} ${(i.cnt/10000).toFixed(2)}万人/红码${i.red_cnt}/黄码${i.yellow_cnt}`,
+              name: `${i.name} ${(i.cnt / 10000).toFixed(2)}万人/红码${
+                i.red_cnt
+              }/黄码${i.yellow_cnt}`,
               geometry: i.geometry,
               attributes: i.attributes,
               type: "polygon"
             };
           })
       };
-      commit("updateStreetList", { list: data.features, menu });
+      const extraMenu = {
+        innerText: ` (${count}/${red_cnt}/${yellow_cnt})`
+      };
+      commit("updateStreetList", { list: data.features, menu, extraMenu });
     },
     /**
      * 村社
@@ -270,7 +266,7 @@ export default new Vuex.Store({
      */
     async fetchSqList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqSQURL });
-      const buildS = { id: "sqLayer", name: "村、社区", count: 0, arr: [] };
+      const buildS = { count: 0, arr: [] };
       data.features.map(({ attributes, geometry }) => {
         buildS.arr.push({
           name: attributes["村社区"],
@@ -306,11 +302,8 @@ export default new Vuex.Store({
         });
       const { id, name, count, arr } = buildS;
       const menu = {
-        id,
-        name,
         fieldAliases: data.fieldAliases,
-        innerText: ` (${count})`,
-        check: false,
+        innerText: ` (${count}个)`,
         children: [...top_arr, ...rest_arr]
       };
       commit("updateSqList", { list: data.features, menu });
@@ -323,8 +316,6 @@ export default new Vuex.Store({
     async fetchFjList({ state, commit }) {
       const { data } = await fetchArcgisServer({ url: yqFJURL });
       const buildS = {
-        id: "fjLayer",
-        name: "房建项目",
         count: 0,
         arr: []
       };
@@ -334,11 +325,8 @@ export default new Vuex.Store({
       });
       const { id, name, count, arr } = buildS;
       const menu = {
-        id,
-        name,
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
-        check: false,
         children: arr.map(i => {
           return {
             name: i.name,

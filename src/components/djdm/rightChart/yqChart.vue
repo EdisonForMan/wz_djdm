@@ -24,17 +24,17 @@ export default {
       options: [
         {
           value: 0,
-          label: "乐清市产能恢复率",
+          label: "产能恢复率",
           color: "#4876FF"
         },
         {
           value: 1,
-          label: "温州市二产产能恢复率",
+          label: "二产产能恢复率",
           color: "#4876FF"
         },
         {
           value: 2,
-          label: "温州市员工到岗率",
+          label: "员工到岗率",
           color: "#4876FF"
         }
       ],

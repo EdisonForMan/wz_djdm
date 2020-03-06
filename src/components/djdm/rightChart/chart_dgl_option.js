@@ -1,9 +1,19 @@
 /** 温州市员工到岗率 */
 export const chart_dgl_option = {
-  color: ["#6EB2FF", "red"],
+  color: ["#6EB2FF", "red", "#FF8C48"],
+  title: {
+    text: "时间:2020-03-02",
+    textStyle: {
+      color: "#fff",
+      fontSize: 16,
+      fontWeight: "bold"
+    },
+    top: "60px",
+    left: "20px"
+  },
   legend: {
     top: "20px",
-    data: ["员工到岗率"],
+    data: ["员工到岗率", "全市平均", "全省平均"],
     textStyle: { color: "#fff", fontSize: 16 },
     inactiveColor: "#000"
   },
@@ -17,7 +27,7 @@ export const chart_dgl_option = {
     left: "3%",
     right: "30px",
     bottom: "50px",
-    top: "60px",
+    top: "100px",
     containLabel: true
   },
   xAxis: {
@@ -90,6 +100,38 @@ export const chart_dgl_option = {
         91.3,
         95.2
       ]
+    },
+    {
+      name: "全市平均",
+      type: "line",
+      data: [78.7],
+      markLine: {
+        label: {
+          fontSize: 16,
+          fontWeight: "bold",
+          formatter: "{c} %"
+        },
+        lineStyle: {
+          width: 2
+        },
+        data: [{ type: "average", name: "平均值" }]
+      }
+    },
+    {
+      name: "全省平均",
+      type: "line",
+      data: [89.5],
+      markLine: {
+        label: {
+          fontSize: 16,
+          fontWeight: "bold",
+          formatter: "{c} %"
+        },
+        lineStyle: {
+          width: 2
+        },
+        data: [{ type: "average", name: "平均值" }]
+      }
     }
   ]
 };
