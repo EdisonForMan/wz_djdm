@@ -31,11 +31,11 @@ export const chart_dgl_option = {
     containLabel: true
   },
   xAxis: {
+    min: 84,
+    max: 100,
     type: "value",
     splitLine: {
-      lineStyle: {
-        type: "dashed"
-      }
+      show: false
     },
     axisLabel: {
       formatter: "{value} %",
@@ -50,20 +50,20 @@ export const chart_dgl_option = {
       fontSize: 16
     },
     data: [
-      "瓯海",
-      "龙岗",
-      "经开区",
       "瓯江口",
       "瑞安",
-      "龙湾",
-      "永嘉",
-      "乐清",
-      "苍南",
-      "鹿城",
       "泰顺",
-      "平阳",
+      "经开区",
+      "鹿城",
+      "龙湾",
       "洞头",
-      "文成"
+      "永嘉",
+      "龙港",
+      "乐清",
+      "文成",
+      "苍南",
+      "平阳",
+      "瓯海",
     ]
   },
   series: [
@@ -85,26 +85,26 @@ export const chart_dgl_option = {
       },
       barWidth: 16,
       data: [
-        75.8,
-        76.5,
-        76.6,
-        77.1,
-        77.3,
-        77.5,
-        79.1,
-        79.2,
-        80.1,
-        81.6,
-        83,
-        84.3,
+        85.8,
+        90.2,
         91.3,
-        95.2
+        91.4,
+        92.3,
+        92.6,
+        94.2,
+        95.1,
+        95.8,
+        95.8,
+        96.9,
+        97.3,
+        98.8,
+        98.9,
       ]
     },
     {
       name: "全市平均",
       type: "line",
-      data: [78.7],
+      data: [94.59],
       markLine: {
         label: {
           fontSize: 16,
@@ -120,7 +120,7 @@ export const chart_dgl_option = {
     {
       name: "全省平均",
       type: "line",
-      data: [89.5],
+      data: [98.6],
       markLine: {
         label: {
           fontSize: 16,

@@ -27,6 +27,7 @@
               @click.stop.native="()=>{}"
               @change="changeCheckboxHandler(index)"
             ></el-checkbox>
+            <span class="inner-title" v-if="!value.children.length" v-html="value.innerTitle" />
             <span>{{ value.name }}</span>
             <span v-if="value.innerText">{{ value.innerText }}</span>
           </template>
@@ -243,15 +244,22 @@ export default {
   border: none;
 }
 .my-menu /deep/ .el-submenu {
+  position: relative;
   margin-bottom: 16px;
 }
-.my-menu /deep/ .noCheck{
+.my-menu /deep/ .noCheck {
   margin-bottom: 6px;
 }
-.my-menu /deep/ .noCheck .el-submenu__title{
-  background:unset;
+.my-menu /deep/ .inner-title {
+  position: absolute;
+  font-size: 14px;
+  top: -14px;
+  left: 85px;
 }
-.my-menu /deep/ .noCheck .el-submenu__title .el-submenu__icon-arrow{
+.my-menu /deep/ .noCheck .el-submenu__title {
+  background: unset;
+}
+.my-menu /deep/ .noCheck .el-submenu__title .el-submenu__icon-arrow {
   display: none;
 }
 .my-menu /deep/ .el-menu-item.is-active {

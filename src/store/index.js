@@ -123,18 +123,19 @@ export default new Vuex.Store({
           geometry,
           attributes: {
             ...attributes,
-            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`
-          }
+            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`,
+          },
+          ydyg: $util.toParseInt(attributes.ydyg)
         });
         buildS.count += 1;
       });
-      const { id, name, count, arr } = buildS;
+      const { count, arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
-        children: arr.map(i => {
+        children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
-            name: i.name,
+            name: `${i.name}(${i.attributes.ydyg}人)`,
             geometry: i.geometry,
             attributes: i.attributes,
             type: "point"
@@ -160,18 +161,19 @@ export default new Vuex.Store({
           geometry,
           attributes: {
             ...attributes,
-            ygdgqk: `${(attributes.ygdgqk * 100).toFixed(2)}%`
-          }
+            ygdgqk: `${(attributes.ygdgqk * 100).toFixed(2)}%`,
+          },
+          ydyg: $util.toParseInt(attributes.ydyg)
         });
         buildS.count += 1;
       });
-      const { id, name, count, arr } = buildS;
+      const { count, arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
-        children: arr.map(i => {
+        children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
-            name: i.name,
+            name: `${i.name}(${i.attributes.ydyg}人)`,
             geometry: i.geometry,
             attributes: i.attributes,
             type: "point"
@@ -191,7 +193,7 @@ export default new Vuex.Store({
         count: 0,
         arr: []
       };
-      const { id, name, count, arr } = buildS;
+      const { arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: "",
@@ -236,7 +238,7 @@ export default new Vuex.Store({
         buildS.red_cnt += $util.toParseInt(attributes.ldrk_red);
         buildS.yellow_cnt += $util.toParseInt(attributes.ldrk_yellow);
       });
-      const { id, name, count, red_cnt, yellow_cnt, arr } = buildS;
+      const { count, red_cnt, yellow_cnt, arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (${count}人)`,
@@ -247,7 +249,7 @@ export default new Vuex.Store({
             return {
               name: `${i.name} ${(i.cnt / 10000).toFixed(2)}万人/红码${
                 i.red_cnt
-              }/黄码${i.yellow_cnt}`,
+                }/黄码${i.yellow_cnt}`,
               geometry: i.geometry,
               attributes: i.attributes,
               type: "polygon"
@@ -255,7 +257,8 @@ export default new Vuex.Store({
           })
       };
       const extraMenu = {
-        innerText: ` (${count}/${red_cnt}/${yellow_cnt})`
+        innerText: `(${count}/${red_cnt}/${yellow_cnt})`,
+        innerTitle: `流动人口&ensp;/&ensp;红码&emsp;/&ensp;黄码`
       };
       commit("updateStreetList", { list: data.features, menu, extraMenu });
     },
@@ -300,7 +303,7 @@ export default new Vuex.Store({
             type: "polygon"
           };
         });
-      const { id, name, count, arr } = buildS;
+      const { count } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (${count}个)`,
@@ -323,7 +326,7 @@ export default new Vuex.Store({
         buildS.arr.push({ name: attributes["gcmc"], geometry, attributes });
         buildS.count += 1;
       });
-      const { id, name, count, arr } = buildS;
+      const { count, arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,

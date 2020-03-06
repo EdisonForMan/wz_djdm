@@ -31,12 +31,17 @@ export const chart_ywz_option = {
     containLabel: true
   },
   xAxis: {
+    min: 16,
+    max: 85,
     type: "value",
     axisLabel: {
-      formatter: "{value} %",
+      formatter: "{value}%",
       color: "#fff",
       fontSize: 16
-    }
+    },
+    splitLine: {
+      show: false
+    },
   },
   yAxis: {
     type: "category",
@@ -47,18 +52,18 @@ export const chart_ywz_option = {
     data: [
       "鹿城",
       "瓯海",
-      "永嘉",
       "乐清",
+      "永嘉",
       "瑞安",
-      "龙湾",
       "经开区",
       "瓯江口",
+      "龙湾",
       "文成",
       "洞头",
-      "泰顺",
       "苍南",
+      "泰顺",
+      "平阳",
       "龙港",
-      "平阳"
     ]
   },
   series: [
@@ -80,26 +85,26 @@ export const chart_ywz_option = {
       },
       barWidth: 16,
       data: [
-        23.8,
-        46.5,
-        47.5,
-        48.3,
-        52.1,
-        55.7,
-        55.9,
-        58.8,
-        60.8,
-        61,
-        75.4,
-        79.2,
-        79.9,
-        81.3
+        33.6,
+        51.2,
+        56.1,
+        58.3,
+        59.0,
+        61.8,
+        63.8,
+        64.4,
+        64.6,
+        66,
+        82.9,
+        83.3,
+        84.6,
+        85.8,
       ]
     },
     {
       name: "全市平均",
       type: "line",
-      data: [57.81],
+      data: [64],
       markLine: {
         label: {
           fontSize: 16,
@@ -115,7 +120,7 @@ export const chart_ywz_option = {
     {
       name: "全省平均",
       type: "line",
-      data: [68.2],
+      data: [78],
       markLine: {
         label: {
           fontSize: 16,

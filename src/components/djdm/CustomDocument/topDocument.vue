@@ -9,7 +9,7 @@
       class="topDocument-inner"
       :class="[active == 0 ? 'current-active' : '']"
       @click="topDocumentClick(0)"
-    >疫情复产图</div>
+    >疫情图复产图</div>
   </div>
 </template>
 <script>
