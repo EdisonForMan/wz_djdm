@@ -30,6 +30,7 @@ export default new Vuex.Store({
         id: "PointLayer",
         name: "规上工业复工复产",
         innerText: undefined,
+        forceText: true,
         check: true,
         children: [],
         tab: "fgfc"
@@ -134,7 +135,7 @@ export default new Vuex.Store({
       const { count, arr } = buildS;
       const menu = {
         fieldAliases: data.fieldAliases,
-        innerText: ` (${count})`,
+        innerText: ` (人数/到岗率)`,
         children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
             name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
@@ -260,7 +261,7 @@ export default new Vuex.Store({
       };
       const extraMenu = {
         innerText: `(${count}/${red_cnt}/${yellow_cnt})`,
-        innerTitle: `流动人口&ensp;/&ensp;<i class="red_title">红码</i>&emsp;/&ensp;<i class="yellow_title">黄码</i>`
+        innerTitle: `流动人口/&ensp;<i class="red_title">红码</i>&ensp;/<i class="yellow_title">黄码</i>`
       };
       commit("updateStreetList", { list: data.features, menu, extraMenu });
     },

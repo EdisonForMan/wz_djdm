@@ -2,7 +2,7 @@
 export const chart_ywz_option = {
   color: ["#6EB2FF", "red", "#FF8C48"],
   title: {
-    text: "时间:2020-03-02",
+    text: "时间:2020-03-06",
     textStyle: {
       color: "#fff",
       fontSize: 16,
@@ -52,7 +52,6 @@ export const chart_ywz_option = {
     data: [
       "鹿城",
       "瓯海",
-      "乐清",
       "永嘉",
       "瑞安",
       "经开区",
@@ -60,6 +59,7 @@ export const chart_ywz_option = {
       "龙湾",
       "文成",
       "洞头",
+      "乐清",
       "苍南",
       "泰顺",
       "平阳",
@@ -87,7 +87,6 @@ export const chart_ywz_option = {
       data: [
         33.6,
         51.2,
-        56.1,
         58.3,
         59.0,
         61.8,
@@ -95,6 +94,7 @@ export const chart_ywz_option = {
         64.4,
         64.6,
         66,
+        73.1,
         82.9,
         83.3,
         84.6,

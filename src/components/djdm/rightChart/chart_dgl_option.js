@@ -2,7 +2,7 @@
 export const chart_dgl_option = {
   color: ["#6EB2FF", "red", "#FF8C48"],
   title: {
-    text: "时间:2020-03-02",
+    text: "时间:2020-03-06",
     textStyle: {
       color: "#fff",
       fontSize: 16,
@@ -59,11 +59,11 @@ export const chart_dgl_option = {
       "瑞安",
       "龙湾",
       "永嘉",
-      "乐清",
       "苍南",
       "鹿城",
       "泰顺",
       "平阳",
+      "乐清",
       "洞头",
       "文成"
     ]
@@ -94,11 +94,11 @@ export const chart_dgl_option = {
         77.3,
         77.5,
         79.1,
-        79.2,
         80.1,
         81.6,
         83,
         84.3,
+        87.9,
         91.3,
         95.2
       ]

@@ -49,8 +49,8 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上工业企业", v: [0, 56.14], c: ["#FF283A", "#FFC659"] },
-        { t: "限上服务业企业", v: [0, 70.62], c: ["#F6E31B", "#1EFF95"] }
+        { t: "规上工业企业", v: [0, 73.14], c: ["#FF283A", "#FFC659"] },
+        { t: "限上服务业企业", v: [0, 74.39], c: ["#F6E31B", "#1EFF95"] }
       ];
       this.xmBuildSiteList.map(({ attributes }) => {
         const { cnfhqk } = attributes;

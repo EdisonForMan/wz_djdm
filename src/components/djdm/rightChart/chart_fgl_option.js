@@ -2,7 +2,7 @@
 export const chart_fgl_option = {
     color: ["#6EB2FF", "red", "#FF8C48"],
     title: {
-        text: "时间:2020-03-05",
+        text: "时间:2020-03-06",
         textStyle: {
             color: "#fff",
             fontSize: 16,
@@ -59,9 +59,9 @@ export const chart_fgl_option = {
             "洞头",
             "永嘉",
             "龙港",
-            "乐清",
             "文成",
             "苍南",
+            "乐清",
             "平阳",
             "瓯海",
         ]
@@ -94,9 +94,9 @@ export const chart_fgl_option = {
                 94.2,
                 95.1,
                 95.8,
-                95.8,
                 96.9,
-                97.3,
+                97.3, 
+                97.7,
                 98.8,
                 98.9,
             ]

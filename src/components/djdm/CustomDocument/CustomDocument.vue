@@ -252,18 +252,19 @@ export default {
 }
 .my-menu /deep/ .inner-title {
   position: absolute;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 40px;
   top: -14px;
   left: 85px;
 }
 .my-menu /deep/ .red_title {
   color: red !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   font-style: normal;
 }
 .my-menu /deep/ .yellow_title {
   color: yellow !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   font-style: normal;
 }
 .my-menu /deep/ .noCheck .el-submenu__title {
