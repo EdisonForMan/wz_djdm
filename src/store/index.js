@@ -54,6 +54,7 @@ export default new Vuex.Store({
         name: "乐清市",
         innerText: undefined,
         children: [],
+        forceText: true,
         tab: "xzqh"
       },
       {
@@ -62,6 +63,7 @@ export default new Vuex.Store({
         innerText: undefined,
         check: false,
         children: [],
+        forceText: true,
         tab: "xzqh"
       },
       {
@@ -135,7 +137,7 @@ export default new Vuex.Store({
         innerText: ` (${count})`,
         children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
-            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl}%)`,
+            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
             geometry: i.geometry,
             attributes: i.attributes,
             type: "point"
@@ -161,7 +163,7 @@ export default new Vuex.Store({
           geometry,
           attributes: {
             ...attributes,
-            ygdgqk: `${(attributes.ygdgqk * 100).toFixed(2)}%`,
+            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`,
           },
           ydyg: $util.toParseInt(attributes.ydyg)
         });
@@ -173,7 +175,7 @@ export default new Vuex.Store({
         innerText: ` (${count})`,
         children: arr.sort($util.compare("ydyg")).reverse().map(i => {
           return {
-            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl}%)`,
+            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
             geometry: i.geometry,
             attributes: i.attributes,
             type: "point"

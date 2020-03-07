@@ -110,12 +110,11 @@ export default {
       this.xmMenu.forEach(Element => {
         const children = Element.children.filter(item => item.name.match(reg));
         tabsMenuData.push({
-          check: Element["check"],
+          ...Element,
           children,
-          innerText: `(${children.length})`,
-          name: Element["name"],
-          fieldAliases: Element["fieldAliases"],
-          tab: Element["tab"]
+          innerText: Element.forceText
+            ? Element.innerText
+            : `(${children.length})`
         });
       });
       this.tabsMenuData = [...tabsMenuData];
@@ -258,13 +257,13 @@ export default {
   left: 85px;
 }
 .my-menu /deep/ .red_title {
-  color: red!important;
-  font-size: 14px!important;
+  color: red !important;
+  font-size: 14px !important;
   font-style: normal;
 }
 .my-menu /deep/ .yellow_title {
-  color: yellow!important;
-  font-size: 14px!important;
+  color: yellow !important;
+  font-size: 14px !important;
   font-style: normal;
 }
 .my-menu /deep/ .noCheck .el-submenu__title {
