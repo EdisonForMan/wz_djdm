@@ -63,8 +63,8 @@ export const chart_dgl_option = {
       "鹿城",
       "泰顺",
       "平阳",
-      "乐清",
       "洞头",
+      "乐清",
       "文成"
     ]
   },
@@ -98,8 +98,8 @@ export const chart_dgl_option = {
         81.6,
         83,
         84.3,
-        87.9,
         91.3,
+        91.4,
         95.2
       ]
     },
