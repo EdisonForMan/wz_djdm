@@ -1,15 +1,5 @@
 /** 各区县 */
 export default {
-  title: {
-    text: "单位:     人",
-    textStyle: {
-      color: "#fff",
-      fontSize: 12,
-      fontWeight: "normal"
-    },
-    bottom: "6%",
-    right: "7%"
-  },
   tooltip: {
     trigger: "axis",
     axisPointer: {
@@ -17,16 +7,16 @@ export default {
     }
   },
   grid: {
-    top: "20px",
+    top: "60px",
     left: "20px",
-    right: "20px",
-    bottom: "60px",
+    right: "50px",
+    bottom: "40px",
     containLabel: true
   },
   legend: {
     show: true,
-    bottom: "6%",
-    left: "2%",
+    top: "20px",
+    right: "center",
     textStyle: {
       color: "#fff"
     },
@@ -108,7 +98,7 @@ export default {
         show: true,
         position: "right",
         color: "#fff",
-        formatter: function(param) {
+        formatter: function (param) {
           return param.value;
         }
       },

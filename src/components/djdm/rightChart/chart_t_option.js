@@ -1,15 +1,5 @@
 /** 各区县 */
 export default {
-    title: {
-        text: "单位:     个",
-        textStyle: {
-            color: "#fff",
-            fontSize: 12,
-            fontWeight: "normal"
-        },
-        bottom: "6%",
-        right: "7%"
-    },
     tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -17,30 +7,24 @@ export default {
         }
     },
     grid: {
-        top: "20px",
+        top: "60px",
         left: "20px",
-        right: "20px",
-        bottom: "60px",
+        right: "50px",
+        bottom: "40px",
         containLabel: true
     },
     legend: {
         show: true,
-        bottom: "6%",
-        left: "2%",
+        top: "20px",
+        right: "center",
         textStyle: {
             color: "#fff"
         },
-        data: [{
-            name: "未复工企业"
-        }, {
-            name: "复工企业"
-        }]
+        data: [{ name: "" }]
     },
-
     xAxis: {
         show: false,
         type: "value",
-        name: "例",
         nameTextStyle: {
             fontSize: 14,
             color: "#fff"
@@ -84,30 +68,20 @@ export default {
         },
         data: []
     }],
-    series: [{
-        name: "复工企业",
-        type: "bar",
-        stack: "one",
-        label: {
-            show: false,
-        },
-        barWidth: 16,
-        data: []
-    },
-    {
-        name: "未复工企业",
-        type: "bar",
-        stack: "one",
-        label: {
-            show: true,
-            position: "right",
-            color: "#fff",
-            formatter: function (param) {
-                return param.value;
-            }
-        },
-        barWidth: 16,
-        data: []
-    }
+    series: [
+        {
+            name: "",
+            type: "bar",
+            label: {
+                show: true,
+                position: "right",
+                color: "#fff",
+                formatter: function (param) {
+                    return param.value + "%";
+                }
+            },
+            barWidth: 16,
+            data: []
+        }
     ]
 }
