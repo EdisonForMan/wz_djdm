@@ -15,9 +15,9 @@
 
 <script>
 import { mapState } from "vuex";
-import chart_t_option from "./chart_t_option";
-import chart_m_option from "./chart_m_option";
-import chart_pie_option from "./chart_pie_option";
+import chart_t_option from "./jdChartOption/chart_t_option";
+import chart_m_option from "./jdChartOption/chart_m_option";
+import chart_pie_option from "./jdChartOption/chart_pie_option";
 export default {
   data() {
     return {

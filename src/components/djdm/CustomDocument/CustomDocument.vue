@@ -71,15 +71,13 @@ export default {
       dataDone: state => state.dataDone
     })
   },
-  watch: {
-    xmMenu(n, o) {
-      this.tabsMenuData = n;
-    }
-  },
   created() {
     this.xmMenu.length && (this.tabsMenuData = [...this.xmMenu]);
   },
   watch: {
+    xmMenu(n, o) {
+      this.tabsMenuData = n;
+    },
     dataDone(n) {
       n && (this.tabsMenuData = [...this.xmMenu]);
     }

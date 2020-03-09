@@ -14,37 +14,37 @@
 </template>
 
 <script>
-import { SERIES, chart_y_option, chart1 } from "./chart_y_option";
-import { chart_ywz_option } from "./chart_ywz_option";
-import { chart_dgl_option } from "./chart_dgl_option";
-import { chart_fgl_option } from "./chart_fgl_option";
+import { chart_y_option } from "./yqChartOption/chart_y_option";
+import { chart_ywz_option } from "./yqChartOption/chart_ywz_option";
+import { chart_dgl_option } from "./yqChartOption/chart_dgl_option";
+import { chart_fgl_option } from "./yqChartOption/chart_fgl_option";
 
 export default {
   data() {
     return {
       options: [
         {
-          value: 3,
+          value: 0,
           label: "复工率",
           color: "#4876FF"
         },
         {
-          value: 0,
+          value: 1,
           label: "产能恢复率",
           color: "#4876FF"
         },
         {
-          value: 1,
+          value: 2,
           label: "二产产能恢复率",
           color: "#4876FF"
         },
         {
-          value: 2,
+          value: 3,
           label: "员工到岗率",
           color: "#4876FF"
         }
       ],
-      selectVal: 3
+      selectVal: 0
     };
   },
   watch: {
@@ -61,35 +61,17 @@ export default {
       this.chart_t = this.$echarts.init(document.getElementById("gqx-chart"));
     },
     doChartData() {
-      let chart_y_option_clone;
-      if (this.selectVal == 0) {
-        const data = this.$util.clone(chart1);
-        //  顶部
-        chart_y_option_clone = this.chart_Y_fixed();
-        chart_y_option_clone.legend.data = Object.keys(data).filter(
-          item => !["name"].includes(item)
-        );
-        chart_y_option_clone.xAxis.data = data.name;
-        chart_y_option_clone.series = Object.keys(data)
-          .filter(item => !["name"].includes(item))
-          .map(item => {
-            const series = this.chart_Y_SERIES_fixed();
-            series.name = item;
-            series.data = data[item];
-            return series;
-          });
-      }
-      if (this.selectVal == 1) {
-        chart_y_option_clone = this.$util.clone(chart_ywz_option);
-      }
-      if (this.selectVal == 2) {
-        chart_y_option_clone = this.$util.clone(chart_dgl_option);
-      }
-      if (this.selectVal == 3){
-        chart_y_option_clone = this.$util.clone(chart_fgl_option);
-      }
+      const options = [
+        chart_fgl_option,
+        chart_y_option,
+        chart_ywz_option,
+        chart_dgl_option
+      ];
+      let chart_option;
+      chart_option = this.$util.clone(options[this.selectVal]);
+
       this.doChartOption({
-        t: chart_y_option_clone
+        t: chart_option
       });
     },
     doChartOption({ t }) {

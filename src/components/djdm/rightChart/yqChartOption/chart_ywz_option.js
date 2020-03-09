@@ -1,6 +1,30 @@
 /** 温州市二产产能恢复率 */
+const data = [
+  { name: "瓯江口", val: 63.8 },
+  { name: "瑞安", val: 59 },
+  { name: "泰顺", val: 83.3 },
+  { name: "经开区", val: 61.8 },
+  { name: "鹿城", val: 33.6 },
+  { name: "龙湾", val: 64.4 },
+  { name: "洞头", val: 66 },
+  { name: "永嘉", val: 58.3 },
+  { name: "龙港", val: 85.8 },
+  { name: "文成", val: 64.6 },
+  { name: "苍南", val: 82.9 },
+  { name: "乐清", val: 73.1 },
+  { name: "平阳", val: 84.6 },
+  { name: "瓯海", val: 51.2 }
+].sort((o1, o2) => {
+  const v1 = o1.val;
+  const v2 = o2.val;
+  return v2 > v1 ? -1 : v2 < v1 ? 1 : 0;
+});
+const avg = [
+  { name: "全省平均", val: 78, color: "#FF8C48" },
+  { name: "全市平均", val: 64, color: "red" }
+];
 export const chart_ywz_option = {
-  color: ["#6EB2FF", "red", "#FF8C48"],
+  color: ["#6EB2FF"],
   title: {
     text: "时间:2020-03-06",
     textStyle: {
@@ -41,7 +65,7 @@ export const chart_ywz_option = {
     },
     splitLine: {
       show: false
-    },
+    }
   },
   yAxis: {
     type: "category",
@@ -49,22 +73,7 @@ export const chart_ywz_option = {
       color: "#fff",
       fontSize: 16
     },
-    data: [
-      "鹿城",
-      "瓯海",
-      "永嘉",
-      "瑞安",
-      "经开区",
-      "瓯江口",
-      "龙湾",
-      "文成",
-      "洞头",
-      "乐清",
-      "苍南",
-      "泰顺",
-      "平阳",
-      "龙港",
-    ]
+    data: data.map(item => item.name)
   },
   series: [
     {
@@ -84,54 +93,26 @@ export const chart_ywz_option = {
         }
       },
       barWidth: 16,
-      data: [
-        33.6,
-        51.2,
-        58.3,
-        59.0,
-        61.8,
-        63.8,
-        64.4,
-        64.6,
-        66,
-        73.1,
-        82.9,
-        83.3,
-        84.6,
-        85.8,
-      ]
+      data: data.map(item => item.val)
     },
-    {
-      name: "全市平均",
-      type: "line",
-      data: [64],
-      markLine: {
-        label: {
-          fontSize: 16,
-          fontWeight: "bold",
-          formatter: "{c} %"
-        },
-        lineStyle: {
-          width: 2
-        },
-        data: [{ type: "average", name: "平均值" }]
-      }
-    },
-    {
-      name: "全省平均",
-      type: "line",
-      data: [78],
-      markLine: {
-        label: {
-          fontSize: 16,
-          fontWeight: "bold",
-          formatter: "{c} %"
-        },
-        lineStyle: {
-          width: 2
-        },
-        data: [{ type: "average", name: "平均值" }]
-      }
-    }
+    ...avg.map(item => {
+      return {
+        name: item.name,
+        type: "line",
+        data: [item.val],
+        markLine: {
+          label: {
+            fontSize: 16,
+            fontWeight: "bold",
+            formatter: "{c} %"
+          },
+          lineStyle: {
+            width: 2,
+            color: item.color
+          },
+          data: [{ type: "average", name: "平均值" }]
+        }
+      };
+    })
   ]
 };

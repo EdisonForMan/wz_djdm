@@ -15,6 +15,8 @@ Vue.use(Vuex);
 import { fetchArcgisServer } from "@/api/beans/space";
 export default new Vuex.Store({
   state: {
+    /** 产能数据 */
+    cof: [56.14, 70.62], //  二|三产产能恢复率
     /** 原始地图数据 */
     xmBuildSiteList: [], // 规上工业数据
     fwLayer: [], // 规上服务业数据
@@ -126,7 +128,7 @@ export default new Vuex.Store({
           geometry,
           attributes: {
             ...attributes,
-            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`,
+            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`
           },
           ydyg: $util.toParseInt(attributes.ydyg)
         });
@@ -136,14 +138,17 @@ export default new Vuex.Store({
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (人数/到岗率)`,
-        children: arr.sort($util.compare("ydyg")).reverse().map(i => {
-          return {
-            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
-            geometry: i.geometry,
-            attributes: i.attributes,
-            type: "point"
-          };
-        })
+        children: arr
+          .sort($util.compare("ydyg"))
+          .reverse()
+          .map(i => {
+            return {
+              name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
+              geometry: i.geometry,
+              attributes: i.attributes,
+              type: "point"
+            };
+          })
       };
       commit("updateXmBuildSiteList", { list: data.features, menu });
     },
@@ -164,7 +169,7 @@ export default new Vuex.Store({
           geometry,
           attributes: {
             ...attributes,
-            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`,
+            ygdgl: `${(attributes.ygdgl * 100).toFixed(2)}%`
           },
           ydyg: $util.toParseInt(attributes.ydyg)
         });
@@ -174,14 +179,17 @@ export default new Vuex.Store({
       const menu = {
         fieldAliases: data.fieldAliases,
         innerText: ` (${count})`,
-        children: arr.sort($util.compare("ydyg")).reverse().map(i => {
-          return {
-            name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
-            geometry: i.geometry,
-            attributes: i.attributes,
-            type: "point"
-          };
-        })
+        children: arr
+          .sort($util.compare("ydyg"))
+          .reverse()
+          .map(i => {
+            return {
+              name: `${i.name}(${i.attributes.ydyg}/${i.attributes.ygdgl})`,
+              geometry: i.geometry,
+              attributes: i.attributes,
+              type: "point"
+            };
+          })
       };
       commit("updateFwList", { list: data.features, menu });
     },
@@ -252,7 +260,7 @@ export default new Vuex.Store({
             return {
               name: `${i.name} ${(i.cnt / 10000).toFixed(2)}万人/红码${
                 i.red_cnt
-                }/黄码${i.yellow_cnt}`,
+              }/黄码${i.yellow_cnt}`,
               geometry: i.geometry,
               attributes: i.attributes,
               type: "polygon"

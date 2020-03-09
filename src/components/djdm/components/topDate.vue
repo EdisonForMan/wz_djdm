@@ -8,7 +8,7 @@
         </p>
         <h3 :style="`color:${item.c[1]}`">
           <i>产能恢复率</i>
-          {{item.v[1]}}
+          {{cof[index]}}
           <i>%</i>
         </h3>
       </li>
@@ -26,7 +26,8 @@ export default {
     ...mapState({
       xmBuildSiteList: state => state.xmBuildSiteList,
       fwLayer: state => state.fwLayer,
-      dataDone: state => state.dataDone
+      dataDone: state => state.dataDone,
+      cof: state => state.cof,
     })
   },
   mounted() {
@@ -49,8 +50,8 @@ export default {
     },
     doTopData() {
       const topData = [
-        { t: "规上工业企业", v: [0, 73.14], c: ["#FF283A", "#FFC659"] },
-        { t: "限上服务业企业", v: [0, 74.39], c: ["#F6E31B", "#1EFF95"] }
+        { t: "规上工业企业", v: [0], c: ["#FF283A", "#FFC659"] },
+        { t: "限上服务业企业", v: [0], c: ["#F6E31B", "#1EFF95"] }
       ];
       this.xmBuildSiteList.map(({ attributes }) => {
         const { cnfhqk } = attributes;

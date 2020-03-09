@@ -159,7 +159,7 @@ export const doArcgisPopup = (
  * @param {*} param1
  */
 export const doLocation = (geometry, [ax = 0, ay = 0]) => {
-  return { ...geometry, x: x + ax, y: y + ay };
+  return { ...geometry, x: geometry.x + ax, y: geometry.y + ay };
 };
 
 /**

@@ -33,7 +33,6 @@ export default {
   series: [
     {
       type: "pie",
-      radius: 70,
       center: ["50%", "25%"],
       radius: ["30%", "50%"],
       label: {
@@ -45,7 +44,6 @@ export default {
     },
     {
       type: "pie",
-      radius: 70,
       center: ["50%", "75%"],
       radius: ["30%", "50%"],
       label: {
